@@ -2,8 +2,8 @@ Realtime Pictionary
 
 ##ToDo
 - [ ] Add Iron router (routing engine)
-- [ ] 
-- [ ] Figure out how to detect a second user has connected session tokens, how to figure out a second person has connected
+- [ ] Implement canvas
+- [ ] Figure out how to detect a second user has connected
 - [ ] Add front-end framework
 - [ ] 
 - [ ] Figure out db schema
