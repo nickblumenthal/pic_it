@@ -8,6 +8,7 @@ Realtime Pictionary
 - [X] Added underscore
 - [X] Added server method to create mongo game entry
 - [X] Added link for using the Mongo Shell with meteor (R&D) 
+- [X] Game button creates a new round  
 - [ ] Figure out how to detect a second user has connected
 - [ ] Implement canvas
 - [ ] Add front-end framework

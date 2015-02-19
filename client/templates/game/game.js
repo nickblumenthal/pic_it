@@ -13,9 +13,13 @@ Template.game.helpers({
 		return Session.get('gameStatus');
 	},
 
-	session: function () {
+	getSessionID: function () {
 		//TEMP: find by user session
 		return Meteor.default_connection._lastSessionId;
+		// Meteor.call('getSessionID', function (error, id) {
+		// 	console.log(id)
+		// 	return id
+		// });
 	}
 });
 
@@ -26,5 +30,10 @@ Template.game.events({
 		} else {
 			Session.set('gameStatus', 'waiting');
 		}
+
+		Meteor.call('createRound', this, function (error, result) {
+			console.log(result)
+		});
+
 	}
 });

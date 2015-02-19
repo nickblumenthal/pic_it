@@ -1,9 +1,9 @@
 <template name="game">
 	<center>	
 		<div>
-			<button>Click to start game</button>
+			<button>Click to switch views</button>
 			<p>Game status: {{ gameStatus }}</p>
-			<p>Session ID: {{ session }}</p>
+			<p>Session ID: {{ getSessionID }}</p>
 		</div>
 	</center>
 	{{> DynamicTemplate template=getTemplate }}
