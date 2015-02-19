@@ -1,11 +1,21 @@
 Template.home.events({
 	'click #create': function (event, template) {
-		console.log("Create board");
-		// TEMP: Tests for validating the boardName
-		var boardName = $('#boardName').val();
-		console.log(boardName);
+		
+		// TEMP: Add tests for validating the gameName
+		var gameName = $('#gameName').val();
+		console.log("Create Game: " + gameName);
 
-		// Redirect to game lobby
-		Router.go('game', { gameID: boardName })
+		// Meteor/Mongo call to create the game, server side method
+		// 
+		Meteor.call('createGame', gameName, function (error, result) {
+
+			if (error) { console.log(error) };
+
+			if (result) {
+
+				// Redirect to game lobby
+				Router.go('game', { gameID: result.gameID })
+			};
+		});
 	}
 });

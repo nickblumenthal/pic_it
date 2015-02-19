@@ -11,6 +11,11 @@ Template.game.helpers({
 
 	gameStatus: function () {
 		return Session.get('gameStatus');
+	},
+
+	session: function () {
+		//TEMP: find by user session
+		return Meteor.default_connection._lastSessionId;
 	}
 });
 
