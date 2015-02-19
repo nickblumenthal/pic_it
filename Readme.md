@@ -1,7 +1,8 @@
 Realtime Pictionary
 
 ##ToDo
-- [ ] Add Iron router (routing engine)
+- [X] Add Iron router (routing engine)
+- [X] Create folder structure
 - [ ] Implement canvas
 - [ ] Figure out how to detect a second user has connected
 - [ ] Add front-end framework
