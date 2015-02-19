@@ -1,0 +1,9 @@
+<template name="game">
+	<center>	
+		<div>
+			<button>Click to start game</button>
+			<p>Game status: {{ gameStatus }}</p>
+		</div>
+	</center>
+	{{> DynamicTemplate template=getTemplate }}
+</template>
