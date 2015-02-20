@@ -1,10 +1,11 @@
 <template name="game">
-	<center>	
-		<div>
-			<button>Click to switch views</button>
+	<center style="border:3px solid black">	
+		<div id="temp">
+			<p>Game Template</p>
+			<button>Create Board</button>
 			<p>Game status: {{ gameStatus }}</p>
 			<p>Session ID: {{ getSessionID }}</p>
 		</div>
 	</center>
-	{{> DynamicTemplate template=getTemplate }}
+	{{> DynamicTemplate template=getTemplate data=getDataContext }}
 </template>

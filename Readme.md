@@ -9,8 +9,10 @@ Realtime Pictionary
 - [X] Added server method to create mongo game entry
 - [X] Added link for using the Mongo Shell with meteor (R&D) 
 - [X] Game button creates a new round  
+- [X] Implement canvas
+- [X] Canvas is reactive
 - [ ] Figure out how to detect a second user has connected
-- [ ] Implement canvas
+- [ ] Creating roles for different users
 - [ ] Add front-end framework
 - [ ] Figure out db schema
 - [ ] Button to open two windows for single player

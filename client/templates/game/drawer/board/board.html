@@ -1,8 +1,11 @@
 <template name="board">
 	<p>CANVAS</p>
+	<button>Render Lines</button>
+	<p>{{ boardID }}</p>
+
 	<div onselectstart="return false;" ondragstart="return false;" >
 
-	<canvas id="board" style="border:4px solid;"></canvas>
+	<canvas id="board" width="{{width}}" height="{{height}}" style="border:4px solid;"></canvas>
 
 	</div>
 </template>
