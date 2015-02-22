@@ -17,8 +17,10 @@ Realtime Pictionary
 - [ ] Figure out db schema
 - [ ] Button to open two windows for single player
 - [ ] Load word list from file on server
+- [ ] Assign word to drawer when their turn starts
 - [X] Test if a guessed word exists in the wordlist
 - [ ] Update guesser as they guess if they type in valid words
+- [ ] Create timer for turn
 
 
 
