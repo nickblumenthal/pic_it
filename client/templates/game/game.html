@@ -6,6 +6,12 @@
 			<p>Game status: {{ gameStatus }}</p>
 			<p>Session ID: {{ getSessionID }}</p>
 		</div>
+		<div id="players">
+			Current Players:
+			{{#each players}}
+				{{sessionID}}
+			{{/each}}
+		</div>
 	</center>
 	{{> DynamicTemplate template=getTemplate data=getDataContext }}
 </template>

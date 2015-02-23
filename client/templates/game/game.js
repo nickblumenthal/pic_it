@@ -30,6 +30,13 @@ Template.game.helpers({
 		// 	console.log(id)
 		// 	return id
 		// });
+	},
+
+	players: function () {
+		var players = this.players.map(function (sessionID) {
+			return { sessionID: sessionID }
+		})
+		return players;
 	}
 });
 

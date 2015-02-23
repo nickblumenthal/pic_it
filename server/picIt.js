@@ -1,13 +1,16 @@
 Meteor.methods({
 	createGame: function (gameName) {
+		// Gets the client's session ID
+		var creatorID = this.connection.id;
+
 		var game = {
 			name: gameName,
-			// TEMP: Add more stuff later
+			players: [ creatorID ]
 		};
 
 		var gameID = Games.insert(game);
 
-		return { gameID: gameID };
+		return { gameID: gameID, creatorID: creatorID };
 	},
 
 	createRound: function (game) {
@@ -28,6 +31,10 @@ Meteor.methods({
 		return round;
 	},
 
+	joinGame: function (gameID, sessionID) {
+		Games.update(gameID, { $addToSet: { players: sessionID }})
+	},
+
 	boardUpdated: function (roundID) {
 		var now = new Date().getTime();
 		
@@ -45,4 +52,11 @@ Meteor.methods({
 		console.log(this.connection.id)
 		return this.connection.id;
 	}
+})
+
+
+
+
+Meteor.publish("Games", function () {
+	Games.find();
 })

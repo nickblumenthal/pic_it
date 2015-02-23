@@ -8,11 +8,9 @@ Template.home.events({
 		// Meteor/Mongo call to create the game, server side method
 		// 
 		Meteor.call('createGame', gameName, function (error, result) {
-
 			if (error) { console.log(error) };
 
 			if (result) {
-
 				// Redirect to game lobby
 				Router.go('game', { gameID: result.gameID })
 			};
