@@ -1,26 +1,28 @@
+var guessedWords = new ReactiveArray();
+
 Template.guesser.events({
-	'keyup #guess': function () {
-	   handleGuess($('#guess').val());
+	'keyup #guess': function (event, template) {
+	   handleGuess($('#guess').val(), template);
    }
 });
 
-Template.guesser.rendered = function() {
-  Template.guesser.wordList = loadWordList('nounlist.txt');
-  Template.guesser.guesses = [];
+Template.guesser.created = function() {
+  this.wordList = loadWordList('nounlist.txt');
 };
 
 Template.guesser.helpers({
-	guesses: function () {
-    console.log(Template.guesser.guesses);
-		return Template.guesser.guesses;
+	guesses: function() {
+    console.log(guessedWords);
+	  return guessedWords.list();
 	}
 });
 
-function handleGuess(guess) {
-  if(isWordInList(guess, Template.guesser.wordList)) {
-    if(Template.guesser.guesses.indexOf(guess) === -1) {
-      Template.guesser.guesses.push(guess);
-      console.log(Template.guesser.guesses);
+function handleGuess(guess, scope) {
+  if(isWordInList(guess, scope.wordList)) {
+    if(guessedWords.indexOf(guess) === -1) {
+      guessedWords.push(guess);
+      console.log(guessedWords);
+
     }
   }
 };
