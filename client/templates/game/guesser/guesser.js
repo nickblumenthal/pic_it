@@ -7,7 +7,10 @@ Template.guesser.events({
 });
 
 Template.guesser.created = function() {
-  this.wordList = loadWordList('nounlist.txt');
+  var that = this;
+  Meteor.call('loadWordList', 'nounlist.txt', function(error, result) {
+    that.wordList = result;
+  });
 };
 
 Template.guesser.helpers({
@@ -28,11 +31,8 @@ function handleGuess(guess, scope) {
 };
 
 function loadWordList(fileName) {
-
-  var wordList = ['cat', 'dog'];
-
-  return wordList;
-};
+  return Meteor.call('loadWordList', fileName);
+}
 
 function isWordInList(word, wordList) {
   return wordList.indexOf(word) !== -1;
