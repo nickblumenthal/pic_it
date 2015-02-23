@@ -36,6 +36,10 @@ Meteor.methods({
 		return "working" 
 	},
 
+	createLine: function (roundID, color, width, x0, y0, x1, y1) {
+
+	},
+
 
 	getSessionID: function () {
 		console.log(this.connection.id)
