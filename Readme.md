@@ -15,6 +15,7 @@ Realtime Pictionary
 - [X] Canvas is reactive
 - [X] Figure out how to detect a second user has connected
 - [X] Creating roles for different users
+- [X] Creating a round chooses a random drawer 
 - [ ] Add front-end framework
 - [ ] Button to open two windows for single player
 - [ ] Load word list from file on server
