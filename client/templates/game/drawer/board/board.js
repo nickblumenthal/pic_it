@@ -18,19 +18,17 @@ Template.board.helpers({
 });
 
 Template.board.events({
-	// 'click #render': function () {
-	// 	boardRender(true, Rounds.findOne({ 'game._id': Session.get('gameID') }))
-	// }
+	'click #clear-lines': function (event) {
+		Meteor.call('clearLines', this._id);
+	}
 
 });
 
 
 Template.board.rendered = function() {
-	// debugger
 	var round = this.data;
 	boardRender(true, round);
 	window.onresize = resizeControl.bind(this);
-
 }
 
 

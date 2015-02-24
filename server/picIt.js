@@ -77,6 +77,10 @@ Meteor.methods({
 	  var wordList = Assets.getText('nounlist.txt');
 	  var wordList = wordList.split('\n');
 	  return wordList;
+	}, 
+
+	clearLines: function (roundID) {
+		Lines.remove({ round_id: roundID });	
 	}
 })
 
