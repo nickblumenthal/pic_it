@@ -1,6 +1,6 @@
 		// return Router.current().params.gameID;
 Template.gameLobby.helpers({
-	
+
 });
 
 Template.gameLobby.events({
@@ -8,8 +8,16 @@ Template.gameLobby.events({
 		var game = this;
 
 		Meteor.call('createRound', game, function (error, result) {
+<<<<<<< HEAD
+=======
+			if (result) {
+				Session.set('currentRound', result._id);
+			};
+>>>>>>> separateRolesFeature
 		});
 	}
 });
 
-
+window.onbeforeunload = function(){
+	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
+}

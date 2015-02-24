@@ -1,12 +1,14 @@
 <template name="game">
-	<center style="border:3px solid black">	
+	<center style="border:3px solid black">
 		<div id="temp">
 			<p>Game Template</p>
 			{{#if inProgress }}
 				<button id="end-round">End Round</button>
 			{{/if}}
 			<p>Game status: {{ gameStatus }}</p>
-			<p>Session ID: {{ getSessionID }}</p>
+			<p>Game ID: {{ this._id }}</p>
+			<p>Player ID: {{ getSessionID }}</p>
+			<p>Round ID: {{ getRoundID }}</p>
 		</div>
 		<div id="players">
 			Current Players:
