@@ -21,11 +21,17 @@ Template.board.helpers({
 	},
 
 	role: function() {
-		var drawer = Rounds.findOne({ 'game._id': Session.get('gameID') }).drawer;
+		var drawer = this.drawer;
+		var guesser = this.guesser;
 		if(drawer === Session.get('playerID')) {
+			Session.set('role', 'drawer');
 			return 'drawer';
-		} else {
+		} else if(guesser === Session.get('playerID')) {
+			Session.set('role', 'guesser');
 			return 'guesser';
+		} else {
+			Session.set('role', 'bystander');
+			return 'bystander';
 		}
 	}
 
