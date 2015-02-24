@@ -27,7 +27,7 @@ Meteor.methods({
 			drawer: drawer,
 			board: {
 				started: started,
-				updated: started 
+				updated: started
 			},
 			lines: {}
 		}
@@ -44,10 +44,10 @@ Meteor.methods({
 
 	boardUpdated: function (roundID) {
 		var now = new Date().getTime();
-		
+
 		Rounds.update({ _id: roundID }, { $set: { 'board.updated': now }})
 
-		return "working" 
+		return "working"
 	},
 
 	createLine: function (roundID, color, width, x0, y0, x1, y1) {
@@ -70,6 +70,13 @@ Meteor.methods({
 		} else {
 			Games.update(gameID, { $set: { status: "waiting" }})
 		}
+	},
+
+	loadWordList: function(fileName) {
+
+	  var wordList = Assets.getText('nounlist.txt');
+	  var wordList = wordList.split('\n');
+	  return wordList;
 	}
 })
 

@@ -59,7 +59,7 @@ var setZoom = function () {
 		zoom=Session.get("board_h")/minZone;
 	}
 	if (zoom<minZoom) zoom=minZoom;
-	Session.set("zoom",zoom);	
+	Session.set("zoom",zoom);
 }
 
 
@@ -87,7 +87,7 @@ var boardRenderWithOverlay = function (round) {
 var boardRender = function (overlay, round) {
 
 	var canvas = document.getElementById('board');
-	
+
 	var s = size();
 
 	if (canvas.width!=s.w || canvas.height!=s.h) {
@@ -150,7 +150,7 @@ var boardRender = function (overlay, round) {
 								context.beginPath();
 								context.moveTo(center.x+point.x*zoom,center.y+point.y*zoom);
 							}
-						}	
+						}
 					}
 				}
 				i++;
@@ -243,9 +243,9 @@ function mpTouchMove(e) {
 		} else {
 			Session.set("line_id", insertLine(
 				round._id,
-				"black", 
+				"black",
 				6,
-				(previousTouchPosition.x-center.x)/zoom, (previousTouchPosition.y-center.y)/zoom, (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom 
+				(previousTouchPosition.x-center.x)/zoom, (previousTouchPosition.y-center.y)/zoom, (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom
 			));
 			Meteor.call("boardUpdated", round._id, function(error, ret){
 					console.log("boardUpdated error="+error+" ret="+ret);
