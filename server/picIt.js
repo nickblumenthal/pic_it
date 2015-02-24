@@ -7,7 +7,7 @@ Meteor.methods({
 			name: gameName,
 			creatorID: creatorID,
 			status: "waiting",
-			players: [ creatorID ]
+			players: [ creatorID ],
 		};
 
 		var gameID = Games.insert(game);

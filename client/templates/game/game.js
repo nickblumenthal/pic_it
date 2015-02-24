@@ -50,6 +50,11 @@ Template.game.helpers({
 			return { sessionID: sessionID }
 		})
 		return players;
+	},
+
+	rounds: function () {
+		var gameID = this._id;
+		return Rounds.find({ 'game._id': gameID })
 	}
 });
 

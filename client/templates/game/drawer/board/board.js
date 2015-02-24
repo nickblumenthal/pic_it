@@ -6,10 +6,6 @@ Session.set("board_h",minZone);
 Session.set("zoom",1);
 
 Template.board.helpers({
-	boardID: function () {
-		// return this.board;
-	},
-
 	width: function () {
 		setZoom();
 		return Session.get('board_w');
@@ -19,14 +15,13 @@ Template.board.helpers({
 		setZoom();
 		return Session.get('board_h')
 	}
-
-
 });
 
 Template.board.events({
-	'click #render': function () {
-		boardRender(true, Rounds.findOne({ 'game._id': Session.get('gameID') }))
-	}
+	// 'click #render': function () {
+	// 	boardRender(true, Rounds.findOne({ 'game._id': Session.get('gameID') }))
+	// }
+
 });
 
 

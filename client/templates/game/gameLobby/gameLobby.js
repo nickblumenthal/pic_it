@@ -8,11 +8,6 @@ Template.gameLobby.events({
 		var game = this;
 
 		Meteor.call('createRound', game, function (error, result) {
-			//TEMP: Remove
-
-			if (result) {
-				$('#temp').append("<p>Board id: " + result._id + "</p>")
-			};
 		});
 	}
 });

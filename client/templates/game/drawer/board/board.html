@@ -1,8 +1,6 @@
 <template name="board">
 	<p>CANVAS</p>
-	<button>Render Lines</button>
-	<p>{{ boardID }}</p>
-
+	<p>Drawer: {{ this.drawer }}</p>
 	<div onselectstart="return false;" ondragstart="return false;" >
 
 	<canvas id="board" width="{{width}}" height="{{height}}" style="border:4px solid;"></canvas>
