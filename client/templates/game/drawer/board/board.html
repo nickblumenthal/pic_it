@@ -2,13 +2,14 @@
 	<div>
 		<p>CANVAS</p>
 		<p>Drawer: {{ this.drawer }}</p>
+		<p>{{ boardID }}</p>
+		<h2>{{ role }}</h2>
 	</div>
 	<div>
 		<button id="clear-lines">Clear Board</button>
 	</div>
-
 	<div onselectstart="return false;" ondragstart="return false;" >
-	
+
 	<canvas id="board" width="{{width}}" height="{{height}}" style="border:4px solid;"></canvas>
 
 	</div>

@@ -8,7 +8,7 @@ Template.game.helpers({
 		} else {
 			return 'board'
 		}
-	}, 
+	},
 
 	// Gives the partial templates data
 	getDataContext: function () {
@@ -18,7 +18,7 @@ Template.game.helpers({
 			return this
 		} else {
 			// TEMP: Have to figure out how to find the latest round
-			return Rounds.findOne({ 'game._id': gameID });		
+			return Rounds.findOne({ 'game._id': gameID }, { sort: { 'board.started' : -1 }});
 		}
 	},
 
@@ -44,6 +44,15 @@ Template.game.helpers({
 		// });
 	},
 
+	getRoundID: function () {
+		var round;
+		if(round = Rounds.findOne({ 'game._id': Session.get('gameID') }, { sort: { 'board.started': -1 }})) {
+			return round._id;
+		} else {
+			return 'Waiting to start round.'
+		}
+	},
+
 	players: function () {
 		var players = this.players.map(function (sessionID) {
 			return { sessionID: sessionID }
@@ -60,8 +69,8 @@ Template.game.helpers({
 Template.game.events({
 	'click #end-round': function (event) {
 		Meteor.call('changeGameStatus', this._id, function (error, result) {
-	
-		})
-	},
 
+		})
+	}
 });
+

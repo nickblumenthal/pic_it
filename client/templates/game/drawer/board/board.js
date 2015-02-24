@@ -14,6 +14,21 @@ Template.board.helpers({
 	height: function () {
 		setZoom();
 		return Session.get('board_h')
+	},
+
+	role: function() {
+		var drawer = this.drawer;
+		var guesser = this.guesser;
+		if(drawer === Session.get('playerID')) {
+			Session.set('role', 'drawer');
+			return 'drawer';
+		} else if(guesser === Session.get('playerID')) {
+			Session.set('role', 'guesser');
+			return 'guesser';
+		} else {
+			Session.set('role', 'bystander');
+			return 'bystander';
+		}
 	}
 });
 

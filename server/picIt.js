@@ -19,12 +19,20 @@ Meteor.methods({
 		Games.update(game._id, { $set: { status: "inProgress" }})
 		var players = game.players;
 
-		var drawer = players[Math.floor(Math.random()*players.length)];
+		// Assign a random drawer and guesser
+		var drawerNum = Math.floor(Math.random()*players.length);
+		var guesserNum = players.length - 1 - drawerNum;
+		var drawer = players[drawerNum];
+		var guesser = players[guesserNum];
+		console.log('drawer:' + drawer);
+		console.log('guesser:' + guesser);
+
 		var started = new Date().getTime();
 
 		var round = {
 			game: game,
 			drawer: drawer,
+			guesser: guesser,
 			board: {
 				started: started,
 				updated: started
@@ -39,7 +47,14 @@ Meteor.methods({
 	},
 
 	joinGame: function (gameID, sessionID) {
-		Games.update(gameID, { $addToSet: { players: sessionID }})
+		var game = Games.findOne(gameID);
+		if(game.players.length < 2) {
+			Games.update(gameID, { $addToSet: { players: sessionID }})
+		}
+	},
+
+	leaveGame: function (gameID, sessionID) {
+		Games.update(gameID, { $pull: { players: sessionID } })
 	},
 
 	boardUpdated: function (roundID) {
@@ -55,12 +70,11 @@ Meteor.methods({
 	},
 
 	getSessionID: function () {
-		console.log(this.connection.id)
 		return this.connection.id;
 	},
 
-	removeUser: function () {
-		console.log(this.connection.id)
+	removeUser: function (playerID, gameID) {
+		Games.update(gameID, { $pull: { players: playerID }});
 	},
 
 	changeGameStatus: function (gameID) {
