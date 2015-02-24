@@ -1,4 +1,3 @@
-
 Template.game.helpers({
 	// Used to dynamically switch the template partial based
 	// on what the status of the game is.
@@ -63,5 +62,6 @@ Template.game.events({
 		Meteor.call('changeGameStatus', this._id, function (error, result) {
 	
 		})
-	}
+	},
+
 });
