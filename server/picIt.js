@@ -39,7 +39,14 @@ Meteor.methods({
 	},
 
 	joinGame: function (gameID, sessionID) {
-		Games.update(gameID, { $addToSet: { players: sessionID }})
+		var game = Games.findOne(gameID);
+		if(game.players.length < 2) {
+			Games.update(gameID, { $addToSet: { players: sessionID }})
+		}
+	},
+
+	leaveGame: function (gameID, sessionID) {
+		Games.update(gameID, { $pull: { players: sessionID } })
 	},
 
 	boardUpdated: function (roundID) {
@@ -55,12 +62,13 @@ Meteor.methods({
 	},
 
 	getSessionID: function () {
-		console.log(this.connection.id)
 		return this.connection.id;
 	},
 
-	removeUser: function () {
-		console.log(this.connection.id)
+	removeUser: function (playerID, gameID) {
+		// console.log(this.connection.id)
+		console.log(playerID);
+		Games.update(gameID, { $pull: { players: playerID }});
 	},
 
 	changeGameStatus: function (gameID) {

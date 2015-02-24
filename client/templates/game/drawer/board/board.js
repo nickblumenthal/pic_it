@@ -18,6 +18,15 @@ Template.board.helpers({
 	height: function () {
 		setZoom();
 		return Session.get('board_h')
+	},
+
+	role: function() {
+		var drawer = Rounds.findOne({ 'game._id': Session.get('gameID') }).drawer;
+		if(drawer === Session.get('playerID')) {
+			return 'drawer';
+		} else {
+			return 'guesser';
+		}
 	}
 
 
