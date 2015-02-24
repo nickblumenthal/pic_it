@@ -29,10 +29,32 @@ Template.board.rendered = function() {
 	// debugger
 	var round = this.data;
 	boardRender(true, round);
+	window.onresize = resizeControl.bind(this);
 
 }
 
 
+var resizeControl = function () {
+	var s = size();
+	var that = this;
+
+	var round = Rounds.findOne({ 'game._id': Session.get('gameID') });
+
+	var canvas = document.getElementById('board');
+	if (canvas) {
+		if (canvas.width!=s.w || canvas.height!=s.h) {
+			Session.set("board_w",s.w);
+			Session.set("board_h",s.h);
+
+			setZoom();
+
+			canvas.width=s.w;
+			canvas.height=s.h;
+			// Template.board.rendered();
+			boardRender(true, round)
+		}
+	}
+}
 
 // Sizing
 
@@ -157,6 +179,24 @@ var boardRender = function (overlay, round) {
 }
 
 
+
+// ZOOM and RESIZE
+//
+
+// Set new size of the canvas on browser window resize (or mobile rotation for example)
+
+
+var setZoom = function () {
+	var zoom=1;
+	if (Session.get("board_w")<minZone) {
+		zoom=Session.get("board_w")/minZone;
+	}
+	if (Session.get("board_h")<Session.get("board_w")) {
+		zoom=Session.get("board_h")/minZone;
+	}
+	if (zoom<minZoom) zoom=minZoom;
+	Session.set("zoom",zoom);	
+}
 
 
 
