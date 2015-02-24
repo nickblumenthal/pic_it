@@ -1,3 +1,4 @@
+
 Template.game.helpers({
 	// Used to dynamically switch the template partial based
 	// on what the status of the game is.
@@ -27,6 +28,14 @@ Template.game.helpers({
 		return this.status;
 	},
 
+	inProgress: function () {
+		if ( this.status === "waiting") {
+			return false;
+		} else if ( this.status === "inProgress" ){
+			return true;
+		}
+	},
+
 	getSessionID: function () {
 		//TEMP: find by user session
 		return Meteor.default_connection._lastSessionId;
@@ -45,5 +54,9 @@ Template.game.helpers({
 });
 
 Template.game.events({
-
+	'click #end-round': function (event) {
+		Meteor.call('changeGameStatus', this._id, function (error, result) {
+	
+		})
+	}
 });

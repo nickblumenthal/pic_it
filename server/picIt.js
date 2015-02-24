@@ -77,7 +77,6 @@ Meteor.methods({
 
 // TEMP: Need to figure out a way to get the gameID to the callback
 Meteor.publish("Games", function () {
-	Games.find();
 
 	var sessionID = this.connection.id
 
@@ -85,4 +84,5 @@ Meteor.publish("Games", function () {
 
 	}, function (e) { console.log(e) })
 	);
+	return Games.find();
 })

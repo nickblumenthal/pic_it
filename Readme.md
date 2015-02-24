@@ -13,10 +13,9 @@ Realtime Pictionary
 - [X] Game button creates a new round  
 - [X] Implement canvas
 - [X] Canvas is reactive
-- [ ] Figure out how to detect a second user has connected
-- [ ] Creating roles for different users
+- [X] Figure out how to detect a second user has connected
+- [X] Creating roles for different users
 - [ ] Add front-end framework
-- [ ] Figure out db schema
 - [ ] Button to open two windows for single player
 
 
