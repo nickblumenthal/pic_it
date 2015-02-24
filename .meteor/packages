@@ -10,3 +10,4 @@ insecure
 iron:router
 underscore
 manuel:reactivearray
+mrt:meteor-flipclockjs
