@@ -8,16 +8,26 @@ Template.guesser.events({
 
 Template.guesser.created = function() {
   var that = this;
+  Session.set('wordListStatus', 'loading');
   Meteor.call('loadWordList', 'nounlist.txt', function(error, result) {
     that.wordList = result;
+    Session.set('wordListStatus', 'loaded');
   });
 };
 
 Template.guesser.helpers({
 	guesses: function() {
-    console.log(guessedWords);
 	  return guessedWords.list();
-	}
+	},
+
+  disabledStatus: function() {
+    if(Session.get('wordListStatus') === 'loading') {
+      return {disabled: 'true', value: 'loading...'};
+    } else {
+      console.log('test2');
+      return '';
+    }
+  }
 });
 
 function handleGuess(guess, scope) {

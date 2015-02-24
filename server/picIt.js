@@ -46,7 +46,6 @@ Meteor.methods({
 
 	  var wordList = Assets.getText('nounlist.txt');
 	  var wordList = wordList.split('\n');
-		console.log('wordList');
 	  return wordList;
 	}
 })
