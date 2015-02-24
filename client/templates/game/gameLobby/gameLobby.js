@@ -8,12 +8,9 @@ Template.gameLobby.events({
 		var game = this;
 
 		Meteor.call('createRound', game, function (error, result) {
-<<<<<<< HEAD
-=======
 			if (result) {
 				Session.set('currentRound', result._id);
 			};
->>>>>>> separateRolesFeature
 		});
 	}
 });
