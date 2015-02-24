@@ -5,6 +5,8 @@ Meteor.methods({
 
 		var game = {
 			name: gameName,
+			creatorID: creatorID,
+			status: "waiting",
 			players: [ creatorID ]
 		};
 
@@ -14,10 +16,15 @@ Meteor.methods({
 	},
 
 	createRound: function (game) {
+		Games.update(game._id, { $set: { status: "inProgress" }})
+		var players = game.players;
+
+		var drawer = players[Math.floor(Math.random()*players.length)];
 		var started = new Date().getTime();
 
 		var round = {
 			game: game,
+			drawer: drawer,
 			board: {
 				started: started,
 				updated: started 
@@ -47,16 +54,35 @@ Meteor.methods({
 
 	},
 
-
 	getSessionID: function () {
 		console.log(this.connection.id)
 		return this.connection.id;
+	},
+
+	removeUser: function () {
+		console.log(this.connection.id)
+	},
+
+	changeGameStatus: function (gameID) {
+		var status = Games.findOne(gameID, { status: true }).status;
+		if ( status === "waiting") {
+			Games.update(gameID, { $set: { status: "inProgress" }})
+		} else {
+			Games.update(gameID, { $set: { status: "waiting" }})
+		}
 	}
 })
 
 
 
-
+// TEMP: Need to figure out a way to get the gameID to the callback
 Meteor.publish("Games", function () {
 	Games.find();
+
+	var sessionID = this.connection.id
+
+	this._session.socket.on("close", Meteor.bindEnvironment(function () {
+
+	}, function (e) { console.log(e) })
+	);
 })

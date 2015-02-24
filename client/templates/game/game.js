@@ -1,11 +1,9 @@
-Session.set('gameStatus', "waiting");
-
 Template.game.helpers({
 	// Used to dynamically switch the template partial based
 	// on what the status of the game is.
 	// This needs to be switched from Session to MongoDB query
 	getTemplate: function () {
-		if ( Session.get('gameStatus') === "waiting") {
+		if ( this.status === "waiting") {
 			return 'gameLobby'
 		} else {
 			return 'board'
@@ -14,13 +12,19 @@ Template.game.helpers({
 
 	// Gives the partial templates data
 	getDataContext: function () {
-		var currentGameID = Router.current().params.gameID;
-		return Rounds.findOne({ 'game._id': currentGameID });
+		// var currentGameID = Router.current().params.gameID;
+		var gameID = this._id;
+		if ( this.status === "waiting") {
+			return this
+		} else {
+			// TEMP: Have to figure out how to find the latest round
+			return Rounds.findOne({ 'game._id': gameID });		
+		}
 	},
 
 	// TEMP: Switch to mongoquery
 	gameStatus: function () {
-		return Session.get('gameStatus');
+		return this.status;
 	},
 
 	getSessionID: function () {
@@ -41,18 +45,5 @@ Template.game.helpers({
 });
 
 Template.game.events({
-	'click button': function () {
-		//TEMP: remove
-		if (Session.get('gameStatus') === "waiting") {
-			Session.set('gameStatus', 'inProgress')
-		} else {
-			Session.set('gameStatus', 'waiting');
-		}
 
-		Meteor.call('createRound', this, function (error, result) {
-			//TEMP: Remove
-			$('#temp').append("<p>Board id: " + result._id + "</p>")
-		});
-
-	}
 });
