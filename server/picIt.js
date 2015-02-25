@@ -32,7 +32,8 @@ Meteor.methods({
 				started: started,
 				updated: started
 			},
-			lines: {}
+			lines: {},
+			guessed_words: []
 		}
 
 		var roundID = Rounds.insert( round );

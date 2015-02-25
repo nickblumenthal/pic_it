@@ -17,16 +17,12 @@ Template.board.helpers({
 	},
 
 	role: function() {
-		// var drawer = this.drawer;
-		// if(drawer === Session.get('playerID')) {
-		// 	Session.set('role', 'drawer');
-		// 	return 'drawer';
-		// } else {
-		// 	Session.set('role', 'guesser');
-		// 	return 'guesser';
-		// }
 		return Session.get('role');
-	}
+	},
+
+	guessed_words: function() {
+    return this.guessed_words
+  }
 });
 
 Template.board.events({
