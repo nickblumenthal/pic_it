@@ -1,7 +1,6 @@
 Template.game.helpers({
 	// Used to dynamically switch the template partial based
 	// on what the status of the game is.
-	// This needs to be switched from Session to MongoDB query
 	getTemplate: function () {
 		if ( this.status === "waiting") {
 			return 'gameLobby'
@@ -22,7 +21,7 @@ Template.game.helpers({
 		}
 	},
 
-	// TEMP: Switch to mongoquery
+	// TEMP: Switch to mongoquery. Update: maybe not- ('this' is reactive)
 	gameStatus: function () {
 		return this.status;
 	},
@@ -70,12 +69,14 @@ Template.game.helpers({
 Template.game.events({
 	'click #create-round': function () {
 		var game = this;
-		var roundStarting = true;
 
-		// Create coutdown if Round creation successful
-		startRound(game)
+		Meteor.call('createRound', game, function (error, result) {
+			if (result) {
+				Session.set('currentRound', result._id);
+				console.log("returned")
+			};
+		});
 	},
-
 
 	'click #end-round': function (event) {
 		Meteor.call('changeGameStatus', this._id, function (error, result) {
@@ -84,56 +85,27 @@ Template.game.events({
 	}
 });
 
-var startRound = function (game) {
-	Meteor.call('createRound', game, function (error, result) {
-		if (result) {
-			Session.set('currentRound', result._id);
-		};
-	});
-}
-
 Template.game.rendered = function () {
 
 	var game = this.data;
 
-
+	// Create FlipClock.js element
 	clock = new FlipClock($('#countdown'), {
 		clockFace: 'Counter',
 		autoStart: false,
 		countdown: true
 	})
 
-	Games.find( game._id ).observeChanges({
-		changed: function (id, fields) {
-			clock.setTime(fields.timer)
-		}
-	});;
-	// Sets clock to whatever the current time is
+	// Sets clock to whatever the current game is
 	clock.setTime(game.timer)
 
+	// Reactively observing timer changes of the mongo entry 
+	// Only updates the counter if the change is for the timer
+	Games.find( game._id ).observeChanges({
+		changed: function (id, fields) {
+			if (fields.timer != null) {
+				clock.setTime(fields.timer)
+			};
+		}
+	});
 };
-
-
-
-
-// Create coutdown if Round creation successful
-		// var clock = new FlipClock($('#countdown'), 5, {
-		// 	clockFace: 'Counter',
-		// 	autoStart: true,
-		// 	countdown: true,
-		// 	callbacks: {
-		// 		stop: function () {
-		// 			if (roundStarting) {
-						
-		// 				startRound(game);
-
-		// 				clock.setTime(10)
-		// 				clock.start();
-		// 				roundStarting = false;
-		// 			} else {
-		// 				debugger 
-		// 			}
-		// 		}
-		// 	}
-		// })
-

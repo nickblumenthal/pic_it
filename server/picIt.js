@@ -17,7 +17,21 @@ Meteor.methods({
 	},
 
 	createRound: function (game) {
-		Games.update(game._id, { $set: { status: "inProgress", timer: 5 }})
+
+		// Countdown before beginning of round
+		Games.update(game._id, { $set: { timer: 5 }})
+
+		// Incrementing the countdown for pre-round
+		var intervalID = Meteor.setInterval( function() {
+			Games.update( game._id, { $inc: { timer: -1 },  $set: { intervalID: intervalID}})
+			}, 1000)
+
+		// Removing pre-round countdown, initiate round
+		Meteor.setTimeout(function () {
+			Meteor.clearInterval(intervalID)	
+			Games.update(game._id, { $set: { status: "inProgress" }})
+		}, 6000)
+
 		var players = game.players;
 
 		// Assign a random drawer and guesser
@@ -42,8 +56,8 @@ Meteor.methods({
 		}
 
 		var roundID = Rounds.insert( round );
-		// TEMP: This needs to get updated
-		var round = Rounds.findOne( roundID );
+
+		var round = Rounds.findOne( roundID, { sort: { 'board.started' : -1 }});
 
 		return round;
 	},
