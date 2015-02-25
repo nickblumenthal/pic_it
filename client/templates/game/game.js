@@ -79,7 +79,7 @@ Template.game.events({
 	},
 
 	'click #end-round': function (event) {
-		Meteor.call('changeGameStatus', this._id, function (error, result) {
+		Meteor.call('stopGame', this._id, function (error, result) {
 
 		})
 	}
