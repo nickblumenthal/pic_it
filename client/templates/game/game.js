@@ -2,10 +2,16 @@ Template.game.helpers({
 	// Used to dynamically switch the template partial based
 	// on what the status of the game is.
 	getTemplate: function () {
+
 		if ( this.status === "waiting") {
 			return 'gameLobby'
-		} else {
-			return 'board'
+		} else if ( this.status === 'inProgress') {
+			assignRoles(this._id);
+			if(Session.get('role') === 'drawer') {
+				return 'drawer'
+			} else {
+				return 'guesser'
+			}
 		}
 	},
 
@@ -16,8 +22,7 @@ Template.game.helpers({
 		if ( this.status === "waiting") {
 			return this
 		} else {
-			// TEMP: Have to figure out how to find the latest round
-			return Rounds.findOne({ 'game._id': gameID }, { sort: { 'board.started' : -1 }});
+			return getCurrentRound(gameID);
 		}
 	},
 
@@ -45,7 +50,7 @@ Template.game.helpers({
 
 	getRoundID: function () {
 		var round;
-		if(round = Rounds.findOne({ 'game._id': Session.get('gameID') }, { sort: { 'board.started': -1 }})) {
+		if(round = getCurrentRound(Session.get('gameID'))) {
 			return round._id;
 		} else {
 			return 'Waiting to start round.'
@@ -85,6 +90,7 @@ Template.game.events({
 	}
 });
 
+
 Template.game.rendered = function () {
 
 	var game = this.data;
@@ -99,7 +105,7 @@ Template.game.rendered = function () {
 	// Sets clock to whatever the current game is
 	clock.setTime(game.timer)
 
-	// Reactively observing timer changes of the mongo entry 
+	// Reactively observing timer changes of the mongo entry
 	// Only updates the counter if the change is for the timer
 	Games.find( game._id ).observeChanges({
 		changed: function (id, fields) {
@@ -108,4 +114,13 @@ Template.game.rendered = function () {
 			};
 		}
 	});
+};
+
+var assignRoles = function(gameID) {
+	var round = getCurrentRound(gameID);
+	if(round.drawer === Session.get('playerID')) {
+		Session.set('role', 'drawer');
+	} else {
+		Session.set('role', 'guesser');
+	}
 };
