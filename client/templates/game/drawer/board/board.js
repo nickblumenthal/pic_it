@@ -324,9 +324,10 @@ function resetLine() {
 }
 
 
-// var insertLine = function(roundID, color, width, x0, y0, x1, y1) {
-// 	return Lines.insert({ _id:Meteor.uuid() , round_id: roundID , width: width , color: color , points: [ {x:x0 , y:y0} , {x:x1 , y:y1} ] });
-// }
+var insertLine = function(roundID, color, width, x0, y0, x1, y1) {
+	return Lines.insert({ _id:Meteor.uuid() , round_id: roundID , width: width , color: color , points: [ {x:x0 , y:y0} , {x:x1 , y:y1} ] });
+}
+
 var pushPoint = function(line_id, x, y) {
 	Lines.update({ _id: line_id }, { $push: { points : {x:x,y:y} } });
 }
