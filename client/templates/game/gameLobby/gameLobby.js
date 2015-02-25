@@ -10,6 +10,7 @@ Template.gameLobby.events({
 		Meteor.call('createRound', game, function (error, result) {
 			if (result) {
 				Session.set('currentRound', result._id);
+				// assignRoles(game._id);
 			};
 		});
 	}

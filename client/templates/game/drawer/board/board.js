@@ -17,18 +17,15 @@ Template.board.helpers({
 	},
 
 	role: function() {
-		var drawer = this.drawer;
-		var guesser = this.guesser;
-		if(drawer === Session.get('playerID')) {
-			Session.set('role', 'drawer');
-			return 'drawer';
-		} else if(guesser === Session.get('playerID')) {
-			Session.set('role', 'guesser');
-			return 'guesser';
-		} else {
-			Session.set('role', 'bystander');
-			return 'bystander';
-		}
+		// var drawer = this.drawer;
+		// if(drawer === Session.get('playerID')) {
+		// 	Session.set('role', 'drawer');
+		// 	return 'drawer';
+		// } else {
+		// 	Session.set('role', 'guesser');
+		// 	return 'guesser';
+		// }
+		return Session.get('role');
 	}
 });
 
@@ -208,7 +205,7 @@ var setZoom = function () {
 		zoom=Session.get("board_h")/minZone;
 	}
 	if (zoom<minZoom) zoom=minZoom;
-	Session.set("zoom",zoom);	
+	Session.set("zoom",zoom);
 }
 
 
