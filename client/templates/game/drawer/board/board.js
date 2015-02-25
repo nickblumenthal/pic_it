@@ -287,9 +287,9 @@ function mpTouchMove(e) {
 		var zoom=Session.get("zoom");
 
 		if (Session.get("line_id")) {
-			pushPoint( Session.get("line_id"), (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom );
+			Meteor.call( 'pushPoint', Session.get("line_id"), (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom );
 		} else {
-			Session.set("line_id", insertLine(
+			Session.set("line_id", Meteor.call( 'createLine',
 				round._id,
 				"black",
 				6,
@@ -322,9 +322,9 @@ function resetLine() {
 }
 
 
-var insertLine = function(roundID, color, width, x0, y0, x1, y1) {
-	return Lines.insert({ _id:Meteor.uuid() , round_id: roundID , width: width , color: color , points: [ {x:x0 , y:y0} , {x:x1 , y:y1} ] });
-}
+// var insertLine = function(roundID, color, width, x0, y0, x1, y1) {
+// 	return Lines.insert({ _id:Meteor.uuid() , round_id: roundID , width: width , color: color , points: [ {x:x0 , y:y0} , {x:x1 , y:y1} ] });
+// }
 var pushPoint = function(line_id, x, y) {
 	Lines.update({ _id: line_id }, { $push: { points : {x:x,y:y} } });
 }
