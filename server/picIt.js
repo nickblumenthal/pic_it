@@ -7,6 +7,7 @@ Meteor.methods({
 			name: gameName,
 			creatorID: creatorID,
 			status: "waiting",
+			timer: 0,
 			players: [ creatorID ],
 		};
 
@@ -16,7 +17,7 @@ Meteor.methods({
 	},
 
 	createRound: function (game) {
-		Games.update(game._id, { $set: { status: "inProgress" }})
+		Games.update(game._id, { $set: { status: "inProgress", timer: 5 }})
 		var players = game.players;
 
 		// Assign a random drawer and guesser
@@ -41,6 +42,7 @@ Meteor.methods({
 		}
 
 		var roundID = Rounds.insert( round );
+		// TEMP: This needs to get updated
 		var round = Rounds.findOne( roundID );
 
 		return round;
@@ -84,9 +86,9 @@ Meteor.methods({
 	changeGameStatus: function (gameID) {
 		var status = Games.findOne(gameID, { status: true }).status;
 		if ( status === "waiting") {
-			Games.update(gameID, { $set: { status: "inProgress" }})
+			Games.update(gameID, { $set: { status: "inProgress", timer: 60 }})
 		} else {
-			Games.update(gameID, { $set: { status: "waiting" }})
+			Games.update(gameID, { $set: { status: "waiting", timer: 0 }})
 		}
 	},
 

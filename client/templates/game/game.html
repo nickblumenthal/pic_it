@@ -1,28 +1,35 @@
 <template name="game">
 	<center style="border:3px solid black">
+
 		<div id="temp">
 			<p>Game Template</p>
-			{{#if inProgress }}
+			<div id="countdown"></div>
+
+			{{#if inProgress}}
 				<button id="end-round">End Round</button>
+			{{else}}
+				<button id="create-round">Start Round</button>
 			{{/if}}
-			<div class="timer"></div>
+
 			<p>Game status: {{ gameStatus }}</p>
 			<p>Game ID: {{ this._id }}</p>
 			<p>Player ID: {{ getSessionID }}</p>
 			<p>Round ID: {{ getRoundID }}</p>
 		</div>
+
 		<div id="players">
 			Current Players:
 			{{#each players}}
 				{{sessionID}},
 			{{/each}}
 		</div>
+
 		<div id="rounds">
 			{{#each rounds}}	
 				<p>Round id: {{ this._id }}. Drawer: {{ this.drawer }}</p>
-
 			{{/each}}
 		</div>
 	</center>
+
 	{{> DynamicTemplate template=getTemplate data=getDataContext }}
 </template>

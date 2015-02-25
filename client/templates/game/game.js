@@ -66,11 +66,74 @@ Template.game.helpers({
 	}
 });
 
+
 Template.game.events({
+	'click #create-round': function () {
+		var game = this;
+		var roundStarting = true;
+
+		// Create coutdown if Round creation successful
+		startRound(game)
+	},
+
+
 	'click #end-round': function (event) {
 		Meteor.call('changeGameStatus', this._id, function (error, result) {
 
 		})
 	}
 });
+
+var startRound = function (game) {
+	Meteor.call('createRound', game, function (error, result) {
+		if (result) {
+			Session.set('currentRound', result._id);
+		};
+	});
+}
+
+Template.game.rendered = function () {
+
+	var game = this.data;
+
+
+	clock = new FlipClock($('#countdown'), {
+		clockFace: 'Counter',
+		autoStart: false,
+		countdown: true
+	})
+
+	Games.find( game._id ).observeChanges({
+		changed: function (id, fields) {
+			clock.setTime(fields.timer)
+		}
+	});;
+	// Sets clock to whatever the current time is
+	clock.setTime(game.timer)
+
+};
+
+
+
+
+// Create coutdown if Round creation successful
+		// var clock = new FlipClock($('#countdown'), 5, {
+		// 	clockFace: 'Counter',
+		// 	autoStart: true,
+		// 	countdown: true,
+		// 	callbacks: {
+		// 		stop: function () {
+		// 			if (roundStarting) {
+						
+		// 				startRound(game);
+
+		// 				clock.setTime(10)
+		// 				clock.start();
+		// 				roundStarting = false;
+		// 			} else {
+		// 				debugger 
+		// 			}
+		// 		}
+		// 	}
+		// })
 
