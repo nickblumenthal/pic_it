@@ -213,6 +213,7 @@ var setZoom = function () {
 // Events
 var isTouchSupported = 'ontouchstart' in window;
 
+
 if (isTouchSupported) {
 	Template.board.events({
 		"touchstart #board": function (e,tmp) {
@@ -263,52 +264,60 @@ function convertTouchEvent(e) {
 
 
 function mpTouchStart(e) {
-	try { convertTouchEvent(e); } catch (err) {return;}
-	//console.log("mpTouchStart "+e.insideX+","+e.insideY);
-	previousTouchPosition={x:e.insideX,y:e.insideY};
-	e.preventDefault();
+	if(Session.get('role') === 'drawer') {
+		try { convertTouchEvent(e); } catch (err) {return;}
+		//console.log("mpTouchStart "+e.insideX+","+e.insideY);
+		previousTouchPosition={x:e.insideX,y:e.insideY};
+		e.preventDefault();
+	}
 }
 
 
 
 function mpTouchMove(e) {
-	try { convertTouchEvent(e); } catch (err) {return;}
-	//console.log("mpTouchMove "+e.insideX+","+e.insideY+" previousTouchPosition="+previousTouchPosition);
-	if (previousTouchPosition) {
+	if(Session.get('role') === 'drawer') {
 
-		var round = Rounds.findOne({ 'game._id': Session.get('gameID') })
-		var board = round.board;
+		try { convertTouchEvent(e); } catch (err) {return;}
+		//console.log("mpTouchMove "+e.insideX+","+e.insideY+" previousTouchPosition="+previousTouchPosition);
+		if (previousTouchPosition) {
 
-		var canvas = document.getElementById('board');
-		var center={x:canvas.width/2,y:canvas.height/2};
-		var zoom=Session.get("zoom");
+			var round = Rounds.findOne({ 'game._id': Session.get('gameID') })
+			var board = round.board;
 
-		if (Session.get("line_id")) {
-			pushPoint( Session.get("line_id"), (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom );
-		} else {
-			Session.set("line_id", insertLine(
-				round._id,
-				"black",
-				6,
-				(previousTouchPosition.x-center.x)/zoom, (previousTouchPosition.y-center.y)/zoom, (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom
-			));
-			Meteor.call("boardUpdated", round._id, function(error, ret){
-					console.log("boardUpdated error="+error+" ret="+ret);
-			});
+			var canvas = document.getElementById('board');
+			var center={x:canvas.width/2,y:canvas.height/2};
+			var zoom=Session.get("zoom");
+
+			if (Session.get("line_id")) {
+				pushPoint( Session.get("line_id"), (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom );
+			} else {
+				Session.set("line_id", insertLine(
+					round._id,
+					"black",
+					6,
+					(previousTouchPosition.x-center.x)/zoom, (previousTouchPosition.y-center.y)/zoom, (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom
+				));
+				Meteor.call("boardUpdated", round._id, function(error, ret){
+						console.log("boardUpdated error="+error+" ret="+ret);
+				});
+			}
+
+			previousTouchPosition={x:e.insideX,y:e.insideY};
 		}
-
-		previousTouchPosition={x:e.insideX,y:e.insideY};
+		e.preventDefault();
 	}
-	e.preventDefault();
 }
 
 
 function mpTouchEnd(e) {
-	// No need of the touch coordinates
-	//convertTouchEvent(e);
-	//console.log("mpTouchEnd "+e.insideX+","+e.insideY);
-	resetLine();
-	e.preventDefault();
+	if(Session.get('role') === 'drawer') {
+
+		// No need of the touch coordinates
+		//convertTouchEvent(e);
+		//console.log("mpTouchEnd "+e.insideX+","+e.insideY);
+		resetLine();
+		e.preventDefault();
+	}
 }
 
 var previousTouchPosition;
