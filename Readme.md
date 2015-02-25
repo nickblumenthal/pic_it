@@ -23,12 +23,12 @@ Realtime Pictionary
 - [X] Test if a guessed word exists in the wordlist
 - [ ] Update guesser as they guess if they type in valid words
 - [ ] Create timer for turn
+- [X] Create timer for round start
 
 
 
 ##Future features
 - [ ] Sharing links
-- [ ]
 
 
 ##Current App Flow-
