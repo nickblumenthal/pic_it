@@ -22,15 +22,13 @@ Meteor.methods({
 
 		// Incrementing the countdown for pre-round
 		var intervalID = Meteor.setInterval( function() {
-			game = Games.findAndModify({
-				new: true,
-				query: { _id: game._id },
-				update: { $inc: { timer: -1 }}
-			})
+
+			Games.update( game._id, { $inc: { timer: -1 }})
+			var Game = Games.findOne( game._id )
 			
-			if (game.timer == 0) {
+			if (Game.timer == 0) {
 				Meteor.clearInterval( intervalID )	
-				Meteor.call('startGame', game);
+				Meteor.call('startGame', Game);
 			};
 			}, 1000)
 	},
@@ -73,13 +71,10 @@ Meteor.methods({
 		// Incrementing the countdown for pre-round
 		var intID = Meteor.setInterval( function() {
 
-			var game = Games.findAndModify({
-				new: true,
-				query: { _id: gameID},
-				update: { $inc: { timer: -1}}
-			})
+			Games.update( game._id, { $inc: { timer: -1 }})
+			var Game = Games.findOne( game._id )
 
-			if (game.timer === 55) { Meteor.call( 'endRound', gameID )}
+			if (Game.timer === 50) { Meteor.call( 'endRound', gameID )}
 		  }, 1000)
 
 		hack.gameID = intID;
