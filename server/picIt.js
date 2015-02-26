@@ -112,12 +112,16 @@ Meteor.methods({
 
 	joinGame: function (gameID, sessionID) {
 		var game = Games.findOne(gameID);
-		Games.update(gameID, { $addToSet: { players: sessionID }})
-		var player = {
-			gameID: gameID,
-			playerID: sessionID,
-			playerName: 'guest'
-		}
+		Games.update(gameID, { $addToSet: { players: {
+			sessionID: sessionID,
+			name: 'guest'
+		}}})
+		// var player = {
+		// 	gameID: gameID,
+		// 	playerID: sessionID,
+		// 	playerName: 'guest'
+		// }
+		// Players.insert(player);
 	},
 
 	leaveGame: function (gameID, sessionID) {
@@ -145,7 +149,7 @@ Meteor.methods({
 	},
 
 	removeUser: function (playerID, gameID) {
-		Games.update(gameID, { $pull: { players: playerID }});
+		Games.update(gameID, { $pull: { players: { sessionID: playerID }}});
 	},
 
 	changeGameStatus: function (gameID) {
