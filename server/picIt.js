@@ -35,7 +35,13 @@ Meteor.methods({
 			}, 1000)
 	},
 
+
 	createRound: function (game) {
+		// Removing pre-round countdown, initiate round
+		Meteor.setTimeout(function () {
+			Meteor.clearInterval(intervalID)
+			Games.update(game._id, { $set: { status: "inProgress" }})
+		}, 6000)
 
 		var players = game.players;
 
@@ -45,6 +51,9 @@ Meteor.methods({
 
 		var started = new Date().getTime();
 
+		// Chose a random word
+		var chosenWord = Meteor.call('getRandomWord', 'nounlist.txt');
+
 		var round = {
 			game: game,
 			drawer: drawer,
@@ -53,7 +62,9 @@ Meteor.methods({
 				updated: started
 			},
 			lines: {},
-			guessed_words: []
+			guessedWords: [],
+			chosenWord: chosenWord,
+			won: false
 		}
 
 		var roundID = Rounds.insert( round );
@@ -154,6 +165,21 @@ Meteor.methods({
 	  var wordList = Assets.getText('nounlist.txt');
 	  var wordList = wordList.split('\n');
 	  return wordList;
+	},
+
+	getRandomWord: function(fileName) {
+		var wordList = Assets.getText(fileName);
+		var wordList = wordList.split('\n');
+		var randNum = Math.floor(Math.random() * wordList.length);
+		return wordList[randNum];
+	},
+
+	checkGuess: function(guess, roundID) {
+		var round = Rounds.find(roundID).fetch()[0];
+		if(guess === round.chosenWord){
+			var winner = Meteor.call('getSessionID');
+			Rounds.update(roundID, { $set: { won: true, winner: winner }});
+		}
 	},
 
 	clearLines: function (roundID) {
