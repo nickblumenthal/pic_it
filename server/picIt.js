@@ -122,7 +122,8 @@ Meteor.methods({
 	checkGuess: function(guess, roundID) {
 		var round = Rounds.find(roundID).fetch()[0];
 		if(guess === round.chosenWord){
-			Rounds.update(roundID, { $set: { won: true }});
+			var winner = Meteor.call('getSessionID');
+			Rounds.update(roundID, { $set: { won: true, winner: winner }});
 		}
 	},
 

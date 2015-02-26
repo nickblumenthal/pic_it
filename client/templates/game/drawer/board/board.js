@@ -26,9 +26,9 @@ Template.board.helpers({
 
 	won: function() {
 		if(this.won === true) {
-			return 'true';
+			return this.winner;
 		} else {
-			return 'false';
+			return 'No winner yet';
 		}
 	}
 });
