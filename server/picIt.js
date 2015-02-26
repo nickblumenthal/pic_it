@@ -34,11 +34,6 @@ Meteor.methods({
 
 
 	createRound: function (game) {
-		// Removing pre-round countdown, initiate round
-		Meteor.setTimeout(function () {
-			Meteor.clearInterval(intervalID)
-			Games.update(game._id, { $set: { status: "inProgress" }})
-		}, 6000)
 
 		var players = game.players;
 
@@ -84,7 +79,7 @@ Meteor.methods({
 			Games.update( game._id, { $inc: { timer: -1 }})
 			var Game = Games.findOne( game._id )
 
-			if (Game.timer === 30) { Meteor.call( 'endRound', gameID )}
+			if (Game.timer === 55) { Meteor.call( 'endRound', gameID )}
 		  }, 1000)
 
 		hack.gameID = intID;
@@ -184,14 +179,6 @@ Meteor.methods({
 // TEMP: Shameful hack
 var hack = {};
 
-// TEMP: Need to figure out a way to get the gameID to the callback
 Meteor.publish("Game", function (gameID) {
-
-	var sessionID = this.connection.id
-
-	this._session.socket.on("close", Meteor.bindEnvironment(function () {
-
-	}, function (e) { console.log(e) })
-	);
 	return Games.find( gameID );
 })
