@@ -1,11 +1,11 @@
 <template name="game">
 	<center style="border:3px solid black">
 
-	<!-- TEMP: Probably break into different templates -->
+		<button id="home">Back to homepage</button>
 	
+	<!-- TEMP: Probably break into different templates -->
 		{{#if gameInProgress}}
 			<div id="temp">
-				<button id="home">Back to homepage</button>
 				<p>Game Template</p>
 				<p>Game name: {{ this.name }}</p>
 				<div id="countdown"></div>

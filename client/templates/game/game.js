@@ -87,21 +87,21 @@ Template.game.rendered = function () {
 
 	// Reactively observing timer changes of the mongo entry
 	// Only updates the counter if the change is for the timer
-	// Games.find( game._id ).observeChanges({
-	// 	changed: function (id, fields) {
-	// 		if (fields.timer != null) {
-	// 			clock.setTime(fields.timer)
-	// 		};
-	// 	}
-	// });
+	Games.find( game._id ).observeChanges({
+		changed: function (id, fields) {
+			if (fields.timer != null) {
+				clock.setTime(fields.timer)
+			};
+		}
+	});
 
-	Tracker.autorun(function () {
-		try {
-			var Game = Games.findOne( game._id );			
-			console.log("reactive change")
-			Tracker.nonreactive( updateClock( clock, Game.timer ))
-		} catch (e) {}
-	})
+	// Tracker.autorun(function () {
+	// 	try {
+	// 		var Game = Games.findOne( game._id );			
+	// 		console.log("reactive change")
+	// 		Tracker.nonreactive( updateClock( clock, Game.timer ))
+	// 	} catch (e) {}
+	// })
 };
 
 var updateClock = function (clock, time) {
