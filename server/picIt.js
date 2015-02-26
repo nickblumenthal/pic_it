@@ -52,7 +52,8 @@ Meteor.methods({
 			},
 			lines: {},
 			guessedWords: [],
-			chosenWord: chosenWord
+			chosenWord: chosenWord,
+			won: false
 		}
 
 		var roundID = Rounds.insert( round );
@@ -116,6 +117,16 @@ Meteor.methods({
 		var wordList = wordList.split('\n');
 		var randNum = Math.floor(Math.random() * wordList.length);
 		return wordList[randNum];
+	},
+
+	checkGuess: function(guess, roundID) {
+		var round = Rounds.find(roundID).fetch()[0];
+		console.log(guess);
+		console.log(round);
+		if(guess === round.chosenWord){
+			Rounds.update(roundID, { $set: { won: true }});
+			console.log(Rounds.find(roundID).fetch());
+		}
 	},
 
 	clearLines: function (roundID) {

@@ -32,6 +32,7 @@ function handleGuess(guess, scope) {
   if(isWordInList(guess, scope.wordList)) {
     if(guessedWords.indexOf(guess) === -1) {
       guessedWords.push(guess);
+			Meteor.call('checkGuess', guess, scope.data._id);
 			return guess;
     }
   }

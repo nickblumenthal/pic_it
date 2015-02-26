@@ -22,7 +22,15 @@ Template.board.helpers({
 
 	guessedWords: function() {
     return this.guessedWords
-  }
+  },
+
+	won: function() {
+		if(this.won === true) {
+			return 'true';
+		} else {
+			return 'false';
+		}
+	}
 });
 
 Template.board.events({
