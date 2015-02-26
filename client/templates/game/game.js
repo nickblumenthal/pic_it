@@ -31,20 +31,11 @@ Template.game.helpers({
 	},
 
 	inLobby: function () {
-		if ( this.status === "waiting") {
-			return false;
-		} else if ( this.status === "inProgress" ){
-			return true;
-		}
+		return ( this.status === "waiting" ? true : false ) 
 	},
 
 	getSessionID: function () {
-		//TEMP: find by user session
-		return Meteor.default_connection._lastSessionId;
-		// Meteor.call('getSessionID', function (error, id) {
-		// 	console.log(id)
-		// 	return id
-		// });
+		return Session.get('playerID');
 	},
 
 	getRoundID: function () {
@@ -56,11 +47,15 @@ Template.game.helpers({
 		}
 	},
 
-	timer: function () {
-		var game = Games.findOne( this._id )
-		return game.timer
+	roundNum: function () {
+		return Rounds.find({ 'game._id': this._id }).count()
+	},
+
+	nextRoundNum: function () {
+		return Rounds.find({ 'game._id': this._id }).count()
 	}
 });
+
 
 
 Template.game.events({
@@ -69,6 +64,7 @@ Template.game.events({
 		Router.go('home');
 	}
 });
+
 
 
 Template.game.rendered = function () {
@@ -94,20 +90,13 @@ Template.game.rendered = function () {
 			};
 		}
 	});
-
-	// Tracker.autorun(function () {
-	// 	try {
-	// 		var Game = Games.findOne( game._id );			
-	// 		console.log("reactive change")
-	// 		Tracker.nonreactive( updateClock( clock, Game.timer ))
-	// 	} catch (e) {}
-	// })
 };
+
+
 
 var updateClock = function (clock, time) {
 	clock.setTime( time )
 }
-
 
 var assignRoles = function(gameID) {
 	var round = getCurrentRound(gameID);

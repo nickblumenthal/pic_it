@@ -12,7 +12,11 @@
 			
 				<p>Game status: {{ gameStatus }}</p>
 				<p>Player ID: {{ getSessionID }}</p>
-				<p>Round ID: {{ getRoundID }}</p>
+				{{#if inLobby}}
+					<p>Upcoming Round: {{ nextRoundNum }}</p>
+				{{else}}
+					<p>Current Round: {{ roundNum }}</p>
+				{{/if}}
 			</div>
 		{{else}}
 			<div>
