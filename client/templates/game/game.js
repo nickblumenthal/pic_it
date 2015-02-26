@@ -82,14 +82,21 @@ Template.game.rendered = function () {
 
 	// Reactively observing timer changes of the mongo entry
 	// Only updates the counter if the change is for the timer
-	Games.find( game._id ).observeChanges({
-		changed: function (id, fields) {
-			if (fields.timer != null) {
-				clock.setTime(fields.timer)
-			};
-		}
-	});
+	// Games.find( game._id ).observeChanges({
+	// 	changed: function (id, fields) {
+	// 		if (fields.timer != null) {
+	// 			clock.setTime(fields.timer)
+	// 		};
+	// 	}
+	// });
+
+	Tracker.autorun(function () {
+		var Game = Games.find( game._id ).fetch()[0];
+		clock.setTime( Game.timer )
+	})
 };
+
+
 
 var assignRoles = function(gameID) {
 	var round = getCurrentRound(gameID);
