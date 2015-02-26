@@ -4,6 +4,5 @@ getCurrentRound = function(gameID) {
 
 Template.registerHelper('rounds', function () {
 	var gameID = this._id
-	if (this.status === "waiting") {};
 	return Rounds.find({ 'game._id': gameID })
 })

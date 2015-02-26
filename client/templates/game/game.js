@@ -3,26 +3,25 @@ Template.game.helpers({
 	// on what the status of the game is.
 	getTemplate: function () {
 
-		if ( this.status === "waiting") {
-			return 'gameLobby'
-		} else if ( this.status === 'inProgress') {
+		if ( this.status === 'inProgress') {
 			assignRoles(this._id);
 			if(Session.get('role') === 'drawer') {
 				return 'drawer'
 			} else {
 				return 'guesser'
 			}
+		} else {
+			return 'gameLobby'
 		}
 	},
 
 	// Gives the partial templates data
 	getDataContext: function () {
-		// var currentGameID = Router.current().params.gameID;
 		var gameID = this._id;
-		if ( this.status === "waiting") {
-			return this
-		} else {
+		if ( this.status === "inProgress") {
 			return getCurrentRound(gameID);
+		} else {
+			return this;
 		}
 	},
 

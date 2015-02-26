@@ -3,7 +3,12 @@ Template.gameLobby.helpers({
 	creator: function () {
 		var sessionID = Meteor.default_connection._lastSessionId;
 		return ( this.creatorID === sessionID ? true : false )
+	}, 
+
+	inProgress: function () {
+		return ( this.status === "inProgress" ? true : false)
 	}
+
 
 });
 
