@@ -81,19 +81,30 @@ Meteor.methods({
 				update: { $inc: { timer: -1}}
 			})
 
-			if (game.timer === 55) { Meteor.call( 'endGame', gameID )}
+			if (game.timer === 55) { Meteor.call( 'endRound', gameID )}
 		  }, 1000)
 
 		hack.gameID = intID;
 
 	},
 
-	endGame: function (gameID) {
+	endRound: function (gameID) {
 		// TEMP: Part of the hack
 		Meteor.clearInterval( hack.gameID )
 		delete hack.gameID
 
-		Games.update( gameID, { $set: { status: "waiting", timer: 0 }})
+		// Count the number of rounds 
+		var count = Rounds.find({ 'game._id': gameID }).count()
+		
+		if (count >= 4) {
+			Meteor.call('endGame', gameID)
+		} else {
+			Games.update( gameID, { $set: { status: "waiting", timer: 0 }})
+		}
+	},
+
+	endGame: function (gameID) {
+		Games.update( gameID, { $set: { status: "finished", timer: 0 }})
 	},
 
 	joinGame: function (gameID, sessionID) {
