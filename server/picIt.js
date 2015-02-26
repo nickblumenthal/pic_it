@@ -22,14 +22,17 @@ Meteor.methods({
 
 		// Incrementing the countdown for pre-round
 		var intervalID = Meteor.setInterval( function() {
-			Games.update( game._id, { $inc: { timer: -1 },  $set: { intervalID: intervalID}})
+			game = Games.findAndModify({
+				new: true,
+				query: { _id: game._id },
+				update: { $inc: { timer: -1 }}
+			})
+			
+			if (game.timer == 0) {
+				Meteor.clearInterval( intervalID )	
+				Meteor.call('startGame', game._id);
+			};
 			}, 1000)
-
-		// Removing pre-round countdown, initiate round
-		Meteor.setTimeout(function () {
-			Meteor.clearInterval(intervalID)	
-			Meteor.call('startGame', game._id);
-		}, 6000)
 
 		var players = game.players;
 
@@ -65,28 +68,29 @@ Meteor.methods({
 		Games.update(gameID, { $set: { status: "inProgress", timer: 60 }});
 
 		// Incrementing the countdown for pre-round
-		var intervalID = Meteor.setInterval( function() {
+		var intID = Meteor.setInterval( function() {
+
+			var intervalID = JSON.stringify(intID)
+
 			var game = Games.findAndModify({
 				new: true,
-				update: { $inc: { timer: -1}, $set: { intervalID: intervalID}}
+				query: { _id: gameID},
+				update: { $inc: { timer: -1}}
 			})
 
-			if (game.timer === 55) {
-				Meteor.clearInterval(game.intervalID)	
-				Games.update(gameID, { $set: { status: "waiting", timer: 0 }});	
-			}
+			if (game.timer === 55) { Meteor.call( 'endGame', gameID )}
 		  }, 1000)
 
-		// Removing pre-round countdown, initiate round
-		// var timeoutID = Meteor.setTimeout(function () {
-			
-		//   }, 6000)
+		hack.gameID = intID;
+
 	},
 
-	stopGame: function (gameID) {
-		var game = Games.findOne(gameID);
-		Meteor.clearInterval(game.intervalID)
-		Games.update(gameID, { $set: { status: "waiting", timer: 0 }})
+	endGame: function (gameID) {
+		// TEMP: Part of the hack
+		Meteor.clearInterval( hack.gameID )
+		delete hack.gameID
+
+		Games.update( gameID, { $set: { status: "waiting", timer: 0 }})
 	},
 
 	joinGame: function (gameID, sessionID) {
@@ -145,7 +149,9 @@ Meteor.methods({
 	}
 })
 
-
+// Used to store current game timers
+// TEMP: Shameful hack
+var hack = {};
 
 // TEMP: Need to figure out a way to get the gameID to the callback
 Meteor.publish("Game", function (gameID) {
