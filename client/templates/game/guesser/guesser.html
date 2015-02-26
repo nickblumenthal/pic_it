@@ -1,9 +1,5 @@
 <template name="guesser">
 	Guesser
   <input type="text" id="guess" {{ disabledStatus }}>
-  <ul>
-    {{ #each guesses }}
-      <li>{{ this }}</li>
-    {{ /each }}
-  </ul>
+	{{> board}}
 </template>

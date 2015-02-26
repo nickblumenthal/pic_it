@@ -3,7 +3,9 @@
 		<p>CANVAS</p>
 		<p>Drawer: {{ this.drawer }}</p>
 		<p>{{ boardID }}</p>
-		<h2>{{ role }}</h2>
+		{{ #each guessed_words }}
+	    {{ this }}
+	  {{ /each }}
 	</div>
 	<div>
 		<button id="clear-lines">Clear Board</button>

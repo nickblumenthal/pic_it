@@ -2,7 +2,10 @@ var guessedWords = new ReactiveArray();
 
 Template.guesser.events({
 	'keyup #guess': function (event, template) {
-	   handleGuess($('#guess').val(), template);
+		guess = handleGuess($('#guess').val(), template);
+		if(guess) {
+			Rounds.update(this._id, { $addToSet: { guessed_words: guess }});
+		}
    }
 });
 
@@ -34,8 +37,7 @@ function handleGuess(guess, scope) {
   if(isWordInList(guess, scope.wordList)) {
     if(guessedWords.indexOf(guess) === -1) {
       guessedWords.push(guess);
-      console.log(guessedWords);
-
+			return guess;
     }
   }
 };
