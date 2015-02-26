@@ -20,8 +20,8 @@ Template.board.helpers({
 		return Session.get('role');
 	},
 
-	guessed_words: function() {
-    return this.guessed_words
+	guessedWords: function() {
+    return this.guessedWords
   }
 });
 

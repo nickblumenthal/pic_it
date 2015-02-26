@@ -4,7 +4,7 @@ Template.guesser.events({
 	'keyup #guess': function (event, template) {
 		guess = handleGuess($('#guess').val(), template);
 		if(guess) {
-			Rounds.update(this._id, { $addToSet: { guessed_words: guess }});
+			Rounds.update(this._id, { $addToSet: { guessedWords: guess }});
 		}
    }
 });
@@ -19,15 +19,10 @@ Template.guesser.created = function() {
 };
 
 Template.guesser.helpers({
-	guesses: function() {
-	  return guessedWords.list();
-	},
-
   disabledStatus: function() {
     if(Session.get('wordListStatus') === 'loading') {
       return {disabled: 'true', value: 'loading...'};
     } else {
-      console.log('test2');
       return '';
     }
   }
