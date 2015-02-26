@@ -39,7 +39,6 @@ Template.board.rendered = function() {
 	window.onresize = resizeControl.bind(this);
 }
 
-
 var resizeControl = function () {
 	var s = size();
 	var that = this;

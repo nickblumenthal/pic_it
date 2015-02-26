@@ -31,7 +31,7 @@ Template.game.helpers({
 		return this.status;
 	},
 
-	inProgress: function () {
+	inLobby: function () {
 		if ( this.status === "waiting") {
 			return false;
 		} else if ( this.status === "inProgress" ){
@@ -68,18 +68,7 @@ Template.game.helpers({
 
 
 Template.game.events({
-	'click #create-round': function () {
-		var game = this;
 
-		Meteor.call('startCountdown', game, function (error, result) {
-		});
-	},
-
-	'click #end-round': function (event) {
-		Meteor.call('endGame', this._id, function (error, result) {
-
-		})
-	}
 });
 
 
@@ -94,7 +83,7 @@ Template.game.rendered = function () {
 		countdown: true
 	})
 
-	// Sets clock to whatever the current game is
+	// Sets clock to whatever the current game timer is
 	clock.setTime(game.timer)
 
 	// Reactively observing timer changes of the mongo entry

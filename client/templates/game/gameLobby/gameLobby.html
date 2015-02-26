@@ -3,6 +3,11 @@
 		<div>
 			<p>Game Lobby Template</p>
 		</div>
+		<div>
+			{{#if creator}}
+				<button id="create-round">Start Round</button>
+			{{/if}}
+		</div>
 		<div id="rounds">
 			<ul>
 				{{#each rounds}}
