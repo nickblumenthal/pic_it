@@ -84,7 +84,7 @@ Meteor.methods({
 			Games.update( game._id, { $inc: { timer: -1 }})
 			var Game = Games.findOne( game._id )
 
-			if (Game.timer === 50) { Meteor.call( 'endRound', gameID )}
+			if (Game.timer === 30) { Meteor.call( 'endRound', gameID )}
 		  }, 1000)
 
 		hack.gameID = intID;
@@ -171,6 +171,7 @@ Meteor.methods({
 		if(guess === round.chosenWord){
 			var winner = Meteor.call('getSessionID');
 			Rounds.update(roundID, { $set: { won: true, winner: winner }});
+			Meteor.call('endRound', round.game._id);
 		}
 	},
 
