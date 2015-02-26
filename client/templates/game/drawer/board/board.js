@@ -63,7 +63,7 @@ var resizeControl = function () {
 
 			canvas.width=s.w;
 			canvas.height=s.h;
-			// Template.board.rendered();
+			
 			boardRender(true, round)
 		}
 	}

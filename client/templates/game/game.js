@@ -56,18 +56,18 @@ Template.game.helpers({
 		}
 	},
 
-	players: function () {
-		var players = this.players.map(function (sessionID) {
-			return { sessionID: sessionID }
-		})
-		return players;
+	timer: function () {
+		var game = Games.findOne( this._id )
+		return game.timer
 	}
-
 });
 
 
 Template.game.events({
-
+	'click #home': function (event) {
+		Meteor.call('removeUser', Session.get('playerID'), this._id);
+		Router.go('home');
+	}
 });
 
 
@@ -87,14 +87,27 @@ Template.game.rendered = function () {
 
 	// Reactively observing timer changes of the mongo entry
 	// Only updates the counter if the change is for the timer
-	Games.find( game._id ).observeChanges({
-		changed: function (id, fields) {
-			if (fields.timer != null) {
-				clock.setTime(fields.timer)
-			};
-		}
-	});
+	// Games.find( game._id ).observeChanges({
+	// 	changed: function (id, fields) {
+	// 		if (fields.timer != null) {
+	// 			clock.setTime(fields.timer)
+	// 		};
+	// 	}
+	// });
+
+	Tracker.autorun(function () {
+		try {
+			var Game = Games.findOne( game._id );			
+			console.log("reactive change")
+			Tracker.nonreactive( updateClock( clock, Game.timer ))
+		} catch (e) {}
+	})
 };
+
+var updateClock = function (clock, time) {
+	clock.setTime( time )
+}
+
 
 var assignRoles = function(gameID) {
 	var round = getCurrentRound(gameID);
