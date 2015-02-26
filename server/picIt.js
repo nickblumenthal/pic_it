@@ -16,7 +16,7 @@ Meteor.methods({
 		return { gameID: gameID, creatorID: creatorID };
 	},
 
-	createRound: function (game) {
+	startCountdown: function (game) {
 		// Countdown before beginning of round
 		Games.update(game._id, { $set: { timer: 5 }})
 
@@ -30,9 +30,12 @@ Meteor.methods({
 			
 			if (game.timer == 0) {
 				Meteor.clearInterval( intervalID )	
-				Meteor.call('startGame', game._id);
+				Meteor.call('startGame', game);
 			};
 			}, 1000)
+	},
+
+	createRound: function (game) {
 
 		var players = game.players;
 
@@ -60,8 +63,12 @@ Meteor.methods({
 		return round;
 	},
 
-	startGame: function (gameID) {
-		Games.update(gameID, { $set: { status: "inProgress", timer: 60 }});
+	startGame: function (game) {
+		var gameID = game._id;
+
+		Meteor.call( 'createRound', game )
+
+		Games.update( gameID, { $set: { status: "inProgress", timer: 60 }});
 
 		// Incrementing the countdown for pre-round
 		var intID = Meteor.setInterval( function() {

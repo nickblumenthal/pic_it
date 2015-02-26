@@ -62,12 +62,8 @@ Template.game.helpers({
 			return { sessionID: sessionID }
 		})
 		return players;
-	},
-
-	rounds: function () {
-		var gameID = this._id;
-		return Rounds.find({ 'game._id': gameID })
 	}
+
 });
 
 
@@ -75,11 +71,7 @@ Template.game.events({
 	'click #create-round': function () {
 		var game = this;
 
-		Meteor.call('createRound', game, function (error, result) {
-			if (result) {
-				Session.set('currentRound', result._id);
-				console.log("returned")
-			};
+		Meteor.call('startCountdown', game, function (error, result) {
 		});
 	},
 

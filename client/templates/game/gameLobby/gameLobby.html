@@ -3,5 +3,12 @@
 		<div>
 			<p>Game Lobby Template</p>
 		</div>
+		<div id="rounds">
+			<ul>
+				{{#each rounds}}
+					<li>{{> roundSummary}}</li>
+				{{/each}}
+			</ul>
+		</div>
 	</center>
 </template>
