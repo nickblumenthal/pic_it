@@ -62,7 +62,6 @@ Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 		Router.go('home');
-
 	}
 });
 

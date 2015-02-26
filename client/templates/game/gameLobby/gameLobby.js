@@ -18,11 +18,17 @@ Template.gameLobby.helpers({
 });
 
 Template.gameLobby.events({
-	'click #create-round': function () {
+	'click #create-round': function (event) {
 		var game = this;
 
 		Meteor.call('startCountdown', game, function (error, result) {
 		});
+
+		var $btn = $(event.currentTarget)
+		// Disable button 
+		$btn.prop("disabled", true)
+		$btn.css("color", "#C4C4C4")
+
 	}
 
 });
