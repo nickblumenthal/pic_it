@@ -54,6 +54,11 @@ Template.game.helpers({
 		} else {
 			return 'Waiting to start round.'
 		}
+	},
+
+	timer: function () {
+		var game = Games.findOne( this._id )
+		return game.timer
 	}
 });
 
@@ -91,11 +96,17 @@ Template.game.rendered = function () {
 	// });
 
 	Tracker.autorun(function () {
-		var Game = Games.find( game._id ).fetch()[0];
-		clock.setTime( Game.timer )
+		try {
+			var Game = Games.findOne( game._id );			
+			console.log("reactive change")
+			Tracker.nonreactive( updateClock( clock, Game.timer ))
+		} catch (e) {}
 	})
 };
 
+var updateClock = function (clock, time) {
+	clock.setTime( time )
+}
 
 
 var assignRoles = function(gameID) {

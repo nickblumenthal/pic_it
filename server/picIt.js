@@ -73,8 +73,6 @@ Meteor.methods({
 		// Incrementing the countdown for pre-round
 		var intID = Meteor.setInterval( function() {
 
-			var intervalID = JSON.stringify(intID)
-
 			var game = Games.findAndModify({
 				new: true,
 				query: { _id: gameID},
