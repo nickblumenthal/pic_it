@@ -2,24 +2,16 @@
 	<center style="border:3px solid black">
 
 		<div id="temp">
+			<button id="home">Back to homepage</button>
 			<p>Game Template</p>
+			<p>Game name: {{ this.name }}</p>
 			<div id="countdown"></div>
-
-
-
+		
 			<p>Game status: {{ gameStatus }}</p>
-			<p>Game ID: {{ this._id }}</p>
 			<p>Player ID: {{ getSessionID }}</p>
 			<p>Round ID: {{ getRoundID }}</p>
 		</div>
 
-		<div id="players">
-			Current Players:
-			{{#each players}}
-				{{sessionID}},
-			{{/each}}
-		</div>
-		
 	</center>
 
 	{{> DynamicTemplate template=getTemplate data=getDataContext }}

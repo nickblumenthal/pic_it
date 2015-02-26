@@ -54,20 +54,16 @@ Template.game.helpers({
 		} else {
 			return 'Waiting to start round.'
 		}
-	},
-
-	players: function () {
-		var players = this.players.map(function (sessionID) {
-			return { sessionID: sessionID }
-		})
-		return players;
 	}
-
 });
 
 
 Template.game.events({
+	'click #home': function (event) {
+		Meteor.call('removeUser', Session.get('playerID'), this._id);
+		Router.go('home');
 
+	}
 });
 
 
