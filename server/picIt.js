@@ -111,15 +111,7 @@ Meteor.methods({
 
 	joinGame: function (gameID, sessionID) {
 		var game = Games.findOne(gameID);
-		// var playerData = {};
-		// playerData[sessionID] = 'guest'
 		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: 'guest' }}})
-		// var player = {
-		// 	gameID: gameID,
-		// 	playerID: sessionID,
-		// 	playerName: 'guest'
-		// }
-		// Players.insert(player);
 	},
 
 	boardUpdated: function (roundID) {
