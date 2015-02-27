@@ -1,13 +1,15 @@
 Template.openGames.helpers({
 	openGames: function () {
 		return Games.find({ status: { $ne: "finished" }}, {
-			sort: { createdAt: -1 }
+			sort: { createdAt: -1 },
+			limit: 20
 		})
 	},
 
 	finishedGames: function () {
 		return Games.find({ status: "finished" }, {
-			sort: { createdAt: -1 }
+			sort: { createdAt: -1 },
+			limit: 20
 		})
 	}
 });
