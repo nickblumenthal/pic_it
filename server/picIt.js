@@ -2,12 +2,14 @@ Meteor.methods({
 	createGame: function (gameName) {
 		// Gets the client's session ID
 		var creatorID = this.connection.id;
+		var createdAt = new Date().getTime();
 
 		var game = {
 			name: gameName,
 			creatorID: creatorID,
 			status: "waiting",
 			timer: 0,
+			createdAt: createdAt,
 			players: [ creatorID ],
 		};
 
@@ -82,14 +84,14 @@ Meteor.methods({
 			if (Game.timer === 55) { Meteor.call( 'endRound', gameID )}
 		  }, 1000)
 
-		hack.gameID = intID;
+		hack[gameID] = intID;
 
 	},
 
 	endRound: function (gameID) {
 		// TEMP: Part of the hack
-		Meteor.clearInterval( hack.gameID )
-		delete hack.gameID
+		Meteor.clearInterval( hack[gameID] )
+		delete hack[gameID]
 
 		// Count the number of rounds
 		var count = Rounds.find({ 'game._id': gameID }).count()
@@ -178,7 +180,3 @@ Meteor.methods({
 // Used to store current game timers
 // TEMP: Shameful hack
 var hack = {};
-
-Meteor.publish("Game", function (gameID) {
-	return Games.find( gameID );
-})

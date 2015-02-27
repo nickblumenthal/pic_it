@@ -7,10 +7,7 @@ Template.gameLobby.helpers({
 	}, 
 
 	players: function () {
-		var players = this.players.map(function (sessionID) {
-			return { sessionID: sessionID }
-		})
-		return players;
+		return this.players;
 	}
 });
 
