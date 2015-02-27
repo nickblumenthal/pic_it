@@ -10,7 +10,7 @@ Template.gameLobby.helpers({
 	},
 
 	players: function () {
-		var players =this.players.map(function(player) {
+		var players = this.players.map(function(player){
 			return player.name;
 		});
 		// var players = this.players.map(function (sessionID) {
@@ -32,6 +32,11 @@ Template.gameLobby.events({
 		$btn.prop("disabled", true)
 		$btn.css("color", "#C4C4C4")
 
+	},
+
+	'click #change-username': function (event) {
+		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
+		// Games.update(this._id, {$set: {players[]}})
 	}
 
 });

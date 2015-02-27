@@ -8,7 +8,6 @@ Meteor.methods({
 			creatorID: creatorID,
 			status: "waiting",
 			timer: 0,
-			players: [ creatorID ],
 		};
 
 		var gameID = Games.insert(game);
@@ -112,20 +111,15 @@ Meteor.methods({
 
 	joinGame: function (gameID, sessionID) {
 		var game = Games.findOne(gameID);
-		Games.update(gameID, { $addToSet: { players: {
-			sessionID: sessionID,
-			name: 'guest'
-		}}})
+		// var playerData = {};
+		// playerData[sessionID] = 'guest'
+		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: 'guest' }}})
 		// var player = {
 		// 	gameID: gameID,
 		// 	playerID: sessionID,
 		// 	playerName: 'guest'
 		// }
 		// Players.insert(player);
-	},
-
-	leaveGame: function (gameID, sessionID) {
-		Games.update(gameID, { $pull: { players: sessionID } })
 	},
 
 	boardUpdated: function (roundID) {
@@ -149,7 +143,14 @@ Meteor.methods({
 	},
 
 	removeUser: function (playerID, gameID) {
-		Games.update(gameID, { $pull: { players: { sessionID: playerID }}});
+		Games.update(gameID, { $pull: { players: {sessionID: playerID }}});
+	},
+
+	updateUsername: function(newUsername, gameID, sessionID) {
+		Games.update(
+			{"_id": gameID, 'players.sessionID': sessionID},
+			{$set: {'players.$.name': newUsername }}
+		)
 	},
 
 	changeGameStatus: function (gameID) {
