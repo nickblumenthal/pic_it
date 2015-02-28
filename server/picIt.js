@@ -205,7 +205,7 @@ Meteor.methods({
 		players = players.sort(function(p1, p2) { p2.point - p1.points });
 
 		return players[0];
-	}
+	},
 
 	clearLines: function (roundID) {
 		Lines.remove({ round_id: roundID });
