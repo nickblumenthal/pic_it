@@ -40,18 +40,46 @@ Template.board.events({
 
 });
 
+var linesToDraw = null;
+
+Template.board.created = function () {
+	var round = this.data;
+
+	Meteor.subscribe( "Lines", round._id );
+	
+};
 
 Template.board.rendered = function() {
 	var round = this.data;
 	boardRender(true, round);
 	window.onresize = resizeControl.bind(this);
+
+	Rounds.startLinesObserver( round );
 }
+
+Template.board.destroyed = function () {
+	Rounds.stopLinesObserver();
+};
+
+Rounds.startLinesObserver = function startLinesObserver (round) {
+	Rounds.linesObserver = Tracker.autorun(function () {
+		linesToDraw = Lines.find({ round_id: round._id });
+
+		boardRender( true, round );
+	});
+}
+
+Rounds.stopLinesObserver = function stopLinesObserver () {
+	if ( Rounds.linesObserver ) { Rounds.linesObserver.stop() };
+}
+
 
 var resizeControl = function () {
 	var s = size();
 	var that = this;
 
-	var round = Rounds.findOne({ 'game._id': Session.get('gameID') });
+	// TEMP: round = that.data
+	var round = getCurrentRound( Session.get('gameID') )
 
 	var canvas = document.getElementById('board');
 	if (canvas) {
@@ -93,26 +121,6 @@ var setZoom = function () {
 }
 
 
-var linesToDraw=null;
-Tracker.autorun(function () {
-	try {
-		var round = Rounds.findOne({ 'game._id': Session.get('gameID') });
-		if (round) {
-			linesToDraw = Lines.find({ round_id: round._id });
-		} else {
-			linesToDraw=null;
-		}
-		Tracker.nonreactive( boardRenderWithOverlay( round ) );
-	} catch (e) {}
-});
-
-
-
-var boardRenderWithOverlay = function (round) {
-	boardRender(true, round );
-}
-
-
 
 var boardRender = function (overlay, round) {
 
@@ -146,8 +154,7 @@ var boardRender = function (overlay, round) {
 		context.stroke();
 	}
 
-	var lines=linesToDraw; //Lines.find({board_id:board._id});
-	//console.log(lines);
+	var lines=linesToDraw; 
 
 	if (lines) {
 
@@ -225,7 +232,7 @@ if (isTouchSupported) {
 		},
 		"touchmove #board": function (e,tmp) {
 			//console.log("touchmove");
-			mpTouchMove(e);
+			mpTouchMove(e, tmp);
 		},
 		"touchend #board": function (e,tmp) {
 			//console.log("touchend");
@@ -238,7 +245,7 @@ if (isTouchSupported) {
 			mpTouchStart(e);
 		},
 		"mousemove #board": function (e,tmp) {
-			mpTouchMove(e);
+			mpTouchMove(e, tmp);
 		},
 		"mouseup #board": function (e,tmp) {
 			mpTouchEnd(e);
@@ -277,14 +284,14 @@ function mpTouchStart(e) {
 
 
 
-function mpTouchMove(e) {
+function mpTouchMove(e, tmp) {
 	if(Session.get('role') === 'drawer') {
 
 		try { convertTouchEvent(e); } catch (err) {return;}
 		//console.log("mpTouchMove "+e.insideX+","+e.insideY+" previousTouchPosition="+previousTouchPosition);
 		if (previousTouchPosition) {
 
-			var round = Rounds.findOne({ 'game._id': Session.get('gameID') })
+			var round = tmp.data;
 			var board = round.board;
 
 			var canvas = document.getElementById('board');

@@ -5,7 +5,7 @@
 		</div>
 
 		<div>
-			{{#if creator}}
+			{{#if gameInProgress}}
  				<button id="create-round">Start Round</button>
 			{{else}}
 				<p>Game Over</p>
@@ -16,7 +16,7 @@
 			Current Players:
 			<ul>
 				{{#each players}}
-					<li>{{sessionID}}</li>
+					<li>{{this}}</li>
 				{{/each}}
 			</ul>
 		</div>

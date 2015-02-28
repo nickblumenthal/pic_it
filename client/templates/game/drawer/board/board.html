@@ -1,8 +1,8 @@
 <template name="board">
 	<div>
 		<p>CANVAS</p>
+		<p>Round ID: {{ this._id }}</p>
 		<p>Drawer: {{ this.drawer }}</p>
-		<p>{{ boardID }}</p>
 		{{ #each guessedWords }}
 	    {{ this }}
 	  {{ /each }}
