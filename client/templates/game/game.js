@@ -31,7 +31,7 @@ Template.game.helpers({
 	},
 
 	inLobby: function () {
-		return ( this.status === "waiting" ? true : false ) 
+		return ( this.status === "waiting" ? true : false )
 	},
 
 	getSessionID: function () {
@@ -62,7 +62,7 @@ Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 
-		// Kill observers: 
+		// Kill observers:
 		Games.stopClockObserve( );
 		// Defined in board.js
 		Rounds.stopLinesObserver();
@@ -96,7 +96,7 @@ Template.game.rendered = function () {
 Games.startClockObserve = function startClockObserve(clock, gameID) {
 	Games.clockObserver =  Tracker.autorun(function () {
 		try {
-			var Game = Games.findOne( gameID );			
+			var Game = Games.findOne( gameID );
 			Tracker.nonreactive( updateClock( clock, Game.timer ))
 		} catch (e) {}
 	})
@@ -132,7 +132,7 @@ var updateClock = function (clock, time) {
 
 var assignRoles = function(gameID) {
 	var round = getCurrentRound(gameID);
-	if(round.drawer === Session.get('playerID')) {
+	if(round.drawer.sessionID === Session.get('playerID')) {
 		Session.set('role', 'drawer');
 	} else {
 		Session.set('role', 'guesser');

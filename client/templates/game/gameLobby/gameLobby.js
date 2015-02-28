@@ -4,10 +4,14 @@ Template.gameLobby.helpers({
 		// TEMP: Might be a session variable for this
 		var sessionID = Meteor.default_connection._lastSessionId;
 		return ( this.creatorID === sessionID ? true : false )
-	}, 
+	},
 
 	players: function () {
-		return this.players;
+		var players = this.players.map(function(player){
+			return player.name;
+		});
+
+		return players;
 	}
 });
 
@@ -20,10 +24,15 @@ Template.gameLobby.events({
 
 		// TEMP: Refactor this globally
 		var $btn = $(event.currentTarget)
-		// Disable button 
+		// Disable button
 		$btn.prop("disabled", true)
 		$btn.css("color", "#C4C4C4")
 
+	},
+
+	'click #change-username': function (event) {
+		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
+		// Games.update(this._id, {$set: {players[]}})
 	}
 
 });

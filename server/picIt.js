@@ -9,8 +9,6 @@ Meteor.methods({
 			creatorID: creatorID,
 			status: "waiting",
 			timer: 0,
-			createdAt: createdAt,
-			players: [ creatorID ],
 		};
 
 		var gameID = Games.insert(game);
@@ -89,6 +87,7 @@ Meteor.methods({
 	},
 
 	endRound: function (gameID) {
+		Meteor.call('assignPoints', gameID);
 		// TEMP: Part of the hack
 		Meteor.clearInterval( hack[gameID] )
 		delete hack[gameID]
@@ -109,16 +108,7 @@ Meteor.methods({
 
 	joinGame: function (gameID, sessionID) {
 		var game = Games.findOne(gameID);
-		Games.update(gameID, { $addToSet: { players: sessionID }})
-		var player = {
-			gameID: gameID,
-			playerID: sessionID,
-			playerName: 'guest'
-		}
-	},
-
-	leaveGame: function (gameID, sessionID) {
-		Games.update(gameID, { $pull: { players: sessionID } })
+		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: 'guest', points: 0 }}})
 	},
 
 	boardUpdated: function (roundID) {
@@ -142,7 +132,14 @@ Meteor.methods({
 	},
 
 	removeUser: function (playerID, gameID) {
-		Games.update(gameID, { $pull: { players: playerID }});
+		Games.update(gameID, { $pull: { players: {sessionID: playerID }}});
+	},
+
+	updateUsername: function(newUsername, gameID, sessionID) {
+		Games.update(
+			{"_id": gameID, 'players.sessionID': sessionID},
+			{$set: {'players.$.name': newUsername }}
+		)
 	},
 
 	changeGameStatus: function (gameID) {
@@ -175,6 +172,35 @@ Meteor.methods({
 			Rounds.update(roundID, { $set: { won: true, winner: winner }});
 			Meteor.call('endRound', round.game._id);
 		}
+	},
+
+	assignPoints: function(gameID) {
+		var round = Rounds.findOne({ 'game._id': gameID }, { sort: { 'board.started' : -1 }});
+		if(round.won === true) {
+			var game = Games.findOne(gameID);
+			var drawerPoints = game.timer;
+			var guesserPoints = 30;
+
+			// Update drawer
+			Games.update(
+				{"_id": gameID, 'players.sessionID': round.drawer.sessionID },
+				{$inc: {'players.$.points': drawerPoints }}
+			);
+
+			// Update guesser
+			Games.update(
+				{"_id": gameID, 'players.sessionID': round.winner },
+				{$inc: {'players.$.points': guesserPoints }}
+			);
+		}
+	},
+
+	getGameWinner: function(gameID) {
+		var game = Games.findOne(gameID);
+		players = game.players;
+		players = players.sort(function(p1, p2) { p2.point - p1.points });
+
+		return players[0];
 	},
 
 	clearLines: function (roundID) {
