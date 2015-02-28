@@ -41,6 +41,7 @@ Template.openGames.events({
 	}
 });
 
+
 Template.openGames.created = function() {
   Session.setDefault('openGamesCursor', 0);
   Session.setDefault('finishedGamesCursor', 0);
@@ -50,6 +51,13 @@ Template.openGames.created = function() {
     Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
   });
 }
+
+Template.openGames.rendered = function () {
+
+	// You can select all after render as this.$('*')
+	// Won't work because its rendered and then hidden
+}
+
 
 var incrementCursor = function (cursor, inc) {
   var newCursor = Session.get( cursor ) + inc;

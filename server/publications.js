@@ -29,3 +29,7 @@ Meteor.publish("Game", function (gameID) {
 Meteor.publish("Rounds", function (gameID) {
 	return Rounds.find({ 'game._id': gameID })
 })
+
+Meteor.publish("Lines", function (roundID) {
+	return Lines.find({ 'round_id': roundID })
+})

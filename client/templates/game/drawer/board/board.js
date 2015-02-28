@@ -40,11 +40,25 @@ Template.board.events({
 
 });
 
+var linesToDraw = null;
+
+Template.board.created = function () {
+	var round = this.data;
+
+	Meteor.subscribe( "Lines", round._id )
+};
 
 Template.board.rendered = function() {
 	var round = this.data;
 	boardRender(true, round);
 	window.onresize = resizeControl.bind(this);
+
+	Tracker.autorun(function () {
+		console.log(linesToDraw)
+		linesToDraw = Lines.find({ round_id: round._id });
+
+		boardRender( true, round );
+	});
 }
 
 var resizeControl = function () {
@@ -90,26 +104,6 @@ var setZoom = function () {
 	}
 	if (zoom<minZoom) zoom=minZoom;
 	Session.set("zoom",zoom);
-}
-
-
-var linesToDraw=null;
-Tracker.autorun(function () {
-	try {
-		var round = Rounds.findOne({ 'game._id': Session.get('gameID') });
-		if (round) {
-			linesToDraw = Lines.find({ round_id: round._id });
-		} else {
-			linesToDraw=null;
-		}
-		Tracker.nonreactive( boardRenderWithOverlay( round ) );
-	} catch (e) {}
-});
-
-
-
-var boardRenderWithOverlay = function (round) {
-	boardRender(true, round );
 }
 
 

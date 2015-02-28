@@ -10,3 +10,4 @@ iron:router
 underscore
 manuel:reactivearray
 jquery
+autopublish

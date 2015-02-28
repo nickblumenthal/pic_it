@@ -61,6 +61,7 @@ Template.game.helpers({
 Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
+		Games.stopClockObserve( );
 		Router.go('home');
 	}
 });
@@ -83,14 +84,40 @@ Template.game.rendered = function () {
 
 	// Reactively observing timer changes of the mongo entry
 	// Only updates the counter if the change is for the timer
-	Games.find( game._id ).observeChanges({
-		changed: function (id, fields) {
-			if (fields.timer != null) {
-				clock.setTime(fields.timer)
-			};
-		}
-	});
+	Games.startClockObserve(clock, game._id)
 };
+
+// TEMP: Not sure if this allowed, but had to save the observer
+// in order to access it from the events
+Games.startClockObserve = function startClockObserve(clock, gameID) {
+	Games.clockObserver =  Tracker.autorun(function () {
+		try {
+			var Game = Games.findOne( gameID );			
+			Tracker.nonreactive( updateClock( clock, Game.timer ))
+		} catch (e) {}
+	})
+}
+
+Games.stopClockObserve = function stopClockObserve () {
+	if ( Games.clockObserver ) {
+		Games.clockObserver.stop();
+	};
+}
+// Games.startClockObserve = function startClockObserve(gameID) {
+// 	Games.clockObserver = 	Games.find( gameID ).observeChanges({
+// 		changed: function (id, fields) {
+// 			if (fields.timer != null) {
+// 				clock.setTime(fields.timer)
+// 			};
+// 		}
+// 	});
+// }
+
+// Games.stopClockObserve = function stopClockObserve () {
+// 	if ( Games.clockObserver ) {
+// 		Games.clockObserver.stop();
+// 	};
+// }
 
 
 
