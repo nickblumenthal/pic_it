@@ -46,8 +46,6 @@ Template.board.created = function () {
 	var round = this.data;
 
 	Meteor.subscribe( "Lines", round._id );
-	console.log('board created')
-
 	
 };
 
@@ -55,14 +53,12 @@ Template.board.rendered = function() {
 	var round = this.data;
 	boardRender(true, round);
 	window.onresize = resizeControl.bind(this);
-	console.log("board rendered")
 
 	Rounds.startLinesObserver( round );
 }
 
 Template.board.destroyed = function () {
 	Rounds.stopLinesObserver();
-	console.log("board was destroyed")
 };
 
 Rounds.startLinesObserver = function startLinesObserver (round) {
@@ -83,7 +79,7 @@ var resizeControl = function () {
 	var that = this;
 
 	// TEMP: round = that.data
-	var round = Rounds.findOne({ 'game._id': Session.get('gameID') });
+	var round = getCurrentRound( Session.get('gameID') )
 
 	var canvas = document.getElementById('board');
 	if (canvas) {
