@@ -18,6 +18,7 @@ Template.gameLobby.events({
 		Meteor.call('startCountdown', game, function (error, result) {
 		});
 
+		// TEMP: Refactor this globally
 		var $btn = $(event.currentTarget)
 		// Disable button 
 		$btn.prop("disabled", true)

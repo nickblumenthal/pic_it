@@ -61,7 +61,12 @@ Template.game.helpers({
 Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
+
+		// Kill observers: 
 		Games.stopClockObserve( );
+		// Defined in board.js
+		Rounds.stopLinesObserver();
+
 		Router.go('home');
 	}
 });
@@ -82,8 +87,7 @@ Template.game.rendered = function () {
 	// Sets clock to whatever the current game timer is
 	clock.setTime(game.timer)
 
-	// Reactively observing timer changes of the mongo entry
-	// Only updates the counter if the change is for the timer
+	// Reactively observing timer changes of the specific game entry
 	Games.startClockObserve(clock, game._id)
 };
 
@@ -103,6 +107,7 @@ Games.stopClockObserve = function stopClockObserve () {
 		Games.clockObserver.stop();
 	};
 }
+
 // Games.startClockObserve = function startClockObserve(gameID) {
 // 	Games.clockObserver = 	Games.find( gameID ).observeChanges({
 // 		changed: function (id, fields) {

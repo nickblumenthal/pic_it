@@ -45,26 +45,44 @@ var linesToDraw = null;
 Template.board.created = function () {
 	var round = this.data;
 
-	Meteor.subscribe( "Lines", round._id )
+	Meteor.subscribe( "Lines", round._id );
+	console.log('board created')
+
+	
 };
 
 Template.board.rendered = function() {
 	var round = this.data;
 	boardRender(true, round);
 	window.onresize = resizeControl.bind(this);
+	console.log("board rendered")
 
-	Tracker.autorun(function () {
-		console.log(linesToDraw)
+	Rounds.startLinesObserver( round );
+}
+
+Template.board.destroyed = function () {
+	Rounds.stopLinesObserver();
+	console.log("board was destroyed")
+};
+
+Rounds.startLinesObserver = function startLinesObserver (round) {
+	Rounds.linesObserver = Tracker.autorun(function () {
 		linesToDraw = Lines.find({ round_id: round._id });
 
 		boardRender( true, round );
 	});
 }
 
+Rounds.stopLinesObserver = function stopLinesObserver () {
+	if ( Rounds.linesObserver ) { Rounds.linesObserver.stop() };
+}
+
+
 var resizeControl = function () {
 	var s = size();
 	var that = this;
 
+	// TEMP: round = that.data
 	var round = Rounds.findOne({ 'game._id': Session.get('gameID') });
 
 	var canvas = document.getElementById('board');
@@ -140,8 +158,7 @@ var boardRender = function (overlay, round) {
 		context.stroke();
 	}
 
-	var lines=linesToDraw; //Lines.find({board_id:board._id});
-	//console.log(lines);
+	var lines=linesToDraw; 
 
 	if (lines) {
 
@@ -219,7 +236,7 @@ if (isTouchSupported) {
 		},
 		"touchmove #board": function (e,tmp) {
 			//console.log("touchmove");
-			mpTouchMove(e);
+			mpTouchMove(e, tmp);
 		},
 		"touchend #board": function (e,tmp) {
 			//console.log("touchend");
@@ -232,7 +249,7 @@ if (isTouchSupported) {
 			mpTouchStart(e);
 		},
 		"mousemove #board": function (e,tmp) {
-			mpTouchMove(e);
+			mpTouchMove(e, tmp);
 		},
 		"mouseup #board": function (e,tmp) {
 			mpTouchEnd(e);
@@ -271,14 +288,14 @@ function mpTouchStart(e) {
 
 
 
-function mpTouchMove(e) {
+function mpTouchMove(e, tmp) {
 	if(Session.get('role') === 'drawer') {
 
 		try { convertTouchEvent(e); } catch (err) {return;}
 		//console.log("mpTouchMove "+e.insideX+","+e.insideY+" previousTouchPosition="+previousTouchPosition);
 		if (previousTouchPosition) {
 
-			var round = Rounds.findOne({ 'game._id': Session.get('gameID') })
+			var round = tmp.data;
 			var board = round.board;
 
 			var canvas = document.getElementById('board');
