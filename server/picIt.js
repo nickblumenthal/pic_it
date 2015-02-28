@@ -185,8 +185,6 @@ Meteor.methods({
 			var drawerPoints = game.timer;
 			var guesserPoints = 30;
 
-			console.log(drawerPoints);
-
 			// Update drawer
 			Games.update(
 				{"_id": gameID, 'players.sessionID': round.drawer.sessionID },
@@ -200,6 +198,14 @@ Meteor.methods({
 			);
 		}
 	},
+
+	getGameWinner: function(gameID) {
+		var game = Games.findOne(gameID);
+		players = game.players;
+		players = players.sort(function(p1, p2) { p2.point - p1.points });
+
+		return players[0];
+	}
 
 	clearLines: function (roundID) {
 		Lines.remove({ round_id: roundID });
