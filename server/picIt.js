@@ -20,7 +20,7 @@ Meteor.methods({
 
 	startCountdown: function (game) {
 		// Countdown before beginning of round
-		Games.update(game._id, { $set: { timer: 5 }})
+		Games.update(game._id, { $set: { timer: 5, status: "starting" }})
 
 		// Incrementing the countdown for pre-round
 		var intervalID = Meteor.setInterval( function() {

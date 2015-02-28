@@ -6,7 +6,7 @@
 
 		<div>
 			{{#if gameInProgress}}
- 				<button id="create-round">Start Round</button>
+ 				<button id="create-round" class="{{disabledBtnClass}}" {{disableBtn}} >Start Round</button>
 			{{else}}
 				<p>Game Over</p>
 			{{/if}}

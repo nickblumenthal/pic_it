@@ -8,6 +8,14 @@ Template.gameLobby.helpers({
 
 	players: function () {
 		return this.players;
+	},
+
+	disableBtn: function () {
+		if ( this.status === "starting" ) { return "disabled" };
+	},
+
+	disabledBtnClass: function () {
+		return (this.status === "starting" ? "disable-btn" : "" )
 	}
 });
 
@@ -19,10 +27,10 @@ Template.gameLobby.events({
 		});
 
 		// TEMP: Refactor this globally
-		var $btn = $(event.currentTarget)
+		// var $btn = $(event.currentTarget)
 		// Disable button 
-		$btn.prop("disabled", true)
-		$btn.css("color", "#C4C4C4")
+		// $btn.prop("disabled", true)
+		// $btn.css("color", "#C4C4C4")
 
 	}
 

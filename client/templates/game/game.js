@@ -31,7 +31,11 @@ Template.game.helpers({
 	},
 
 	inLobby: function () {
-		return ( this.status === "waiting" ? true : false ) 
+		if ( (this.status === "waiting") || ( this.status === "starting")) {
+			return true
+		} else {
+			return false
+		}
 	},
 
 	getSessionID: function () {
@@ -52,7 +56,7 @@ Template.game.helpers({
 	},
 
 	nextRoundNum: function () {
-		return Rounds.find({ 'game._id': this._id }).count()
+		return Rounds.find({ 'game._id': this._id }).count() + 1
 	}
 });
 
@@ -62,10 +66,8 @@ Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 
-		// Kill observers: 
+		// Kill clock observer 
 		Games.stopClockObserve( );
-		// Defined in board.js
-		Rounds.stopLinesObserver();
 
 		Router.go('home');
 	}
@@ -107,23 +109,6 @@ Games.stopClockObserve = function stopClockObserve () {
 		Games.clockObserver.stop();
 	};
 }
-
-// Games.startClockObserve = function startClockObserve(gameID) {
-// 	Games.clockObserver = 	Games.find( gameID ).observeChanges({
-// 		changed: function (id, fields) {
-// 			if (fields.timer != null) {
-// 				clock.setTime(fields.timer)
-// 			};
-// 		}
-// 	});
-// }
-
-// Games.stopClockObserve = function stopClockObserve () {
-// 	if ( Games.clockObserver ) {
-// 		Games.clockObserver.stop();
-// 	};
-// }
-
 
 
 var updateClock = function (clock, time) {
