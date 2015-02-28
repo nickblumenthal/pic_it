@@ -91,6 +91,7 @@ Meteor.methods({
 	},
 
 	endRound: function (gameID) {
+		Meteor.call('assignPoints', gameID);
 		// TEMP: Part of the hack
 		Meteor.clearInterval( hack.gameID )
 		delete hack.gameID
@@ -111,7 +112,7 @@ Meteor.methods({
 
 	joinGame: function (gameID, sessionID) {
 		var game = Games.findOne(gameID);
-		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: 'guest' }}})
+		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: 'guest', points: 0 }}})
 	},
 
 	boardUpdated: function (roundID) {
@@ -174,6 +175,29 @@ Meteor.methods({
 			var winner = Meteor.call('getSessionID');
 			Rounds.update(roundID, { $set: { won: true, winner: winner }});
 			Meteor.call('endRound', round.game._id);
+		}
+	},
+
+	assignPoints: function(gameID) {
+		var round = Rounds.findOne({ 'game._id': gameID }, { sort: { 'board.started' : -1 }});
+		if(round.won === true) {
+			var game = Games.findOne(gameID);
+			var drawerPoints = game.timer;
+			var guesserPoints = 30;
+
+			console.log(drawerPoints);
+
+			// Update drawer
+			Games.update(
+				{"_id": gameID, 'players.sessionID': round.drawer.sessionID },
+				{$inc: {'players.$.points': drawerPoints }}
+			);
+
+			// Update guesser
+			Games.update(
+				{"_id": gameID, 'players.sessionID': round.winner },
+				{$inc: {'players.$.points': guesserPoints }}
+			);
 		}
 	},
 

@@ -97,7 +97,7 @@ Template.game.rendered = function () {
 
 	Tracker.autorun(function () {
 		try {
-			var Game = Games.findOne( game._id );			
+			var Game = Games.findOne( game._id );
 			console.log("reactive change")
 			Tracker.nonreactive( updateClock( clock, Game.timer ))
 		} catch (e) {}
@@ -111,7 +111,7 @@ var updateClock = function (clock, time) {
 
 var assignRoles = function(gameID) {
 	var round = getCurrentRound(gameID);
-	if(round.drawer === Session.get('playerID')) {
+	if(round.drawer.sessionID === Session.get('playerID')) {
 		Session.set('role', 'drawer');
 	} else {
 		Session.set('role', 'guesser');

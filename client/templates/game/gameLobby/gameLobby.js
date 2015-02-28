@@ -13,9 +13,7 @@ Template.gameLobby.helpers({
 		var players = this.players.map(function(player){
 			return player.name;
 		});
-		// var players = this.players.map(function (sessionID) {
-		// 	return { sessionID: sessionID }
-		// })
+		
 		return players;
 	}
 });
