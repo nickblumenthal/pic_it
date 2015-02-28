@@ -1,0 +1,9 @@
+body{
+	background: url("/greenish.jpg");
+	background-size: cover;
+}
+
+.tile {
+	background: rgba(0,0,0,0.35);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}

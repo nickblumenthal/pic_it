@@ -1,7 +1,7 @@
 <!-- TEMP: Definitely should be refactored -->
 <template name="openGames">
 	<p>Open Games:</p>
-	<div id="open-games">
+	<div id="open-games" class="tile">
 		{{#each openGames}}
 			<div class="open-game" data-id="{{ this._id }}">
 				{{ this.name }}
@@ -14,7 +14,7 @@
 	</div>
 
 	<p>Finished Games:</p>
-	<div id="finished-games">
+	<div id="finished-games" class="tile">
 		{{#each finishedGames}}
 			<div class="open-game" data-id="{{ this._id }}">
 				{{ this.name }}
