@@ -1,5 +1,7 @@
 <template name="layout">
 	<div id="main">
-			{{> yield}}
+		{{ #transition }}
+			{{> yield }}
+		{{ /transition }}
 	</div>
 </template>

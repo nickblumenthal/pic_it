@@ -1,17 +1,20 @@
 <!-- TEMP: Definitely should be refactored -->
 <template name="openGames">
-	{{#if ready}}
-
 		<p>Open Games:</p>
 
 		<div id="open-games">
 
 			<div id="games-container" class="container">
-				{{#each openGames}}
-					<div class="open-game" data-id="{{ this._id }}">
-						{{ this.name }}
-					</div>
-				{{/each}}
+				{{#if ready}}
+					{{#each openGames}}
+						<div class="open-game" data-id="{{ this._id }}">
+							{{ this.name }}
+						</div>
+					{{/each}}
+				{{else}}
+					<center>Loading Open Games..</center>	
+				{{ /if }}
+
 			</div>
 
 			<div class="controls">
@@ -37,11 +40,11 @@
 				<button id="finished-game-next">Next</button>
 			</div>
 		</div>
-	{{else}}
+	<!-- {{else}}
 		<center>
 		<p>Loading</p>
 		</center>	
-	{{/if}}
+	{{/if}} -->
 </template>
 
 
