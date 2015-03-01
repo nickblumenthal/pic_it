@@ -15,8 +15,8 @@
 		<div id="players">
 			Current Players:
 			<ul class="animated">
-				{{#each players}}
-					<li class="fade">User: {{this.name}}.  Points: {{this.points}}</li>
+				{{#each this.players}}
+					<li class="hidden">User: {{this.name}}.  Points: {{this.points}}</li>
 				{{/each}}
 			</ul>
 		</div>

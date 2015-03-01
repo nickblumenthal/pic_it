@@ -34,13 +34,31 @@ Template.gameLobby.events({
 
 });
 
+Template.gameLobby.created = function () {
+}
+
 
 // IMPORTANT: Meteor looks at a reactive element's parent for a property
 // _uihooks to see what to do before inserting, moving or deleting the 
 // reactive element
 
 Template.gameLobby.rendered = function() {
-  this.$('.animated')[0]._uihooks = {
+
+  var reactiveList = this.$('.animated');
+
+	// Animated players list
+	reactiveList.children().velocity('transition.slideLeftIn',
+		{ stagger: 250 }
+	)
+  // Adds animations to reactive elements inside of .animated
+  createElementHooks( reactiveList );
+
+};
+
+var createElementHooks = function ($obj) {
+	// TEMP: Can iterate if multiple items
+	$obj[0]._uihooks = {
+
     insertElement: function(node, next) {
       $(node).insertBefore(next);
       return Tracker.afterFlush(function() {
@@ -57,13 +75,14 @@ Template.gameLobby.rendered = function() {
 	    //   return $(node).remove();
 	    // });
 
+			var $node = $(node);
 
-    	$(node).velocity('transition.slideRightOut', function () {
-    		$(node).remove()
+    	$node.velocity('transition.slideRightOut', function () {
+    		$node.remove()
     	})
 	  }
   };
-};
+}
 
 window.onbeforeunload = function(){
 	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
