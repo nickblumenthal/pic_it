@@ -31,11 +31,7 @@ Template.game.helpers({
 	},
 
 	inLobby: function () {
-		if ( (this.status === "waiting") || ( this.status === "starting")) {
-			return true
-		} else {
-			return false
-		}
+		return ( this.status === "waiting" ? true : false )
 	},
 
 	getSessionID: function () {
@@ -56,7 +52,7 @@ Template.game.helpers({
 	},
 
 	nextRoundNum: function () {
-		return Rounds.find({ 'game._id': this._id }).count() + 1
+		return Rounds.find({ 'game._id': this._id }).count()
 	}
 });
 
@@ -66,8 +62,10 @@ Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 
-		// Kill clock observer 
+		// Kill observers:
 		Games.stopClockObserve( );
+		// Defined in board.js
+		Rounds.stopLinesObserver();
 
 		Router.go('home');
 	}
@@ -95,6 +93,7 @@ Template.game.rendered = function () {
 
 // TEMP: Not sure if this allowed, but had to save the observer
 // in order to access it from the events
+
 Games.startClockObserve = function startClockObserve(clock, gameID) {
 	Games.clockObserver =  Tracker.autorun(function () {
 		try {
@@ -109,6 +108,23 @@ Games.stopClockObserve = function stopClockObserve () {
 		Games.clockObserver.stop();
 	};
 }
+
+// Games.startClockObserve = function startClockObserve(gameID) {
+// 	Games.clockObserver = 	Games.find( gameID ).observeChanges({
+// 		changed: function (id, fields) {
+// 			if (fields.timer != null) {
+// 				clock.setTime(fields.timer)
+// 			};
+// 		}
+// 	});
+// }
+
+// Games.stopClockObserve = function stopClockObserve () {
+// 	if ( Games.clockObserver ) {
+// 		Games.clockObserver.stop();
+// 	};
+// }
+
 
 
 var updateClock = function (clock, time) {

@@ -1,3 +1,11 @@
 .disable-btn {
 	color: #C4C4C4;
 }
+
+.game-lobby {
+	background-color: #FFF;
+}
+
+.current-players {
+	list-style: none;
+}
