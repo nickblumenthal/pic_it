@@ -6,11 +6,25 @@ Template.openGames.helpers({
 		})
 	},
 
+	openGamesCount: function () {
+		return Games.find({ status: { $ne: "finished" }}, {
+			sort: { createdAt: -1 },
+			limit: 20
+		}).count()
+	},
+
 	finishedGames: function () {
 		return Games.find({ status: "finished" }, {
 			sort: { createdAt: -1 },
 			limit: 20
 		})
+	},
+
+	finishedGamesCount: function() {
+		return Games.find({ status: "finished" }, {
+			sort: { createdAt: -1 },
+			limit: 20
+		}).count()
 	}
 });
 
