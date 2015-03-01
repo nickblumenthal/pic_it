@@ -1,10 +1,13 @@
 <template name="layout">
 	<div class="container-fluid">
 		<div class="row top"></div>
-		<div id="main" class="tranisition-hidden">
-			{{ #transition }}
-				{{> yield }}
-			{{ /transition }}
+		<div class="col-lg-10 col-lg-offset-1">
+			<div id="main" class="tranisition-hidden">
+				{{ #transition }}
+					{{> header}}
+					{{> yield }}
+				{{ /transition }}
+			</div>
 		</div>
 	</div>
 </template>
