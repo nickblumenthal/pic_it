@@ -1,6 +1,7 @@
 <template name="layout">
-	<div class="container">
-		<div id="main">
+	<div class="container-fluid">
+		<div id="main" class="col-lg-10 col-lg-offset-1">
+			{{> header}}
 			{{> yield}}
 		</div>
 	</div>

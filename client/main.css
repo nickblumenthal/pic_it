@@ -1,9 +1,23 @@
-body{
+/*body{
 	background: url("/greenish.jpg");
 	background-size: cover;
-}
+}*/
 
-.tile {
+/*.tile {
 	background: rgba(0,0,0,0.35);
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+}*/
+
+body {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	background-color: #60d7a9;
+}
+
+#main {
+	/*background-color: #999;*/
+	font-size: 18px;
+}
+
+.header {
+	font-size: 48px;
 }
