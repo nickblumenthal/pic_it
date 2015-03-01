@@ -1,13 +1,19 @@
 <!-- TEMP: Definitely should be refactored -->
 <template name="openGames">
 	{{#if ready}}
+
 		<p>Open Games:</p>
+
 		<div id="open-games">
-			{{#each openGames}}
-				<div class="open-game" data-id="{{ this._id }}">
-					{{ this.name }}
-				</div>
-			{{/each}}
+
+			<div id="games-container" class="container">
+				{{#each openGames}}
+					<div class="open-game" data-id="{{ this._id }}">
+						{{ this.name }}
+					</div>
+				{{/each}}
+			</div>
+
 			<div class="controls">
 				<button id="open-game-prev">Previous</button>
 				<button id="open-game-next">Next</button>
@@ -15,12 +21,17 @@
 		</div>
 
 		<p>Finished Games:</p>
+
 		<div id="finished-games">
-			{{#each finishedGames}}
-				<div class="open-game" data-id="{{ this._id }}">
-					{{ this.name }}
-				</div>
-			{{/each}}
+
+			<div class="container">
+				{{#each finishedGames}}
+					<div class="open-game" data-id="{{ this._id }}">
+						{{ this.name }}
+					</div>
+				{{/each}}
+			</div>
+
 			<div class="controls">
 				<button id="finished-game-prev">Previous</button>
 				<button id="finished-game-next">Next</button>

@@ -54,13 +54,7 @@ Template.openGames.created = function() {
 
   // Save subs into the template instance
   var tempSubs = this.subscriptions = {};
-  
 
-  // TEMP: Possibly could have put this directly into the helpers
-  // Tracker.autorun(function() {
-		// Meteor.subscribe('openGames', Session.get('openGamesCursor'));
-		// Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
-  // });
   Tracker.autorun(function() {
 		tempSubs.openGames = Meteor.subscribe('openGames', Session.get('openGamesCursor'));
 		tempSubs.finishedGames = Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
