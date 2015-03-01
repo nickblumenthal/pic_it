@@ -11,6 +11,12 @@ Template.openGames.helpers({
 			sort: { createdAt: -1 },
 			limit: 20
 		})
+	},
+
+	ready: function () {
+		return _.all( Template.instance().subscriptions, function (sub, key) {
+			return sub.ready()
+		})
 	}
 });
 
@@ -46,17 +52,29 @@ Template.openGames.created = function() {
   Session.setDefault('openGamesCursor', 0);
   Session.setDefault('finishedGamesCursor', 0);
 
+  // Save subs into the template instance
+  var tempSubs = this.subscriptions = {};
+  
+
+  // TEMP: Possibly could have put this directly into the helpers
+  // Tracker.autorun(function() {
+		// Meteor.subscribe('openGames', Session.get('openGamesCursor'));
+		// Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
+  // });
   Tracker.autorun(function() {
-    Meteor.subscribe('openGames', Session.get('openGamesCursor'));
-    Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
+		tempSubs.openGames = Meteor.subscribe('openGames', Session.get('openGamesCursor'));
+		tempSubs.finishedGames = Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
   });
+
 }
 
-Template.openGames.rendered = function () {
 
-	// You can select all after render as this.$('*')
-	// Won't work because its rendered and then hidden
-}
+// Terminates subs 
+Template.openGames.destroyed = function () {
+	_.each( this.subscriptions, function (sub) {
+		sub.stop();
+	})
+};
 
 
 var incrementCursor = function (cursor, inc) {

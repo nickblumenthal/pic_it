@@ -1,31 +1,36 @@
 <!-- TEMP: Definitely should be refactored -->
 <template name="openGames">
-	<p>Open Games:</p>
-	<div id="open-games">
-		{{#each openGames}}
-			<div class="open-game" data-id="{{ this._id }}">
-				{{ this.name }}
+	{{#if ready}}
+		<p>Open Games:</p>
+		<div id="open-games">
+			{{#each openGames}}
+				<div class="open-game" data-id="{{ this._id }}">
+					{{ this.name }}
+				</div>
+			{{/each}}
+			<div class="controls">
+				<button id="open-game-prev">Previous</button>
+				<button id="open-game-next">Next</button>
 			</div>
-		{{/each}}
-		<div class="controls">
-			<button id="open-game-prev">Previous</button>
-			<button id="open-game-next">Next</button>
 		</div>
-	</div>
 
-	<p>Finished Games:</p>
-	<div id="finished-games">
-		{{#each finishedGames}}
-			<div class="open-game" data-id="{{ this._id }}">
-				{{ this.name }}
+		<p>Finished Games:</p>
+		<div id="finished-games">
+			{{#each finishedGames}}
+				<div class="open-game" data-id="{{ this._id }}">
+					{{ this.name }}
+				</div>
+			{{/each}}
+			<div class="controls">
+				<button id="finished-game-prev">Previous</button>
+				<button id="finished-game-next">Next</button>
 			</div>
-		{{/each}}
-		<div class="controls">
-			<button id="finished-game-prev">Previous</button>
-			<button id="finished-game-next">Next</button>
 		</div>
-	</div>
-
+	{{else}}
+		<center>
+		<p>Loading</p>
+		</center>	
+	{{/if}}
 </template>
 
 
