@@ -20,7 +20,6 @@ Meteor.publish("finishedGames", function (cursor) {
 })
 
 // Iron Router Sub hooks
-
 // Publish for individual game
 Meteor.publish("Game", function (gameID) {
 	return Games.find( gameID );

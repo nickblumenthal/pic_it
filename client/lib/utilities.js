@@ -10,3 +10,12 @@ Template.registerHelper('rounds', function () {
 Template.registerHelper('gameInProgress', function () {
 	return ( this.status !== "finished" ? true : false)
 })
+
+// Animation end names used as hooks for page transitions
+// TEMP: Need to add the Modernizr operation here
+animEndEventNames = {
+	'WebkitAnimation' : 'webkitAnimationEnd',
+	'OAnimation' : 'oAnimationEnd',
+	'msAnimation' : 'MSAnimationEnd',
+	'animation' : 'animationend'
+}
