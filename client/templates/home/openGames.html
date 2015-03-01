@@ -1,11 +1,10 @@
 <!-- TEMP: Definitely should be refactored -->
 <template name="openGames">
 		{{#if openGamesCount}}
-			<p>Open Games:</p>
-
 			<div id="open-games">
+			<h2>Open Games:</h2>
 
-				<div id="games-container" class="container">
+				<div id="games-container">
 					{{#if ready}}
 						{{#each openGames}}
 							<div class="open-game" data-id="{{ this._id }}">
@@ -19,8 +18,8 @@
 				</div>
 
 				<div class="controls">
-					<button id="open-game-prev">Previous</button>
-					<button id="open-game-next">Next</button>
+					<button id="open-game-prev" class="pt-touch-button">Previous</button>
+					<button id="open-game-next" class="pt-touch-button">Next</button>
 				</div>
 			</div>
 		{{/if}}
@@ -30,7 +29,7 @@
 
 			<div id="finished-games">
 
-				<div class="container">
+				<div>
 					{{#each finishedGames}}
 						<div class="open-game" data-id="{{ this._id }}">
 							{{ this.name }}
@@ -39,8 +38,8 @@
 				</div>
 
 				<div class="controls">
-					<button id="finished-game-prev">Previous</button>
-					<button id="finished-game-next">Next</button>
+					<button id="finished-game-prev" class="pt-touch-button">Previous</button>
+					<button id="finished-game-next" class="pt-touch-button">Next</button>
 				</div>
 			</div>
 		{{/if}}

@@ -6,9 +6,14 @@
 	display: inline-block;
 	padding: 10px;
 	margin: 10px;
+	background-color: #FFF;
 }
 
 .open-game:hover {
 	background-color: #619FBA;
 	color: white;
+}
+
+#open-games h2 {
+	font-color: #FFF;
 }

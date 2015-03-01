@@ -146,6 +146,15 @@ html, body { height: 100%; }
 	color: #aaa;
 }
 
+.pt-touch-button:hover {
+	box-shadow: 0 3px 0 rgba(0,0,0,0.5);
+}
+
+.pt-touch-button:focus {
+	outline: none;
+
+}
+
 .pt-triggers .dl-menuwrapper button {
 	margin-bottom: 0;
 }
@@ -156,6 +165,7 @@ html, body { height: 100%; }
 
 .touch .pt-triggers .dl-menuwrapper {
 	display: none;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.1);
 }
 
 .pt-message {
