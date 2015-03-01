@@ -1,46 +1,49 @@
 <!-- TEMP: Definitely should be refactored -->
 <template name="openGames">
+		{{#if openGamesCount}}
+			<p>Open Games:</p>
 
-		<p>Open Games:</p>
+			<div id="open-games">
 
-		<div id="open-games">
+				<div id="games-container" class="container">
+					{{#if ready}}
+						{{#each openGames}}
+							<div class="open-game" data-id="{{ this._id }}">
+								{{ this.name }}
+							</div>
+						{{/each}}
+					{{else}}
+						<center>Loading Open Games..</center>
+					{{ /if }}
 
-			<div id="games-container" class="container">
-				{{#if ready}}
-					{{#each openGames}}
+				</div>
+
+				<div class="controls">
+					<button id="open-game-prev">Previous</button>
+					<button id="open-game-next">Next</button>
+				</div>
+			</div>
+		{{/if}}
+
+		{{#if finishedGamesCount}}
+			<p>Finished Games:</p>
+
+			<div id="finished-games">
+
+				<div class="container">
+					{{#each finishedGames}}
 						<div class="open-game" data-id="{{ this._id }}">
 							{{ this.name }}
 						</div>
 					{{/each}}
-				{{else}}
-					<center>Loading Open Games..</center>
-				{{ /if }}
+				</div>
 
+				<div class="controls">
+					<button id="finished-game-prev">Previous</button>
+					<button id="finished-game-next">Next</button>
+				</div>
 			</div>
-
-			<div class="controls">
-				<button id="open-game-prev">Previous</button>
-				<button id="open-game-next">Next</button>
-			</div>
-		</div>
-
-		<p>Finished Games:</p>
-
-		<div id="finished-games">
-
-			<div class="container">
-				{{#each finishedGames}}
-					<div class="open-game" data-id="{{ this._id }}">
-						{{ this.name }}
-					</div>
-				{{/each}}
-			</div>
-
-			<div class="controls">
-				<button id="finished-game-prev">Previous</button>
-				<button id="finished-game-next">Next</button>
-			</div>
-		</div>
+		{{/if}}
 	<!-- {{else}}
 		<center>
 		<p>Loading</p>
