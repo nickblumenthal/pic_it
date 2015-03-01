@@ -34,6 +34,37 @@ Template.gameLobby.events({
 
 });
 
+
+// IMPORTANT: Meteor looks at a reactive element's parent for a property
+// _uihooks to see what to do before inserting, moving or deleting the 
+// reactive element
+
+Template.gameLobby.rendered = function() {
+  this.$('.animated')[0]._uihooks = {
+    insertElement: function(node, next) {
+      $(node).insertBefore(next);
+      return Tracker.afterFlush(function() {
+      	$(node).velocity('transition.slideLeftIn')
+      });
+    },
+
+		removeElement: function(node) {
+			// Need this for CSS transitions
+	    // var finishEvent;
+	    // finishEvent = 'webkitTransitionEnd oTransitionEnd transitionEnd msTransitionEnd transitionend';
+
+	    // return $(node).on(finishEvent, function() {
+	    //   return $(node).remove();
+	    // });
+
+
+    	$(node).velocity('transition.slideRightOut', function () {
+    		$(node).remove()
+    	})
+	  }
+  };
+};
+
 window.onbeforeunload = function(){
 	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
 }
