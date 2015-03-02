@@ -1,11 +1,4 @@
 <template name="board">
-	<div>
-		{{ #each guessedWords }}
-	    {{ this }}
-	  {{ /each }}
-	</div>
-
-
 	<div class="drawer-canvas" onselectstart="return false;" ondragstart="return false;" >
 		<canvas id="board" width="{{width}}" height="{{height}}"></canvas>
 	</div>
