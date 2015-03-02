@@ -1,0 +1,8 @@
+.guess-list {
+  height: 400px;
+  width: 100%;
+  background-color: #FFF;
+  padding: 10px;
+  padding-bottom: 20px;
+  overflow: hidden;
+}
