@@ -14,12 +14,16 @@ var hooks = {
 
     // // Make it visible
     // // Adds transition effect
-    $node.addClass('pt-page-' + transitionDir('insert'))
+    if ( Session.get('firstHook') ) {
+	    $node.addClass('pt-page-' + transitionDir('insert'))
+    };
 
     $node.on( animEndEventName, function () {
+	    Session.set('firstHook', true )
     	$node.off( animEndEventName );
     	$node.removeClass('pt-page-' + transitionDir('insert'))
     })
+
   },
 
 
