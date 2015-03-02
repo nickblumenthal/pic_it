@@ -2,9 +2,18 @@ var guessedWords = new ReactiveArray();
 
 Template.guesser.events({
 	'keyup #guess': function (event, template) {
-		guess = handleGuess($('#guess').val(), template);
+		guess = handleGuess($('#guess').val().toLowerCase(), template);
 		if(guess) {
-			Rounds.update(this._id, { $addToSet: { guessedWords: guess }});
+			guesses = this.guessedWords;
+			guesses.unshift(guess);
+			Rounds.update(
+				{"_id": this._id},
+				{
+					$set: {
+						guessedWords: guesses
+					}
+				}
+			);
 		}
    }
 });
@@ -31,7 +40,7 @@ Template.guesser.helpers({
 function handleGuess(guess, scope) {
   if(isWordInList(guess, scope.wordList)) {
     if(guessedWords.indexOf(guess) === -1) {
-      guessedWords.push(guess);
+      guessedWords.unshift(guess);
 			Meteor.call('checkGuess', guess, scope.data._id);
 			return guess;
     }

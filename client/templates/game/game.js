@@ -38,6 +38,14 @@ Template.game.helpers({
 		}
 	},
 
+	inLobbyOrStarting: function () {
+		return ( (this.status === "waiting" || this.status === "starting") ? true : false);
+	},
+
+	gameFinished: function () {
+		return ( this.status == "finished" ? true: false );
+	},
+
 	getSessionID: function () {
 		return Session.get('playerID');
 	},
@@ -58,7 +66,23 @@ Template.game.helpers({
 
 	nextRoundNum: function () {
 		return Rounds.find({ 'game._id': this._id }).count() + 1
-	}
+	},
+
+	getUsername: function() {
+		var player = this.players.filter(function(player) {
+			return player.sessionID === Session.get('playerID')
+		});
+		return player.name || 'Guest';
+	},
+
+	disableBtn: function () {
+		if ( this.status !== "waiting" ) { return "disabled" };
+	},
+
+	disabledBtnClass: function () {
+		return (this.status !== "waiting" ? "disable-btn" : "" )
+	},
+
 });
 
 
@@ -74,13 +98,13 @@ Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 
-		// Kill clock observer 
+		// Kill clock observer
 		Games.stopClockObserve( );
 
 		Router.go('home');
 	},
 
-	'click #change-username': function (event) {
+	'keyup #username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
 		// Games.update(this._id, {$set: {players[]}})
 	}

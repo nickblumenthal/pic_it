@@ -128,7 +128,7 @@ html, body { height: 100%; }
 	height: 50px;
 	letter-spacing: 1px;
 	width: 20%;
-	min-width: 200px;
+	min-width: 110px;
 	cursor: pointer;
 	display: inline-block;
 	font-family: 'Lato', Calibri, Arial, sans-serif;
@@ -139,6 +139,10 @@ html, body { height: 100%; }
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+.pt-touch-button.wide {
+	width: 200px;
 }
 
 .pt-touch-button {

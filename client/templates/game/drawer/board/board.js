@@ -2,7 +2,7 @@ minZoom=0.1;
 minZone=960; //pixels, min square zone that every body can see
 lineGrow=5; //the greater, the thiner the line is when starting/ending
 Session.set("board_w",550);
-Session.set("board_h",minZone);
+Session.set("board_h",200);
 Session.set("zoom",1);
 
 Template.board.helpers({
@@ -18,6 +18,10 @@ Template.board.helpers({
 
 	role: function() {
 		return Session.get('role');
+	},
+
+	drawer: function() {
+		return Session.get('role') === 'drawer';
 	},
 
 	guessedWords: function() {
@@ -51,7 +55,7 @@ Template.board.created = function () {
 
 Template.board.rendered = function() {
 	var round = this.data;
-	resizeBoard();
+	// resizeBoard();
 	boardRender(true, round);
 	// window.onresize = resizeControl.bind(this);
 
@@ -103,8 +107,10 @@ var resizeControl = function () {
 var size = function () {
 	var canvas = document.getElementById('board');
 	if (canvas) {
-		var rect = canvas.getBoundingClientRect();
-		return {w:window.innerWidth-20 , h:(window.innerHeight-rect.top-20)}
+		// var rect = canvas.getBoundingClientRect();
+		// return {w:window.innerWidth-20 , h:(window.innerHeight-rect.top-20)}
+		var rect = $(canvas).parent();
+		return { w: rect.width(), h: rect.height() };
 	}
 	return {w:500,h:500}
 }
@@ -228,15 +234,15 @@ var isTouchSupported = 'ontouchstart' in window;
 if (isTouchSupported) {
 	Template.board.events({
 		"touchstart #board": function (e,tmp) {
-			//console.log("touchstart");
+			console.log("touchstart");
 			mpTouchStart(e);
 		},
 		"touchmove #board": function (e,tmp) {
-			//console.log("touchmove");
+			console.log("touchmove");
 			mpTouchMove(e, tmp);
 		},
 		"touchend #board": function (e,tmp) {
-			//console.log("touchend");
+			console.log("touchend");
 			mpTouchEnd(e);
 		},
 	});
@@ -258,9 +264,10 @@ if (isTouchSupported) {
 
 function convertTouchEvent(e) {
 	if (isTouchSupported) {
-		if (e.touches[0]) {
-			e.insideX=e.touches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
-			e.insideY=e.touches[0].pageY - document.getElementById('board').getBoundingClientRect().top;
+
+		if (e.originalEvent.touches[0]) {
+			e.insideX=e.originalEvent.touches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
+			e.insideY=e.originalEvent.touches[0].pageY - document.getElementById('board').getBoundingClientRect().top;
 		} else {
 			e.insideX=e.changedTouches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
 			e.insideY=e.changedTouches[0].pageY - document.getElementById('board').getBoundingClientRect().top;

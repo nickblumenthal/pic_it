@@ -1,16 +1,13 @@
 <template name="board">
-	<div>
-		{{ #each guessedWords }}
-	    {{ this }}
-	  {{ /each }}
-	</div>
-
-	<div>
-		<button id="clear-lines">Clear Board</button>
-	</div>
-
 	<div class="drawer-canvas" onselectstart="return false;" ondragstart="return false;" >
 		<canvas id="board" width="{{width}}" height="{{height}}"></canvas>
 	</div>
 
+	<hr>
+
+	{{#if drawer}}
+		<div class="canvas-controls">
+			<button id="clear-lines" class="pt-touch-button">Clear Board</button>
+		</div>
+	{{/if}}
 </template>
