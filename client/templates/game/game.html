@@ -8,12 +8,12 @@
 					{{#if gameInProgress}}
 						<button id="create-round" class="{{disabledBtnClass}} pt-touch-button" {{disableBtn}} >Start Round</button>
 					{{/if}}
-					<input id="username" class="standard" value="">
-					<button type="submit" id="change-username" class="pt-touch-button">Set Username</button>
+					<!-- <input id="username" class="standard" value="">
+					<button type="submit" id="change-username" class="pt-touch-button">Set Username</button> -->
 
 					<span class="input input--kaede">
-						<input class="input__field input__field--kaede" type="text" id="input-35" />
-						<label class="input__label input__label--kaede" for="input-35">
+						<input class="input__field input__field--kaede" type="text" id="username" value="{{getUsername}}"/>
+						<label class="input__label input__label--kaede" for="username">
 							<span class="input__label-content input__label-content--kaede">USERNAME</span>
 						</label>
 					</span>

@@ -61,6 +61,13 @@ Template.game.helpers({
 
 	nextRoundNum: function () {
 		return Rounds.find({ 'game._id': this._id }).count()
+	},
+
+	getUsername: function() {
+		var player = this.players.filter(function(player) {
+			return player.sessionID === Session.get('playerID')
+		});
+		return player.name || 'Guest';
 	}
 });
 
@@ -85,7 +92,7 @@ Template.game.events({
 		Router.go('home');
 	},
 
-	'click #change-username': function (event) {
+	'keyup #username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
 		// Games.update(this._id, {$set: {players[]}})
 	}
