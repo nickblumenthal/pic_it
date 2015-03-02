@@ -2,7 +2,7 @@
   color: #FFF;
 }
 
-input {
+input.standard{
 	height: 53px;
 	color: #999;
 	border: none;
@@ -18,7 +18,7 @@ input {
   min-width: 200px;
 }
 
-input:focus {
+input.standard:focus {
 	border-bottom: solid 3px rgba(0,0,0,0.5);
 	outline: none;
 	outline-offset: 0;
