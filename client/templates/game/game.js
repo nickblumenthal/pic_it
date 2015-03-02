@@ -59,6 +59,13 @@ Template.game.helpers({
 
 
 Template.game.events({
+	'click #create-round': function (event) {
+		var game = this;
+
+		Meteor.call('startCountdown', game, function (error, result) {
+		});
+	},
+
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 
@@ -68,6 +75,11 @@ Template.game.events({
 		Rounds.stopLinesObserver();
 
 		Router.go('home');
+	},
+
+	'click #change-username': function (event) {
+		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
+		// Games.update(this._id, {$set: {players[]}})
 	}
 });
 

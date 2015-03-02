@@ -2,41 +2,57 @@
 	<div class="game">
 		<center>
 			<div class="row">
-				<div class="col-lg-2">
-					<button id="home" class="pt-touch-button">Back to homepage</button>
-				</div>
-				<div class="col-lg-8">
-					<!-- TEMP: Probably break into different templates -->
-					{{#if gameInProgress}}
-						<div id="temp">
-							<h3>Game: {{ this.name }}</h3>
 
-							<p>Game status: {{ gameStatus }}</p>
-							{{#if inLobby}}
-								<p>Upcoming Round: {{ nextRoundNum }}</p>
+				<div class="col-lg-2 navigation">
+					<button id="home" class="pt-touch-button">Back to homepage</button>
+					{{#if gameInProgress}}
+						<button id="create-round" class="{{disabledBtnClass}} pt-touch-button" {{disableBtn}} >Start Round</button>
+					{{/if}}
+					<input id="username" value="">
+					<button type="submit" id="change-username" class="pt-touch-button">Set Username</button>
+				</div>
+
+				<div class="col-lg-6 col-lg-offset-1 game-status">
+					<!-- TEMP: Probably break into different templates -->
+					<div class="row">
+						<div class="col-lg-12">
+							{{#if gameInProgress}}
+								<div id="temp">
+									<h3>Game: {{ this.name }}</h3>
+
+									<p><span>Status: {{ gameStatus }}</span>
+									<span>
+										{{#if inLobby}}
+											Upcoming Round: {{ nextRoundNum }}
+										{{else}}
+											Current Round: {{ roundNum }}
+										{{/if}}
+									</span>
+									</p>
+								</div>
 							{{else}}
-								<p>Current Round: {{ roundNum }}</p>
+								<div>
+									<p>GAME OVER</p>
+									<p>Game winner: {{ this.winner }}</p>
+								</div>
 							{{/if}}
 						</div>
-					{{else}}
-						<div>
-							<p>GAME OVER</p>
-							<p>Game winner: {{ this.winner }}</p>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-lg-12">
+							{{> DynamicTemplate template=getTemplate data=getDataContext }}
 						</div>
-					{{/if}}
+					</div>
 				</div>
-				<div class="col-lg-2">
+
+				<div class="col-lg-2  col-lg-offset-1">
 					{{#if gameInProgress}}
 						<div id="countdown"></div>
 					{{/if}}
 				</div>
 			</div>
 
-			<div class="row">
-				<div class="col-lg-12">
-					{{> DynamicTemplate template=getTemplate data=getDataContext }}
-				</div>
-			</div>
 		</center>
 	</div>
 </template>

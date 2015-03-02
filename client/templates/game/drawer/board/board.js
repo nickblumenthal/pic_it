@@ -1,7 +1,7 @@
 minZoom=0.1;
 minZone=960; //pixels, min square zone that every body can see
 lineGrow=5; //the greater, the thiner the line is when starting/ending
-Session.set("board_w",minZone);
+Session.set("board_w",550);
 Session.set("board_h",minZone);
 Session.set("zoom",1);
 
@@ -46,15 +46,16 @@ Template.board.created = function () {
 	var round = this.data;
 
 	Meteor.subscribe( "Lines", round._id );
-	
+
 };
 
 Template.board.rendered = function() {
 	var round = this.data;
+	resizeBoard();
 	boardRender(true, round);
-	window.onresize = resizeControl.bind(this);
+	// window.onresize = resizeControl.bind(this);
 
-	Rounds.startLinesObserver( round );
+	Rounds.startLinesObserver(round);
 }
 
 Template.board.destroyed = function () {
@@ -91,8 +92,8 @@ var resizeControl = function () {
 
 			canvas.width=s.w;
 			canvas.height=s.h;
-			
-			boardRender(true, round)
+
+			boardRender(false, round)
 		}
 	}
 }
@@ -143,18 +144,18 @@ var boardRender = function (overlay, round) {
 	context.clearRect ( 0 , 0 , canvas.width , canvas.height );
 
 	if (overlay) {
-	  context.beginPath();
-		context.strokeStyle = "rgba(240, 240, 240, 255)";
-		context.lineWidth = 4;
-		context.moveTo(center.x+minZone*0.5*zoom,center.y+minZone*0.5*zoom);
-		context.lineTo(center.x+minZone*0.5*zoom,center.y-minZone*0.5*zoom);
-		context.lineTo(center.x-minZone*0.5*zoom,center.y-minZone*0.5*zoom);
-		context.lineTo(center.x-minZone*0.5*zoom,center.y+minZone*0.5*zoom);
-		context.lineTo(center.x+minZone*0.5*zoom,center.y+minZone*0.5*zoom);
-		context.stroke();
+	  // context.beginPath();
+		// context.strokeStyle = "rgba(240, 240, 240, 255)";
+		// context.lineWidth = 4;
+		// context.moveTo(center.x+minZone*0.5*zoom,center.y+minZone*0.5*zoom);
+		// context.lineTo(center.x+minZone*0.5*zoom,center.y-minZone*0.5*zoom);
+		// context.lineTo(center.x-minZone*0.5*zoom,center.y-minZone*0.5*zoom);
+		// context.lineTo(center.x-minZone*0.5*zoom,center.y+minZone*0.5*zoom);
+		// context.lineTo(center.x+minZone*0.5*zoom,center.y+minZone*0.5*zoom);
+		// context.stroke();
 	}
 
-	var lines=linesToDraw; 
+	var lines=linesToDraw;
 
 	if (lines) {
 
@@ -344,4 +345,9 @@ var insertLine = function(roundID, color, width, x0, y0, x1, y1) {
 
 var pushPoint = function(line_id, x, y) {
 	Lines.update({ _id: line_id }, { $push: { points : {x:x,y:y} } });
+}
+
+var resizeBoard = function() {
+	Session.set("board_w", $('.drawer-canvas').width());
+	Session.set("board_h", $('.drawer-canvas').height());
 }

@@ -12,8 +12,9 @@
 .open-game:hover {
 	background-color: #619FBA;
 	color: white;
+	cursor: pointer;
 }
 
 #open-games h2 {
-	font-color: #FFF;
+	color: #FFF;
 }

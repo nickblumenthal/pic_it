@@ -1,15 +1,6 @@
 .hidden {
   opacity: 0;
 }
-/*body{
-	background: url("/greenish.jpg");
-	background-size: cover;
-}*/
-
-/*.tile {
-	background: rgba(0,0,0,0.35);
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
-}*/
 
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
@@ -32,21 +23,8 @@ body {
 	color: white;
 }
 
-input {
-	height: 53px;
-	color: #aaa;
-	border: none;
-	border-bottom: solid 3px rgba(0,0,0,0.1);
-	appearance: none;
-	-webkit-background-clip: padding-box; /* for Safari */
-  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
-	transition: border-bottom 1s;
-	position: relative;
-	top: 1px;
-}
-
-input:focus {
-	border-bottom: solid 3px rgba(0,0,0,0.5);
-	outline: none;
-	outline-offset: 0;
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
