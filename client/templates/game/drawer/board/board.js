@@ -264,9 +264,10 @@ if (isTouchSupported) {
 
 function convertTouchEvent(e) {
 	if (isTouchSupported) {
-		if (e.touches[0]) {
-			e.insideX=e.touches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
-			e.insideY=e.touches[0].pageY - document.getElementById('board').getBoundingClientRect().top;
+
+		if (e.originalEvent.touches[0]) {
+			e.insideX=e.originalEvent.touches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
+			e.insideY=e.originalEvent.touches[0].pageY - document.getElementById('board').getBoundingClientRect().top;
 		} else {
 			e.insideX=e.changedTouches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
 			e.insideY=e.changedTouches[0].pageY - document.getElementById('board').getBoundingClientRect().top;
