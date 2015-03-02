@@ -12,7 +12,9 @@
 
 	<hr>
 
-	<div class="canvas-controls">
-		<button id="clear-lines" class="pt-touch-button">Clear Board</button>
-	</div>
+	{{#if drawer}}
+		<div class="canvas-controls">
+			<button id="clear-lines" class="pt-touch-button">Clear Board</button>
+		</div>
+	{{/if}}
 </template>

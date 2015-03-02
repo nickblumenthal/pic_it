@@ -20,6 +20,10 @@ Template.board.helpers({
 		return Session.get('role');
 	},
 
+	drawer: function() {
+		return Session.get('role') === 'drawer';
+	},
+
 	guessedWords: function() {
     return this.guessedWords
   },
