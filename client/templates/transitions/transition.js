@@ -14,15 +14,16 @@ var hooks = {
 
     // // Make it visible
     // // Adds transition effect
-    if ( Session.get('firstHook') ) {
+    if ( Session.get('notFirstHook') ) {
 	    $node.addClass('pt-page-' + transitionDir('insert'))
     };
 
     $node.on( animEndEventName, function () {
-	    Session.set('firstHook', true )
     	$node.off( animEndEventName );
     	$node.removeClass('pt-page-' + transitionDir('insert'))
     })
+    // debugger
+    Session.set('notFirstHook', true )
 
   },
 
