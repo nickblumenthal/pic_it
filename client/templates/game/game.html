@@ -50,7 +50,9 @@
 				<div class="col-lg-2  col-lg-offset-1">
 					{{#if gameInProgress}}
 						<div id="countdown"></div>
-						{{> guessList}}
+						{{#unless inLobbyOrStarting}}
+							{{> guessList}}
+						{{/unless}}
 					{{/if}}
 				</div>
 			</div>
