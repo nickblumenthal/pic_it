@@ -4,8 +4,8 @@ Template.layout.rendered = function () {
 	var $content = this.$('.pt-page')
 
 	// For velocity transitions
-	var $velContent = this.$('.transition-hidden')
-	$velContent.removeClass('transition-hidden')
+	// var $velContent = this.$('.transition-hidden')
+	// $velContent.removeClass('transition-hidden')
 
 	$content.addClass('pt-page-current');
 	$main.addClass('pt-page-current').addClass('pt-page-moveFromTop');
