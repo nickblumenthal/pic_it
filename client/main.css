@@ -1,6 +1,4 @@
-.hidden {
-  opacity: 0;
-}
+html { overflow: scroll; }
 
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;

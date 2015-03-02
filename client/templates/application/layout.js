@@ -8,12 +8,12 @@ Template.layout.rendered = function () {
 	// $velContent.removeClass('transition-hidden')
 
 	$content.addClass('pt-page-current');
-	$main.addClass('pt-page-current').addClass('pt-page-moveFromTop');
+	$main.addClass('pt-page-current').addClass('pt-page-moveFromBottom');
 
 
 	$main.on( animEndEventName, function () {
 		$main.off( animEndEventName );
-		$main.removeClass('pt-page-moveFromTop');
+		$main.removeClass('pt-page-moveFromBottom');
 	})
 	// this.$('#main').velocity('transition.slideDownBigIn', {
 	// 	complete: function () {
