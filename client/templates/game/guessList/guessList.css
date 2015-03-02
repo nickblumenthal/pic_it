@@ -6,3 +6,8 @@
   padding-bottom: 20px;
   overflow: hidden;
 }
+
+.guess-list ul {
+  color: #e85c4a;
+  text-decoration: line-through;
+}
