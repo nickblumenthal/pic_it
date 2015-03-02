@@ -7,7 +7,7 @@ Template.gameLobby.helpers({
 	},
 
 	players: function () {
-		return this.players;
+		return _.sortBy( this.players, 'points' ).reverse();
 	},
 
 	disableBtn: function () {
