@@ -2,7 +2,7 @@ var guessedWords = new ReactiveArray();
 
 Template.guesser.events({
 	'keyup #guess': function (event, template) {
-		guess = handleGuess($('#guess').val(), template);
+		guess = handleGuess($('#guess').val().toLowerCase(), template);
 		if(guess) {
 			guesses = this.guessedWords;
 			guesses.unshift(guess);
