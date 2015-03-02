@@ -4,18 +4,14 @@
 			<div id="open-games">
 			<h2>Open Games:</h2>
 
-				<div id="games-container">
-					<!-- {{#if ready}} -->
-						<!-- {{#transition}} -->
-						{{#each openGames}}
-							<div class="open-game " data-id="{{ this._id }}">
-								{{ this.name }}
-							</div>
-						{{/each}}
-						<!-- {{/transition}} -->
-					<!-- {{else}}
-						<center>Loading Open Games..</center>
-					{{ /if }} -->
+				<div class="games-container">
+						{{#transition}}
+							{{#each openGames}}
+								<div class="open-game games-transition" data-id="{{ this._id }}">
+									{{ this.name }}
+								</div>
+							{{/each}}
+						{{/transition}}
 
 				</div>
 
@@ -30,12 +26,12 @@
 			<div id="finished-games">
 			<h2>Finished Games:</h2>
 
-				<div>
-					{{#each finishedGames}}
-						<div class="open-game" data-id="{{ this._id }}">
-							{{ this.name }}
-						</div>
-					{{/each}}
+				<div class="games-container">
+						{{#each finishedGames}}
+							<div class="open-game" data-id="{{ this._id }}">
+								{{ this.name }}
+							</div>
+						{{/each}}
 				</div>
 
 				<div class="controls">
@@ -44,9 +40,4 @@
 				</div>
 			</div>
 		{{/if}}
-	<!-- {{else}}
-		<center>
-		<p>Loading</p>
-		</center>
-	{{/if}} -->
 </template>

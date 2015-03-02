@@ -48,10 +48,18 @@ var gamesHooks = {
 
   insertElement: function(node, next) {
   	var $node = $(node);
+    var that = this;
 
     $node.insertBefore(next);
 
-    $node.velocity('transition.slideLeftBigIn', { delay: 1000, display: 'inline-block'})
+    var remove = function () {
+      if (that.transitioning) {
+        Meteor.setTimeout( remove, 50 )
+      } else {
+        $node.velocity('transition.slideLeftBigIn', { duration: 300, delay: 250, display: 'inline-block'})
+      }
+    };
+    remove();
   },
 
 
@@ -59,7 +67,8 @@ var gamesHooks = {
     var $node = $(node);
     var that = this;
 
-    $node.velocity('transition.slideRightBigOut', function () {
+    this.transitioning = true
+    $node.velocity('transition.slideRightBigOut', 300, function () {
       $node.remove()
       that.transitioning = false;
     })
@@ -69,8 +78,10 @@ var gamesHooks = {
  
 Template.transition.rendered = function() {
 	var parentNode = this.firstNode.parentNode;
+  var className = parentNode.className;
 
-	if ( parentNode.id === "games-container") {
+  // To distinguish with templates to give what hooks
+	if ( className === "games-container") {
 		parentNode._uihooks = gamesHooks;
 	} else {
 		parentNode._uihooks = hooks;

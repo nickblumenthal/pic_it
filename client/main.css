@@ -30,3 +30,8 @@ ul {
 .transition-hidden {
 	opacity: 0;
 }
+
+.games-transition {
+	display: none;
+	opacity: 0;
+}
