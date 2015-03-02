@@ -16,13 +16,13 @@
 					<!-- TEMP: Probably break into different templates -->
 					<div class="row">
 						<div class="col-lg-12">
-							{{#if gameInProgress}}
+							{{#if inLobbyOrStarting}}
 								<div id="temp">
 									<h3>Game: {{ this.name }}</h3>
 
 									<p><span>Status: {{ gameStatus }}</span>
 									<span>
-										{{#if inLobby}}
+										{{#if inLobbyOrStarting}}
 											Upcoming Round: {{ nextRoundNum }}
 										{{else}}
 											Current Round: {{ roundNum }}
@@ -30,7 +30,8 @@
 									</span>
 									</p>
 								</div>
-							{{else}}
+							{{/if}}
+							{{#if gameFinished}}
 								<div>
 									<p>GAME OVER</p>
 									<p>Game winner: {{ this.winner }}</p>
@@ -38,7 +39,7 @@
 							{{/if}}
 						</div>
 					</div>
-					<hr>
+
 					<div class="row">
 						<div class="col-lg-12">
 							{{> DynamicTemplate template=getTemplate data=getDataContext }}

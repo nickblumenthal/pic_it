@@ -31,7 +31,15 @@ Template.game.helpers({
 	},
 
 	inLobby: function () {
-		return ( this.status === "waiting" ? true : false )
+		return ( this.status === "waiting" ? true : false );
+	},
+
+	inLobbyOrStarting: function () {
+		return ( (this.status === "waiting" || this.status === "starting") ? true : false);
+	},
+
+	gameFinished: function () {
+		return ( this.status == "finished" ? true: false );
 	},
 
 	getSessionID: function () {
