@@ -42,9 +42,40 @@ var hooks = {
 		})
   }
 };
+
+var gamesHooks = {
+  transitioning: false,
+
+  insertElement: function(node, next) {
+  	var $node = $(node);
+
+    $node.insertBefore(next);
+
+    $node.velocity('transition.slideLeftBigIn', { delay: 1000, display: 'inline-block'})
+  },
+
+
+  removeElement: function(node) {
+    var $node = $(node);
+    var that = this;
+
+    $node.velocity('transition.slideRightBigOut', function () {
+      $node.remove()
+      that.transitioning = false;
+    })
+  }
+};
+
  
 Template.transition.rendered = function() {
-  this.firstNode.parentNode._uihooks = hooks;
+	var parentNode = this.firstNode.parentNode;
+
+	if ( parentNode.id === "games-container") {
+		parentNode._uihooks = gamesHooks;
+	} else {
+		parentNode._uihooks = hooks;
+	}
+
 };
 
 var transitionDir = function ( action ) {
