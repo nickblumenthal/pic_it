@@ -234,15 +234,15 @@ var isTouchSupported = 'ontouchstart' in window;
 if (isTouchSupported) {
 	Template.board.events({
 		"touchstart #board": function (e,tmp) {
-			//console.log("touchstart");
+			console.log("touchstart");
 			mpTouchStart(e);
 		},
 		"touchmove #board": function (e,tmp) {
-			//console.log("touchmove");
+			console.log("touchmove");
 			mpTouchMove(e, tmp);
 		},
 		"touchend #board": function (e,tmp) {
-			//console.log("touchend");
+			console.log("touchend");
 			mpTouchEnd(e);
 		},
 	});
