@@ -68,7 +68,15 @@ Template.game.helpers({
 			return player.sessionID === Session.get('playerID')
 		});
 		return player.name || 'Guest';
-	}
+	},
+
+	disableBtn: function () {
+		if ( this.status !== "waiting" ) { return "disabled" };
+	},
+
+	disabledBtnClass: function () {
+		return (this.status !== "waiting" ? "disable-btn" : "" )
+	},
 });
 
 

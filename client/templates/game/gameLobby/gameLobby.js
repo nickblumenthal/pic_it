@@ -10,14 +10,6 @@ Template.gameLobby.helpers({
 		return this.players;
 	},
 
-	disableBtn: function () {
-		if ( this.status === "starting" ) { return "disabled" };
-	},
-
-	disabledBtnClass: function () {
-		return (this.status === "starting" ? "disable-btn" : "" )
-	},
-
 	rounds: function() {
 		return Rounds.find({'game._id': this._id});
 	},
