@@ -6,6 +6,15 @@ Template.openGames.helpers({
 		})
 	},
 
+	// Remove count, use openGames if statement inside of blaze
+
+	openGamesCount: function () {
+		return Games.find({ status: { $ne: "finished" }}, {
+			sort: { createdAt: -1 },
+			limit: 20
+		}).count()
+	},
+
 	finishedGames: function () {
 		return Games.find({ status: "finished" }, {
 			sort: { createdAt: -1 },
@@ -17,6 +26,13 @@ Template.openGames.helpers({
 		return _.all( Template.instance().subscriptions, function (sub, key) {
 			return sub.ready()
 		})
+	},
+
+	finishedGamesCount: function() {
+		return Games.find({ status: "finished" }, {
+			sort: { createdAt: -1 },
+			limit: 20
+		}).count()
 	}
 });
 
@@ -63,7 +79,7 @@ Template.openGames.created = function() {
 }
 
 
-// Terminates subs 
+// Terminates subs
 Template.openGames.destroyed = function () {
 	_.each( this.subscriptions, function (sub) {
 		sub.stop();

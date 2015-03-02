@@ -16,17 +16,18 @@ Template.gameLobby.helpers({
 
 	disabledBtnClass: function () {
 		return (this.status === "starting" ? "disable-btn" : "" )
+	},
+
+	rounds: function() {
+		return Rounds.find({'game._id': this._id});
+	},
+
+	roundsCount: function() {
+		return Rounds.find({'game._id': this._id}).count();
 	}
 });
 
 Template.gameLobby.events({
-	'click #create-round': function (event) {
-		var game = this;
-
-		Meteor.call('startCountdown', game, function (error, result) {
-		});
-	},
-
 	'click #change-username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
 		// Games.update(this._id, {$set: {players[]}})
@@ -39,9 +40,10 @@ Template.gameLobby.created = function () {
 
 
 // IMPORTANT: Meteor looks at a reactive element's parent for a property
-// _uihooks to see what to do before inserting, moving or deleting the 
+// _uihooks to see what to do before inserting, moving or deleting the
 // reactive element
 
+// Need to refactor this
 Template.gameLobby.rendered = function() {
 
   var reactiveList = this.$('.animated');

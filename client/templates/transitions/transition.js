@@ -8,15 +8,18 @@ var hooks = {
   	var $node = $(node);
 
     $node.insertBefore(next);
-    // Make it visible
-    $node.addClass('pt-page-current')
-    // Adds transition effect
-    $node.addClass('pt-page-' + transitionDir('insert'))
 
-    $node.on( animEndEventName, function () {
-    	$node.off( animEndEventName );
-    	$node.removeClass('pt-page-' + transitionDir('insert'))
-    })
+    $node.addClass('pt-page-current')
+    $node.velocity('transition.slideLeftBigIn', { delay: 750})
+
+    // // Make it visible
+    // // Adds transition effect
+    // $node.addClass('pt-page-' + transitionDir('insert'))
+
+    // $node.on( animEndEventName, function () {
+    // 	$node.off( animEndEventName );
+    // 	$node.removeClass('pt-page-' + transitionDir('insert'))
+    // })
   },
 
 
@@ -26,20 +29,19 @@ var hooks = {
     var that = this;
 
 
-    // if 	Router.current().url
-    // $node.velocity('transition.slideRightBigOut', function () {
-    //   $node.remove()
-    //   that.transitioning = false;
-    // })
+    $node.velocity('transition.slideRightBigOut', function () {
+      $node.remove()
+      that.transitioning = false;
+    })
 
 		// TEMP: Switch this to a Session variable
-		$node.addClass( 'pt-page-' + transitionDir('remove') );
+		// $node.addClass( 'pt-page-' + transitionDir('remove') );
 
-		$node.on( animEndEventName, function () {
-			$node.off( animEndEventName )
-			// $node.removeClass('pt-page-current')
-			$node.remove()
-		})
+		// $node.on( animEndEventName, function () {
+		// 	$node.off( animEndEventName )
+		// 	// $node.removeClass('pt-page-current')
+		// 	$node.remove()
+		// })
   }
 };
  

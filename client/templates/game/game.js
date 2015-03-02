@@ -51,6 +51,7 @@ Template.game.helpers({
 		}
 	},
 
+	// TEMP: Refactor this to take a NUM argument and then delete nextRoundNum
 	roundNum: function () {
 		return Rounds.find({ 'game._id': this._id }).count()
 	},
@@ -63,6 +64,13 @@ Template.game.helpers({
 
 
 Template.game.events({
+	'click #create-round': function (event) {
+		var game = this;
+
+		Meteor.call('startCountdown', game, function (error, result) {
+		});
+	},
+
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 
@@ -70,6 +78,11 @@ Template.game.events({
 		Games.stopClockObserve( );
 
 		Router.go('home');
+	},
+
+	'click #change-username': function (event) {
+		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
+		// Games.update(this._id, {$set: {players[]}})
 	}
 });
 

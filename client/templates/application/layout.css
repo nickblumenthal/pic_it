@@ -1,6 +1,9 @@
+/* THIS IS ALL THAT IS NEEDED FOR CSS TRANSITIONS */
+
+
 /* Needed for all animations */
 
-.pt-perspective {
+/*.pt-perspective {
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -32,12 +35,12 @@
 .pt-page-ontop {
 	z-index: 999;
 }
-
+*/
 
 
 /* Animation sets */
 
-.pt-page-moveFromTop {
+/*.pt-page-moveFromTop {
 	-webkit-animation: moveFromTop .6s ease both;
 	animation: moveFromTop .6s ease both;
 }
@@ -66,13 +69,13 @@
 	-webkit-animation: moveFromRight .6s ease both;
 	animation: moveFromRight .6s ease both;
 }
-
+*/
 
 
 /* Move from / to */
 
 
-@-webkit-keyframes moveToLeft {
+/*@-webkit-keyframes moveToLeft {
 	from { }
 	to { -webkit-transform: translateX(-100%); }
 }
@@ -118,13 +121,13 @@
 @keyframes moveToBottom {
 	from { }
 	to { -webkit-transform: translateY(100%); transform: translateY(100%); }
-}
+}*/
 
 
 
 /* animation delay classes */
 
-.pt-page-delay100 {
+/*.pt-page-delay100 {
 	-webkit-animation-delay: .1s;
 	animation-delay: .1s;
 }
@@ -155,4 +158,4 @@
 .pt-page-delay1000 {
 	-webkit-animation-delay: 1s;
 	animation-delay: 1s;
-}
+}*/

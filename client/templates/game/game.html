@@ -1,34 +1,58 @@
 <template name="game">
+	<div class="game transition-hidden">
+		<center>
+			<div class="row">
 
-	<div>
-		<center style="border:3px solid black">
+				<div class="col-lg-2 navigation">
+					<button id="home" class="pt-touch-button">Back to homepage</button>
+					{{#if gameInProgress}}
+						<button id="create-round" class="{{disabledBtnClass}} pt-touch-button" {{disableBtn}} >Start Round</button>
+					{{/if}}
+					<input id="username" value="">
+					<button type="submit" id="change-username" class="pt-touch-button">Set Username</button>
+				</div>
 
-			<button id="home">Back to homepage</button>
-		
-		<!-- TEMP: Probably break into different templates -->
-			{{#if gameInProgress}}
-				<div id="temp">
-					<p>Game Template</p>
-					<p>Game name: {{ this.name }}</p>
-					<div id="countdown"></div>
-				
-					<p>Game status: {{ gameStatus }}</p>
-					<p>Player ID: {{ getSessionID }}</p>
-					{{#if inLobby}}
-						<p>Upcoming Round: {{ nextRoundNum }}</p>
-					{{else}}
-						<p>Current Round: {{ roundNum }}</p>
+				<div class="col-lg-6 col-lg-offset-1 game-status">
+					<!-- TEMP: Probably break into different templates -->
+					<div class="row">
+						<div class="col-lg-12">
+							{{#if gameInProgress}}
+								<div id="temp">
+									<h3>Game: {{ this.name }}</h3>
+
+									<p><span>Status: {{ gameStatus }}</span>
+									<span>
+										{{#if inLobby}}
+											Upcoming Round: {{ nextRoundNum }}
+										{{else}}
+											Current Round: {{ roundNum }}
+										{{/if}}
+									</span>
+									</p>
+								</div>
+							{{else}}
+								<div>
+									<p>GAME OVER</p>
+									<p>Game winner: {{ this.winner }}</p>
+								</div>
+							{{/if}}
+						</div>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-lg-12">
+							{{> DynamicTemplate template=getTemplate data=getDataContext }}
+						</div>
+					</div>
+				</div>
+
+				<div class="col-lg-2  col-lg-offset-1">
+					{{#if gameInProgress}}
+						<div id="countdown"></div>
 					{{/if}}
 				</div>
-			{{else}}
-				<div>
-					<p>GAME OVER</p>
-					<p>Game winner: {{ this.winner }}</p>
-				</div>
-			{{/if}}
+			</div>
 
 		</center>
-
-		{{> DynamicTemplate template=getTemplate data=getDataContext }}
 	</div>
 </template>

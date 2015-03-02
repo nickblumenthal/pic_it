@@ -1,18 +1,16 @@
 <template name="board">
 	<div>
-		<p>CANVAS</p>
-		<p>Round ID: {{ this._id }}</p>
-		<p>Drawer: {{ this.drawer }}</p>
 		{{ #each guessedWords }}
 	    {{ this }}
 	  {{ /each }}
 	</div>
+
 	<div>
 		<button id="clear-lines">Clear Board</button>
 	</div>
-	<div onselectstart="return false;" ondragstart="return false;" >
 
-	<canvas id="board" width="{{width}}" height="{{height}}" style="border:4px solid;"></canvas>
-
+	<div class="drawer-canvas" onselectstart="return false;" ondragstart="return false;" >
+		<canvas id="board" width="{{width}}" height="{{height}}"></canvas>
 	</div>
+
 </template>

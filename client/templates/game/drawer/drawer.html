@@ -1,4 +1,8 @@
 <template name="drawer">
-  <p>{{ chosenWord }}</p>
-  {{> board }}
+  <div class="drawer">
+    <p>{{ chosenWord }}</p>
+    <div class="drawer-view">
+      {{> board }}
+    </div>
+  </div>
 </template>
