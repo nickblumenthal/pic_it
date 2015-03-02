@@ -12,19 +12,13 @@ var hooks = {
     $node.addClass('pt-page-current')
     // $node.velocity('transition.slideLeftBigIn', { delay: 750})
 
-    // // Make it visible
     // // Adds transition effect
-    if ( Session.get('notFirstHook') ) {
 	    $node.addClass('pt-page-' + transitionDir('insert'))
-    };
 
     $node.on( animEndEventName, function () {
     	$node.off( animEndEventName );
     	$node.removeClass('pt-page-' + transitionDir('insert'))
     })
-    // debugger
-    Session.set('notFirstHook', true )
-
   },
 
 
@@ -32,7 +26,6 @@ var hooks = {
     var remove;
     var $node = $(node);
     var that = this;
-
 
     // $node.velocity('transition.slideRightBigOut', function () {
     //   $node.remove()
