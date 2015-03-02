@@ -1,6 +1,4 @@
-.hidden {
-  opacity: 0;
-}
+html { overflow: scroll; }
 
 body {
 	font-family: 'Lato', Calibri, Arial, sans-serif;
@@ -28,4 +26,8 @@ ul {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.transition-hidden {
+	opacity: 0;
 }

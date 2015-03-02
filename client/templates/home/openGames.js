@@ -6,6 +6,8 @@ Template.openGames.helpers({
 		})
 	},
 
+	// Remove count, use openGames if statement inside of blaze
+
 	openGamesCount: function () {
 		return Games.find({ status: { $ne: "finished" }}, {
 			sort: { createdAt: -1 },

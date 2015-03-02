@@ -7,7 +7,7 @@ Template.gameLobby.helpers({
 	},
 
 	players: function () {
-		return this.players;
+		return _.sortBy( this.players, 'points' ).reverse();
 	},
 
 	rounds: function() {
@@ -35,6 +35,7 @@ Template.gameLobby.created = function () {
 // _uihooks to see what to do before inserting, moving or deleting the
 // reactive element
 
+// Need to refactor this
 Template.gameLobby.rendered = function() {
 
   var reactiveList = this.$('.animated');

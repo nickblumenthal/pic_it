@@ -1,13 +1,15 @@
 <template name="home">
-	<center>
-		<div class="home">
-			<h2>Create a new game</h2>
-			<!-- TEMP: Turn into a form -->
-			<div class="form-group">
-				<input type="text" class="standard" name="gameName" id="gameName">
-				<button id="create" class="pt-touch-button wide">Create Game</button>
+	<div class="pt-page">
+		<center>
+			<div class="home">
+				<h2>Create a new game</h2>
+				<!-- TEMP: Turn into a form -->
+				<div class="form-group">
+					<input type="text" class="standard" name="gameName" id="gameName">
+					<button id="create" class="pt-touch-button">Create Game</button>
+				</div>
 			</div>
-		</div>
-		{{> openGames }}
-	</center>
+			{{> openGames }}
+		</center>
+	</div>
 </template>

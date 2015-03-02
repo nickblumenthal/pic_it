@@ -31,7 +31,11 @@ Template.game.helpers({
 	},
 
 	inLobby: function () {
-		return ( this.status === "waiting" ? true : false );
+		if ( (this.status === "waiting") || ( this.status === "starting")) {
+			return true
+		} else {
+			return false
+		}
 	},
 
 	inLobbyOrStarting: function () {
@@ -55,12 +59,13 @@ Template.game.helpers({
 		}
 	},
 
+	// TEMP: Refactor this to take a NUM argument and then delete nextRoundNum
 	roundNum: function () {
 		return Rounds.find({ 'game._id': this._id }).count()
 	},
 
 	nextRoundNum: function () {
-		return Rounds.find({ 'game._id': this._id }).count()
+		return Rounds.find({ 'game._id': this._id }).count() + 1
 	},
 
 	getUsername: function() {
@@ -77,6 +82,7 @@ Template.game.helpers({
 	disabledBtnClass: function () {
 		return (this.status !== "waiting" ? "disable-btn" : "" )
 	},
+
 });
 
 
@@ -92,10 +98,8 @@ Template.game.events({
 	'click #home': function (event) {
 		Meteor.call('removeUser', Session.get('playerID'), this._id);
 
-		// Kill observers:
+		// Kill clock observer
 		Games.stopClockObserve( );
-		// Defined in board.js
-		Rounds.stopLinesObserver();
 
 		Router.go('home');
 	},
@@ -128,7 +132,6 @@ Template.game.rendered = function () {
 
 // TEMP: Not sure if this allowed, but had to save the observer
 // in order to access it from the events
-
 Games.startClockObserve = function startClockObserve(clock, gameID) {
 	Games.clockObserver =  Tracker.autorun(function () {
 		try {
@@ -143,23 +146,6 @@ Games.stopClockObserve = function stopClockObserve () {
 		Games.clockObserver.stop();
 	};
 }
-
-// Games.startClockObserve = function startClockObserve(gameID) {
-// 	Games.clockObserver = 	Games.find( gameID ).observeChanges({
-// 		changed: function (id, fields) {
-// 			if (fields.timer != null) {
-// 				clock.setTime(fields.timer)
-// 			};
-// 		}
-// 	});
-// }
-
-// Games.stopClockObserve = function stopClockObserve () {
-// 	if ( Games.clockObserver ) {
-// 		Games.clockObserver.stop();
-// 	};
-// }
-
 
 
 var updateClock = function (clock, time) {
