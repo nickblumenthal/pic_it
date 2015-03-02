@@ -19,3 +19,7 @@ animEndEventNames = {
 	'msAnimation' : 'MSAnimationEnd',
 	'animation' : 'animationend'
 }
+
+// TEMP: Added this here because lib gets loaded before Modernizr
+// therefore causing an error
+animEndEventName = animEndEventNames[ Modernizr.prefixed( 'animation' ) ]

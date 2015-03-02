@@ -1,31 +1,34 @@
 <template name="game">
-	<center style="border:3px solid black">
 
-		<button id="home">Back to homepage</button>
-	
-	<!-- TEMP: Probably break into different templates -->
-		{{#if gameInProgress}}
-			<div id="temp">
-				<p>Game Template</p>
-				<p>Game name: {{ this.name }}</p>
-				<div id="countdown"></div>
-			
-				<p>Game status: {{ gameStatus }}</p>
-				<p>Player ID: {{ getSessionID }}</p>
-				{{#if inLobby}}
-					<p>Upcoming Round: {{ nextRoundNum }}</p>
-				{{else}}
-					<p>Current Round: {{ roundNum }}</p>
-				{{/if}}
-			</div>
-		{{else}}
-			<div>
-				<p>GAME OVER</p>
-				<p>Game winner: {{ this.winner }}</p>
-			</div>
-		{{/if}}
+	<div>
+		<center style="border:3px solid black">
 
-	</center>
+			<button id="home">Back to homepage</button>
+		
+		<!-- TEMP: Probably break into different templates -->
+			{{#if gameInProgress}}
+				<div id="temp">
+					<p>Game Template</p>
+					<p>Game name: {{ this.name }}</p>
+					<div id="countdown"></div>
+				
+					<p>Game status: {{ gameStatus }}</p>
+					<p>Player ID: {{ getSessionID }}</p>
+					{{#if inLobby}}
+						<p>Upcoming Round: {{ nextRoundNum }}</p>
+					{{else}}
+						<p>Current Round: {{ roundNum }}</p>
+					{{/if}}
+				</div>
+			{{else}}
+				<div>
+					<p>GAME OVER</p>
+					<p>Game winner: {{ this.winner }}</p>
+				</div>
+			{{/if}}
 
-	{{> DynamicTemplate template=getTemplate data=getDataContext }}
+		</center>
+
+		{{> DynamicTemplate template=getTemplate data=getDataContext }}
+	</div>
 </template>
