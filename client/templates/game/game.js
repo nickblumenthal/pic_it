@@ -111,6 +111,9 @@ Template.game.events({
 	}
 });
 
+Template.game.created = function () {
+
+};
 
 
 Template.game.rendered = function () {

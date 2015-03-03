@@ -139,10 +139,6 @@ Meteor.methods({
 		Lines.update({ _id: line_id }, { $push: { points : {x:x,y:y} } });
 	},
 
-	getSessionID: function () {
-		return this.connection.id;
-	},
-
 	removeUser: function (playerID, gameID) {
 		Games.update(gameID, { $pull: { players: {sessionID: playerID }}});
 	},
