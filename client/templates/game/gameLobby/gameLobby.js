@@ -27,57 +27,19 @@ Template.gameLobby.events({
 
 });
 
-Template.gameLobby.created = function () {
-}
 
-
-// IMPORTANT: Meteor looks at a reactive element's parent for a property
-// _uihooks to see what to do before inserting, moving or deleting the
-// reactive element
-
-// Need to refactor this
 Template.gameLobby.rendered = function() {
 
   var reactiveList = this.$('.animated');
 
-	// Animated players list
+	// Initial anim of players list
 	reactiveList.children().velocity('transition.slideLeftIn',
 		{ stagger: 250 }
 	)
-  // Adds animations to reactive elements inside of .animated
-  createElementHooks( reactiveList );
 
 };
 
-var createElementHooks = function ($obj) {
-	// TEMP: Can iterate if multiple items
-	$obj[0]._uihooks = {
-
-    insertElement: function(node, next) {
-      $(node).insertBefore(next);
-      return Tracker.afterFlush(function() {
-      	$(node).velocity('transition.slideLeftIn')
-      });
-    },
-
-		removeElement: function(node) {
-			// Need this for CSS transitions
-	    // var finishEvent;
-	    // finishEvent = 'webkitTransitionEnd oTransitionEnd transitionEnd msTransitionEnd transitionend';
-
-	    // return $(node).on(finishEvent, function() {
-	    //   return $(node).remove();
-	    // });
-
-			var $node = $(node);
-
-    	$node.velocity('transition.slideRightOut', function () {
-    		$node.remove()
-    	})
-	  }
-  };
-}
-
+// TEMP: Might want to refactor this into the overall game template
 window.onbeforeunload = function(){
 	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
 }

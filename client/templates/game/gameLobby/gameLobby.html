@@ -4,10 +4,12 @@
 			<div class="game-lobby">
 				<div id="players">
 					<h3>Players & Points</h3>
-					<ul class="current-players animated">
-						{{#each this.players}}
-							<li class="transition-hidden">{{this.name}} : {{this.points}}</li>
-						{{/each}}
+					<ul id="current-players-list" class="current-players animated">
+						{{#transition}}
+							{{#each this.players}}
+								<li class="transition-hidden">{{this.name}} : {{this.points}}</li>
+							{{/each}}
+						{{/transition}}
 					</ul>
 				</div>
 				<hr>

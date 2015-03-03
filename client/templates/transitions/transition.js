@@ -1,3 +1,7 @@
+// IMPORTANT: Meteor looks at a reactive element's parent for a property
+// _uihooks to see what to do before inserting, moving or deleting the
+// reactive element
+
 // Hooks for initial page transition
 var hooks = {
   transitioning: false,
@@ -69,7 +73,9 @@ var createTransitionHooks = function (transIn, transOut, display, wait) {
           $node.velocity( trans, { duration: 500, display: display})
         }
       };
-      insert();
+      return Tracker.afterFlush( function () {
+        insert()
+      })
     },
 
      moveElement: function (node, next) {
@@ -114,7 +120,9 @@ Template.transition.rendered = function() {
     parentNode._uihooks = createTransitionHooks('slideRightBigIn', 'slideRightBigOut', 'block')
   } else if ( parentNode.id === "guesses") {
     parentNode._uihooks = createTransitionHooks('slideLeftBigIn', 'slideRightBigOut', 'block', false)
-  } 
+  } else if ( parentNode.id === "current-players-list" ) {
+    parentNode._uihooks = createTransitionHooks('slideLeftIn', 'slideRightOut', 'block', false)
+  }
   else {
     // Route change hooks
 		parentNode._uihooks = hooks;
