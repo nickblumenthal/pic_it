@@ -52,16 +52,15 @@ var gamesHooks = {
 
     $node.insertBefore(next);
 
-    var remove = function () {
+    var insert = function () {
       if (that.transitioning) {
-        Meteor.setTimeout( remove, 50 )
+        Meteor.setTimeout( insert, 50 )
       } else {
         $node.velocity('transition.slideLeftBigIn', { duration: 300, delay: 250, display: 'inline-block'})
       }
     };
-    remove();
+    insert();
   },
-
 
   removeElement: function(node) {
     var $node = $(node);
@@ -75,15 +74,51 @@ var gamesHooks = {
   }
 };
 
+var gameTemplateHooks = {
+  transitioning: false,
+
+  insertElement: function(node, next) {
+    var $node = $(node);
+    var that = this;
+
+    $node.hide();
+
+    $node.insertBefore(next);
+
+    var insert = function () {
+      if (that.transitioning) {
+        Meteor.setTimeout( insert, 50 )
+      } else {
+        $node.velocity('transition.slideUpBigIn', { duration: 300, delay: 250, display: 'inline-block'})
+      }
+    };
+    insert();
+  },
+
+  removeElement: function(node) {
+    var $node = $(node);
+    var that = this;
+
+    this.transitioning = true
+    $node.velocity('transition.slideDownBigOut', 300, function () {
+      $node.remove()
+      that.transitioning = false;
+    })
+  }
+};
  
 Template.transition.rendered = function() {
 	var parentNode = this.firstNode.parentNode;
   var className = parentNode.className;
 
+  console.log(parentNode)
+
   // To distinguish with templates to give what hooks
 	if ( className === "games-container") {
 		parentNode._uihooks = gamesHooks;
-	} else {
+	} else if ( parentNode.id === "game-view" ) {
+    parentNode._uihooks = gameTemplateHooks;
+  } else {
 		parentNode._uihooks = hooks;
 	}
 

@@ -48,8 +48,10 @@
 					</div>
 
 					<div class="row">
-						<div class="col-lg-12">
-							{{> DynamicTemplate template=getTemplate data=getDataContext }}
+						<div id="game-view" class="col-lg-12">
+							{{#transition}}
+								{{> DynamicTemplate template=getTemplate data=getDataContext }}
+							{{/transition}}
 						</div>
 					</div>
 				</div>

@@ -33,6 +33,6 @@ ul {
 }
 
 .games-transition {
-	display: none;
+	/*display: none;*/
 	opacity: 0;
 }
