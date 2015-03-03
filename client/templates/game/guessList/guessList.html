@@ -2,10 +2,12 @@
   <div class="guess-list">
     <h3>Guessed Words</h3>
     <hr>
-    <ul>
-    {{#each guessedWords}}
-      <li>{{this}}</li>
-    {{/each}}
+    <ul id="guesses">
+    	{{#transition}}
+		    {{#each guessedWords}}
+		      <li>{{this}}</li>
+		    {{/each}}
+	    {{/transition}}
     </ul>
   </div>
 </template>

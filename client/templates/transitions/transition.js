@@ -36,7 +36,10 @@ var hooks = {
 };
 
 
-var createTransitionHooks = function (transIn, transOut, display) {
+var createTransitionHooks = function (transIn, transOut, display, wait) {
+  // Sets the default for wait
+  var wait = typeof wait !== 'undefined' ? wait : true;
+
   var hooks = {
     transitioning: false,
 
@@ -59,12 +62,20 @@ var createTransitionHooks = function (transIn, transOut, display) {
       insert();
     },
 
+     moveElement: function (node, next) {
+      debugger
+      $(node).animate({ height: 'toggle', opacity: 'toggle' }, 'slow').promise().done(function(){
+        $(node).insertBefore(next).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
+      });
+    },
+
     removeElement: function(node) {
       var $node = $(node);
       var that = this;
       var trans = 'transition.' + transOut;
 
-      this.transitioning = true
+      if ( wait ) { this.transitioning = true };
+
       $node.velocity( trans, { 
         duration: 500,
         display: display, 
@@ -91,7 +102,10 @@ Template.transition.rendered = function() {
     parentNode._uihooks = createTransitionHooks('slideUpBigIn', 'slideDownBigOut', 'block');
   } else if ( parentNode.id === "timer" ) {
     parentNode._uihooks = createTransitionHooks('slideRightBigIn', 'slideRightBigOut', 'block')
-  } else {
+  } else if ( parentNode.id === "guesses") {
+    parentNode._uihooks = createTransitionHooks('slideLeftBigIn', 'slideRightBigOut', 'block', false)
+  } 
+  else {
 		parentNode._uihooks = hooks;
 	}
 
