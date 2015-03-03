@@ -9,6 +9,7 @@ Meteor.methods({
 			creatorID: creatorID,
 			status: "waiting",
 			timer: 0,
+			players: [],
 			createdAt: createdAt
 		};
 
@@ -119,7 +120,6 @@ Meteor.methods({
 	},
 
 	joinGame: function (gameID, sessionID) {
-		var game = Games.findOne(gameID);
 		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: 'guest', points: 0 }}})
 	},
 
