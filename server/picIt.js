@@ -18,30 +18,41 @@ Meteor.methods({
 	},
 
 	startCountdown: function (game) {
+		var drawer;
+
+		Meteor.call('selectDrawer', game, function (err, res) {
+			drawer = res;
+		})
+
 		// Countdown before beginning of round
 		Games.update(game._id, { $set: { timer: 5, status: "starting" }})
 
 		// Incrementing the countdown for pre-round
 		var intervalID = Meteor.setInterval( function() {
+
 			Games.update( game._id, { $inc: { timer: -1 }})
 			var Game = Games.findOne( game._id )
 
 			if (Game.timer == 0) {
 				Meteor.clearInterval( intervalID )
-				Meteor.call('startGame', Game);
+				Meteor.call('startGame', Game, drawer);
 			};
 			}, 1000)
+
+		return drawer;
 	},
 
-
-	createRound: function (game) {
-
+	selectDrawer: function (game) {
 		var players = game.players;
 
 		// Assign a random drawer
 		var drawerNum = Math.floor(Math.random()*players.length);
 		var drawer = players[drawerNum];
 
+		return drawer;
+	},
+
+	createRound: function (game, drawer) {
 		var started = new Date().getTime();
 
 		// Chose a random word
@@ -67,10 +78,10 @@ Meteor.methods({
 		return round;
 	},
 
-	startGame: function (game) {
+	startGame: function (game, drawer) {
 		var gameID = game._id;
 
-		Meteor.call( 'createRound', game )
+		Meteor.call( 'createRound', game, drawer )
 
 		Games.update( gameID, { $set: { status: "inProgress", timer: 60 }});
 

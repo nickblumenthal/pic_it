@@ -92,6 +92,7 @@ Template.game.events({
 		var game = this;
 
 		Meteor.call('startCountdown', game, function (error, result) {
+			
 		});
 	},
 
