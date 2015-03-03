@@ -79,7 +79,7 @@ var gamesHooks = {
 
 // Hooks for the templates inside of game.html
 
-var createTransitionHooks = function (transIn, transOut) {
+var createTransitionHooks = function (transIn, transOut, display) {
   var hooks = {
     transitioning: false,
 
@@ -96,7 +96,7 @@ var createTransitionHooks = function (transIn, transOut) {
         if (that.transitioning) {
           Meteor.setTimeout( insert, 50 )
         } else {
-          $node.velocity( trans, { duration: 500, display: 'block'})
+          $node.velocity( trans, { duration: 500, display: display})
         }
       };
       insert();
@@ -110,7 +110,7 @@ var createTransitionHooks = function (transIn, transOut) {
       this.transitioning = true
       $node.velocity( trans, { 
         duration: 500,
-        display: 'block', 
+        display: display, 
         complete: function () {
           $node.remove()
           that.transitioning = false;
@@ -131,11 +131,11 @@ Template.transition.rendered = function() {
 
   // To distinguish with templates to give what hooks
 	if ( className === "games-container") {
-		parentNode._uihooks = gamesHooks;
+		parentNode._uihooks = createTransitionHooks('expandIn', 'expandOut', 'inline-block');
 	} else if ( parentNode.id === "game-view" ) {
-    parentNode._uihooks = createTransitionHooks('slideUpBigIn', 'slideDownBigOut');
+    parentNode._uihooks = createTransitionHooks('slideUpBigIn', 'slideDownBigOut', 'block');
   } else if ( parentNode.id === "timer" ) {
-    parentNode._uihooks = createTransitionHooks('slideRightBigIn', 'slideRightBigOut')
+    parentNode._uihooks = createTransitionHooks('slideRightBigIn', 'slideRightBigOut', 'block')
   } else {
 		parentNode._uihooks = hooks;
 	}
