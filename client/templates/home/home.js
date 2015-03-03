@@ -17,3 +17,7 @@ Template.home.events({
 		});
 	}
 });
+
+Template.home.rendered = function () {
+	Session.set('notFirstHook', true)
+};

@@ -6,18 +6,28 @@ var hooks = {
   	var $node = $(node);
 
     $node.insertBefore(next);
-
-    // TEMP: Not really needed anymore, seeing as we could just 
-    // $node.hide() before inserting
     $node.addClass('pt-page-current')
 
-    // // Adds transition effect
-    $node.addClass('pt-page-' + transitionDir('insert'))
+    console.log(Session.get('notFirstHook'))
+    if (Session.get('notFirstHook')) {
+      // TEMP: Not really needed anymore, seeing as we could just 
+      // $node.hide() before inserting
 
-    $node.on( animEndEventName, function () {
-    	$node.off( animEndEventName );
-    	$node.removeClass('pt-page-' + transitionDir('insert'))
-    })
+      // // Adds transition effect
+      $node.addClass('pt-page-' + transitionDir('insert'))
+
+      $node.on( animEndEventName, function () {
+      	$node.off( animEndEventName );
+      	$node.removeClass('pt-page-' + transitionDir('insert'))
+      })
+    } else {
+      $node.addClass('pt-page-moveFromBottom')
+
+      $node.on( animEndEventName, function () {
+        $node.off( animEndEventName );
+        $node.removeClass('pt-page-moveFromBottom')
+      })
+    }
   },
 
   removeElement: function(node) {
@@ -106,6 +116,7 @@ Template.transition.rendered = function() {
     parentNode._uihooks = createTransitionHooks('slideLeftBigIn', 'slideRightBigOut', 'block', false)
   } 
   else {
+    // Route change hooks
 		parentNode._uihooks = hooks;
 	}
 
