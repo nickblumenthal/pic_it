@@ -1,9 +1,14 @@
 <template name="drawer">
-  <div class="drawer">
-    {{ chosenWord }}
-    <hr>
-    <div class="drawer-view">
-      {{> board }}
-    </div>
-  </div>
+	<!-- TEMP: Factor the inline style into a class -->
+	<div class="row game-status margin-fix" style="margin-left:0px; margin-right:0px">
+		<div class="col-lg-12">
+		  <div class="drawer">
+		    {{ chosenWord }}
+		    <hr>
+		    <div class="drawer-view">
+		      {{> board }}
+		    </div>
+		  </div>
+	  </div>
+	</div>
 </template>

@@ -102,7 +102,7 @@ input.standard:focus {
 
 /* Hoshi */
 .input--hoshi {
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 
 .input__field--hoshi {

@@ -1,23 +1,27 @@
 <template name="gameLobby">
-	<div class="game-lobby">
-		<div id="players">
-			<h3>Players & Points</h3>
-			<ul class="current-players animated">
-				{{#each players}}
-					<li class="transition-hidden">{{this.name}} : {{this.points}}</li>
-				{{/each}}
-			</ul>
-		</div>
-		<hr>
-		{{#if roundsCount}}
-			<div id="rounds">
-				<h3>Previous Rounds</h3>
-				<ul>
-						{{#each rounds}}
-							<li>{{> roundSummary}}</li>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="game-lobby">
+				<div id="players">
+					<h3>Players & Points</h3>
+					<ul class="current-players animated">
+						{{#each players}}
+							<li class="transition-hidden">{{this.name}} : {{this.points}}</li>
 						{{/each}}
-				</ul>
+					</ul>
+				</div>
+				<hr>
+				{{#if roundsCount}}
+					<div id="rounds">
+						<h3>Previous Rounds</h3>
+						<ul>
+								{{#each rounds}}
+									<li>{{> roundSummary}}</li>
+								{{/each}}
+						</ul>
+					</div>
+				{{/if}}
 			</div>
-		{{/if}}
+		</div>
 	</div>
 </template>

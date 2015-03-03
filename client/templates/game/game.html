@@ -19,9 +19,9 @@
 					</span>
 				</div>
 
-				<div class="col-lg-6 col-lg-offset-1 game-status">
+				<div class="col-lg-6 col-lg-offset-1">
 					<!-- TEMP: Probably break into different templates -->
-					<div class="row">
+					<div class="row game-status">
 						<div class="col-lg-12">
 							{{#if inLobbyOrStarting}}
 								<div id="temp">
@@ -47,25 +47,27 @@
 						</div>
 					</div>
 
-					<div class="row">
-						<div id="game-view" class="col-lg-12">
-							{{#transition}}
-								{{> DynamicTemplate template=getTemplate data=getDataContext }}
-							{{/transition}}
-						</div>
+					<div id="game-view" class="row">
+						{{#transition}}
+							{{> DynamicTemplate template=getTemplate data=getDataContext }}
+						{{/transition}}
 					</div>
+
 				</div>
 
-				<div class="col-lg-2  col-lg-offset-1">
+
+				<div id="timer" class="col-lg-2  col-lg-offset-1">
 					{{#if gameInProgress}}
 						<div id="countdown"></div>
-						{{#unless inLobbyOrStarting}}
-							{{> guessList}}
-						{{/unless}}
+						{{#transition}}
+							{{#unless inLobbyOrStarting}}
+								{{> guessList}}
+							{{/unless}}
+						{{/transition}}
 					{{/if}}
 				</div>
-			</div>
 
+			</div>
 		</center>
 	</div>
 </template>
