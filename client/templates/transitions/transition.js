@@ -1,6 +1,3 @@
-// Can use a reactive var and allow transitions to continue when another is done
-// TEMP: Shameful, not DRY code. Refactor ASAP.
-
 // Hooks for initial page transition
 var hooks = {
   transitioning: false,
@@ -10,11 +7,12 @@ var hooks = {
 
     $node.insertBefore(next);
 
+    // TEMP: Not really needed anymore, seeing as we could just 
+    // $node.hide() before inserting
     $node.addClass('pt-page-current')
-    // $node.velocity('transition.slideLeftBigIn', { delay: 750})
 
     // // Adds transition effect
-	    $node.addClass('pt-page-' + transitionDir('insert'))
+    $node.addClass('pt-page-' + transitionDir('insert'))
 
     $node.on( animEndEventName, function () {
     	$node.off( animEndEventName );
@@ -27,57 +25,16 @@ var hooks = {
     var $node = $(node);
     var that = this;
 
-    // $node.velocity('transition.slideRightBigOut', function () {
-    //   $node.remove()
-    //   that.transitioning = false;
-    // })
-
 		// TEMP: Switch this to a Session variable
 		$node.addClass( 'pt-page-' + transitionDir('remove') );
 
 		$node.on( animEndEventName, function () {
 			$node.off( animEndEventName )
-			// $node.removeClass('pt-page-current')
 			$node.remove()
 		})
   }
 };
 
-
-// Refactor this into createTransitionHooks and remove openGames hidden class
-// Hooks for listing the games in home.html
-var gamesHooks = {
-  transitioning: false,
-
-  insertElement: function(node, next) {
-  	var $node = $(node);
-    var that = this;
-
-    $node.insertBefore(next);
-
-    var insert = function () {
-      if (that.transitioning) {
-        Meteor.setTimeout( insert, 50 )
-      } else {
-        $node.velocity('transition.slideLeftBigIn', { duration: 300, delay: 250, display: 'inline-block'})
-      }
-    };
-    insert();
-  },
-
-  removeElement: function(node) {
-    var $node = $(node);
-    var that = this;
-
-    this.transitioning = true
-    $node.velocity('transition.slideRightBigOut', 300, function () {
-      $node.remove()
-      that.transitioning = false;
-    })
-  }
-};
-
-// Hooks for the templates inside of game.html
 
 var createTransitionHooks = function (transIn, transOut, display) {
   var hooks = {
@@ -121,8 +78,6 @@ var createTransitionHooks = function (transIn, transOut, display) {
   return hooks
 }
  
-
-
 
 // Where hooks are applied
 Template.transition.rendered = function() {
