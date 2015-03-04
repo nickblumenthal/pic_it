@@ -10,3 +10,7 @@
 .current-players {
 	list-style: none;
 }
+
+.currentUser {
+	color: blue;
+}

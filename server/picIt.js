@@ -9,6 +9,7 @@ Meteor.methods({
 			creatorID: creatorID,
 			status: "waiting",
 			timer: 0,
+			drawer: null,
 			players: [],
 			createdAt: createdAt
 		};
@@ -26,7 +27,7 @@ Meteor.methods({
 		})
 
 		// Countdown before beginning of round
-		Games.update(game._id, { $set: { timer: 5, status: "starting" }})
+		Games.update(game._id, { $set: { timer: 5, status: "starting", drawer: drawer }})
 
 		// Incrementing the countdown for pre-round
 		var intervalID = Meteor.setInterval( function() {
@@ -84,7 +85,7 @@ Meteor.methods({
 
 		Meteor.call( 'createRound', game, drawer )
 
-		Games.update( gameID, { $set: { status: "inProgress", timer: 60 }});
+		Games.update( gameID, { $set: { status: "inProgress", timer: 7 }});
 
 		// Incrementing the countdown for pre-round
 		var intID = Meteor.setInterval( function() {
