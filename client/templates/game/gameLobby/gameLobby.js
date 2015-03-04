@@ -30,7 +30,7 @@ Template.gameLobby.events({
 
 Template.gameLobby.rendered = function() {
 
-  var reactiveList = this.$('.animated');
+  var reactiveList = this.$('.current-players');
 
 	// Initial anim of players list
 	reactiveList.children().velocity('transition.slideLeftIn',

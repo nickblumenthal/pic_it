@@ -92,7 +92,29 @@ Template.game.events({
 		var game = this;
 
 		Meteor.call('startCountdown', game, function (error, result) {
-			
+			var drawerID = result.sessionID;
+			var list = $('.current-players').find('li');
+
+			var $drawer;
+
+
+			var guessers = $.grep(list, function(value) { 
+				var $value = $(value);
+				if ( $value.data("id") === drawerID ) {
+					$drawer = $value;
+				}; 
+				return $value.data("id") !== drawerID 
+			})
+
+			console.log(guessers)
+			$drawer.velocity({
+				translateX: ["-100px", "easeOutCubic"],
+				colorGreen: "90%"
+			}, 2000)
+
+			$(guessers).velocity({
+				opacity: [".35", "easeOutSine"]
+			}, 5000)
 		});
 	},
 
