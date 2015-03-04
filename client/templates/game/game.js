@@ -92,7 +92,7 @@ Template.game.events({
 		var game = this;
 
 		Meteor.call('startCountdown', game, function (error, result) {
-			
+
 		});
 	},
 
@@ -130,7 +130,13 @@ Template.game.rendered = function () {
 	Games.startClockObserve(clock, game._id)
 	// TEMP: Hack to allow for different UIhook on first page hit
 	Meteor.setTimeout( function () {
-		Session.set('notFirstHook', true)}, 1000)
+		Session.set('notFirstHook', true)
+	}, 1000)
+
+	// Setup event listener for sidebar expander
+	$('.sidebar-toggle').on('click', function() {
+  	$('#sidebar').toggleClass('collapsed')
+	})
 };
 
 // TEMP: Not sure if this allowed, but had to save the observer
