@@ -21,50 +21,55 @@
 
 				<div class="col-lg-6 col-lg-offset-1">
 					<!-- TEMP: Probably break into different templates -->
-					<div class="row game-status">
-						<div class="col-lg-12">
-							{{#if inLobbyOrStarting}}
-								<div id="temp">
-									<h3>Game: {{ this.name }}</h3>
+					{{#transition transIn="slideUpBigIn" transOut="slideDownBigOut" display="block" wait="true"}}
+						{{#if inLobbyOrStarting}}
+							<div class="row game-status">
+								<div class="col-lg-12">
+										<div id="temp">
+											<h3>Game: {{ this.name }}</h3>
 
-									<p><span>Status: {{ gameStatus }}</span>
-									<span>
-										{{#if inLobbyOrStarting}}
-											Upcoming Round: {{ nextRoundNum }}
-										{{else}}
-											Current Round: {{ roundNum }}
-										{{/if}}
-									</span>
-									</p>
+											<p><span>Status: {{ gameStatus }}</span>
+											<span>
+												{{#if inLobbyOrStarting}}
+													Upcoming Round: {{ nextRoundNum }}
+												{{else}}
+													Current Round: {{ roundNum }}
+												{{/if}}
+											</span>
+											</p>
+										</div>
+									{{#if gameFinished}}
+										<div>
+											<p>GAME OVER</p>
+											<p>Game winner: {{ this.winner }}</p>
+										</div>
+									{{/if}}
 								</div>
-							{{/if}}
-							{{#if gameFinished}}
-								<div>
-									<p>GAME OVER</p>
-									<p>Game winner: {{ this.winner }}</p>
-								</div>
-							{{/if}}
-						</div>
-					</div>
+							</div>
+							<!-- Anim hack -->
+						{{else}}
+							<div class="row game-status"></div>
+						{{/if}}
+
+					{{/transition}}
 
 					<div id="game-view" class="row">
 						{{#transition transIn="slideUpBigIn" transOut="slideDownBigOut" display="block" wait="true"}}
 							{{> DynamicTemplate template=getTemplate data=getDataContext }}
 						{{/transition}}
 					</div>
-
 				</div>
 
 
 				<div id="timer" class="col-lg-2  col-lg-offset-1">
-					{{#if gameInProgress}}
-						<div id="countdown"></div>
-						{{#transition transIn="slideRightBigIn" transOut="slideRightBigOut" display="block" wait="true"}}
-							{{#unless inLobbyOrStarting}}
-								{{> guessList}}
-							{{/unless}}
-						{{/transition}}
-					{{/if}}
+					{{#transition transIn="slideRightBigIn" transOut="slideRightBigOut" display="block" wait="true"}}
+						{{#if gameInProgress}}
+							<div id="countdown"></div>
+								{{#unless inLobbyOrStarting}}
+									{{> guessList}}
+								{{/unless}}
+						{{/if}}
+					{{/transition}}
 				</div>
 
 			</div>

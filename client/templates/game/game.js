@@ -10,6 +10,8 @@ Template.game.helpers({
 			} else {
 				return 'guesser'
 			}
+		} else if ( this.status === "finished") {
+			return 'gameSummary'
 		} else {
 			return 'gameLobby'
 		}
@@ -91,36 +93,13 @@ Template.game.events({
 	'click #create-round': function (event) {
 		var game = this;
 
-		Meteor.call('startCountdown', game, function (error, result) {
-			var drawerID = result.sessionID;
-			var list = $('.current-players').find('li');
-
-			var $drawer;
-
-
-			var guessers = $.grep(list, function(value) { 
-				var $value = $(value);
-				if ( $value.data("id") === drawerID ) {
-					$drawer = $value;
-				}; 
-				return $value.data("id") !== drawerID 
-			})
-
-			console.log(guessers)
-			$drawer.velocity({
-				translateX: ["-100px", "easeOutCubic"],
-				colorGreen: "90%"
-			}, 2000)
-
-			$(guessers).velocity({
-				opacity: [".35", "easeOutSine"]
-			}, 5000)
-		});
+		Meteor.call('startCountdown', game)
 	},
 
 	'click #home': function (event) {
-		Meteor.call('removeUser', Session.get('playerID'), this._id);
-
+		if (this.status !== "finished") {
+			Meteor.call('removeUser', Session.get('playerID'), this._id);
+		};
 		// Kill clock observer
 		Games.stopClockObserve( );
 
@@ -133,6 +112,17 @@ Template.game.events({
 	}
 });
 
+Template.game.created = function () {
+	var sessionID = Meteor.default_connection._lastSessionId;
+
+	if(sessionID && this.data.status !== "finished") {
+		Meteor.call('joinGame', this.data._id, sessionID);
+		Session.set('playerID', sessionID);
+	} else {
+		console.log('ERROR- User not logged in!')
+	}	
+
+};
 
 Template.game.rendered = function () {
 
@@ -144,6 +134,8 @@ Template.game.rendered = function () {
 		autoStart: false,
 		countdown: true
 	})
+
+
 
 	// Sets clock to whatever the current game timer is
 	clock.setTime(game.timer)

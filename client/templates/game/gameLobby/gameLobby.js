@@ -37,9 +37,54 @@ Template.gameLobby.rendered = function() {
 		{ stagger: 250 }
 	)
 
+	// Animation for gameLobby 
+	observeDrawer(this);
+
+	// To prevent users from being removed from game after its over
+	if ( this.data.status === "finished" ) {
+		window.onbeforeunload = null;
+	};
+
 };
 
 // TEMP: Might want to refactor this into the overall game template
 window.onbeforeunload = function(){
 	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
+}
+
+
+var observeDrawer = function (tmp) {
+	var game = Games.find({ _id: tmp.data._id});
+	game.observeChanges({
+		changed: function (id, fields) {
+			if (fields.drawer) {
+				// console.log(fields.drawer)
+				revealDrawer(fields.drawer, tmp)
+			};
+		}
+	});
+}
+
+var revealDrawer = function (drawer, tmp) {
+	var drawerID = drawer.sessionID;
+	var list = tmp.$('.current-players').find('li');
+	var $drawer;
+
+	var guessers = $.grep(list, function(value) { 
+		var $value = $(value);
+		if ( $value.data("id") === drawerID ) {
+			$drawer = $value;
+		}; 
+		return $value.data("id") !== drawerID 
+	})
+
+	console.log(guessers)
+	$drawer.velocity({
+		translateX: ["-20px", "easeOutCubic"],
+		colorGreen: "90%"
+	}, 2000)
+
+	$(guessers).velocity({
+		opacity: [".25", "easeOutSine"]
+	}, 5000)
 }
