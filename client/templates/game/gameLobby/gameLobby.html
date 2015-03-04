@@ -5,7 +5,7 @@
 				<div id="players">
 					<h3>Players & Points</h3>
 					<ul id="current-players-list" class="current-players animated">
-						{{#transition}}
+						{{#transition transIn="slideLeftIn" transOut="slideRightOut" display="block" wait="false"}}
 							{{#each this.players}}
 								<li class="transition-hidden">{{this.name}} : {{this.points}}</li>
 							{{/each}}

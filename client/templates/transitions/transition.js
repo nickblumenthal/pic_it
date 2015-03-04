@@ -111,23 +111,15 @@ Template.transition.rendered = function() {
 	var parentNode = this.firstNode.parentNode;
   var className = parentNode.className;
 
-  // To distinguish with templates to give what hooks
-	if ( className === "games-container") {
-		parentNode._uihooks = createTransitionHooks('expandIn', 'expandOut', 'inline-block');
-	} else if ( parentNode.id === "game-view" ) {
-    parentNode._uihooks = createTransitionHooks('slideUpBigIn', 'slideDownBigOut', 'block');
-  } else if ( parentNode.id === "timer" ) {
-    parentNode._uihooks = createTransitionHooks('slideRightBigIn', 'slideRightBigOut', 'block')
-  } else if ( parentNode.id === "guesses") {
-    parentNode._uihooks = createTransitionHooks('slideLeftBigIn', 'slideRightBigOut', 'block', false)
-  } else if ( parentNode.id === "current-players-list" ) {
-    parentNode._uihooks = createTransitionHooks('slideLeftIn', 'slideRightOut', 'block', false)
-  }
-  else {
-    // Route change hooks
-		parentNode._uihooks = hooks;
-	}
+  // Set transition attributes
+  var transIn = typeof this.data.transIn !== 'undefined' ? this.data.transIn : 'transition.fadeIn';
+  var transOut = typeof this.data.transOut !== 'undefined' ? this.data.transOut : 'transition.fadeOut';
+  var display = typeof this.data.display !== 'undefined' ? this.data.display : true;
+  var wait = typeof this.data.wait !== 'undefined' ? this.data.wait : true;
 
+  if (parentNode.id === "initial") { return parentNode._uihooks = hooks };
+
+  return parentNode._uihooks = createTransitionHooks( transIn, transOut, display, wait);
 };
 
 // For figuring out which direction route changes should transition

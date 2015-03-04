@@ -2,10 +2,10 @@
 	<div id="main" class="container-fluid pt-page">
 		<div class="row top"></div>
 		<div class="col-lg-10 col-lg-offset-1">
-			<div>
+			<div id="initial">
 				{{> header}}
 
-				{{ #transition }}
+				{{ #transition transIn="cheat" }}
 					{{> yield }}
 				{{ /transition }}
 			</div>

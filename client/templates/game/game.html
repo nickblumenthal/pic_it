@@ -48,7 +48,7 @@
 					</div>
 
 					<div id="game-view" class="row">
-						{{#transition}}
+						{{#transition transIn="slideUpBigIn" transOut="slideDownBigOut" display="block" wait="true"}}
 							{{> DynamicTemplate template=getTemplate data=getDataContext }}
 						{{/transition}}
 					</div>
@@ -59,7 +59,7 @@
 				<div id="timer" class="col-lg-2  col-lg-offset-1">
 					{{#if gameInProgress}}
 						<div id="countdown"></div>
-						{{#transition}}
+						{{#transition transIn="slideRightBigIn" transOut="slideRightBigOut" display="block" wait="true"}}
 							{{#unless inLobbyOrStarting}}
 								{{> guessList}}
 							{{/unless}}

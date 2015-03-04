@@ -3,7 +3,7 @@
     <h3>Guessed Words</h3>
     <hr>
     <ul id="guesses">
-    	{{#transition}}
+    	{{#transition transIn="slideLeftBigIn" transOut="slideRightBigOut" display="block" wait="false"}}
 		    {{#each guessedWords}}
 		      <li>{{this}}</li>
 		    {{/each}}
