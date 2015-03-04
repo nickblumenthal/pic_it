@@ -22,19 +22,20 @@ Template.gameLobby.helpers({
 Template.gameLobby.events({
 	'click #change-username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
-		// Games.update(this._id, {$set: {players[]}})
 	}
 });
 
 
 Template.gameLobby.rendered = function() {
 
-  var reactiveList = this.$('.current-players');
+  var dbPlayers = this.$('.current-players');
 
 	// Initial anim of players list
-	reactiveList.children().velocity('transition.slideLeftIn',
+	dbPlayers.children().velocity('transition.slideLeftIn',
 		{ stagger: 250 }
 	)
+
+	observeCurrentUser(this)
 
 	// Animation for gameLobby 
 	observeDrawer(this);
@@ -50,13 +51,40 @@ window.onbeforeunload = function(){
 	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
 }
 
+var query;
+var observeCurrentUser = function (tmp) {
+	var game = Games.find({ _id: tmp.data._id});
+
+	query = game.observeChanges({
+		changed: function (id, fields) {
+			if (fields.players) {
+				console.log(fields.players)
+				var currentUser = _.find( fields.players, function (player) {
+					return player.sessionID === Session.get('playerID');
+				})
+				if (currentUser) { 
+					Meteor.setTimeout( function() {
+						highlightCurrentUser(currentUser.sessionID)
+					}, 200)
+				}
+			};
+		},
+	});
+}
+
+var highlightCurrentUser = function (sessionID) {
+	// Stops the observe changes
+	query.stop();
+	var currentPlayer = $('.current-players').find('li[data-id="' + sessionID + '"]')
+	currentPlayer.addClass('currentUser');
+}
 
 var observeDrawer = function (tmp) {
 	var game = Games.find({ _id: tmp.data._id});
+
 	game.observeChanges({
 		changed: function (id, fields) {
 			if (fields.drawer) {
-				// console.log(fields.drawer)
 				revealDrawer(fields.drawer, tmp)
 			};
 		}

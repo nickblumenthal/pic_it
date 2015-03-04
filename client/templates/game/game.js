@@ -113,19 +113,11 @@ Template.game.events({
 });
 
 Template.game.created = function () {
-	var sessionID = Meteor.default_connection._lastSessionId;
-
-	if(sessionID && this.data.status !== "finished") {
-		Meteor.call('joinGame', this.data._id, sessionID);
-		Session.set('playerID', sessionID);
-	} else {
-		console.log('ERROR- User not logged in!')
-	}	
-
+	
 };
 
 Template.game.rendered = function () {
-
+	joinGame(this.data);
 	var game = this.data;
 
 	// Create FlipClock.js element
@@ -175,3 +167,14 @@ var assignRoles = function(gameID) {
 		Session.set('role', 'guesser');
 	}
 };
+
+var joinGame = function (game) {
+	var sessionID = Meteor.default_connection._lastSessionId;
+
+	if(sessionID && game.status !== "finished") {
+		Meteor.call('joinGame', game._id, sessionID);
+		Session.set('playerID', sessionID);
+	} else {
+		console.log('ERROR- User not logged in!')
+	}	
+}
