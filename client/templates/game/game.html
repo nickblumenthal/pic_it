@@ -2,20 +2,22 @@
 	<div class="game">
 		<center>
 			<div class="row">
-				<div id="sidebar" class="col-lg-2 navigation collapsed">
-					<button id="home" class="pt-touch-button wide">Back to homepage</button>
-					{{#if gameInProgress}}
-						<button id="create-round" class="{{disabledBtnClass}} pt-touch-button wide" {{disableBtn}} >Start Round</button>
-					{{/if}}
-					<!-- <input id="username" class="standard" value="">
-					<button type="submit" id="change-username" class="pt-touch-button">Set Username</button> -->
+				<div class="col-lg-2 navigation">
+					<div id="sidebar" class="collapsed">
+						<button id="home" class="pt-touch-button wide">Back to homepage</button>
+						{{#if gameInProgress}}
+							<button id="create-round" class="{{disabledBtnClass}} pt-touch-button wide" {{disableBtn}} >Start Round</button>
+						{{/if}}
+						<!-- <input id="username" class="standard" value="">
+						<button type="submit" id="change-username" class="pt-touch-button">Set Username</button> -->
 
-					<span class="input input--kaede">
-						<input class="input__field input__field--kaede" type="text" id="username" value="{{getUsername}}"/>
-						<label class="input__label input__label--kaede" for="username">
-							<span class="input__label-content input__label-content--kaede">USERNAME</span>
-						</label>
-					</span>
+						<span class="input input--kaede">
+							<input class="input__field input__field--kaede" type="text" id="username" value="{{getUsername}}"/>
+							<label class="input__label input__label--kaede" for="username">
+								<span class="input__label-content input__label-content--kaede">USERNAME</span>
+							</label>
+						</span>
+					</div>
 				</div>
 
 				<div class="col-lg-6 col-lg-offset-1">
@@ -57,7 +59,7 @@
 
 				<div id="timer" class="col-lg-2  col-lg-offset-1">
 					{{#if gameInProgress}}
-						<div id="countdown"></div>
+						<div id="countdown" class="large-screen"></div>
 						{{#transition transIn="slideRightBigIn" transOut="slideRightBigOut" display="block" wait="true"}}
 							{{#unless inLobbyOrStarting}}
 								{{> guessList}}

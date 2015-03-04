@@ -3,11 +3,18 @@
   padding: 10px;
 }
 
-.game-status span{
+.game-status span {
   margin: 10px;
 }
 
 .game-margin-fix {
 	margin-left: 0px;
 	margin-right: 0px;
+}
+
+/* Move clock to upper right corner on mobile */
+@media(max-width: 600px) {
+  #countdown.large-screen {
+    display: none;
+  }
 }
