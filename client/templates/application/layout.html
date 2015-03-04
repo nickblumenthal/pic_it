@@ -2,9 +2,9 @@
 	<div id="main" class="container-fluid pt-page">
 		<div class="row top"></div>
 		<div class="col-lg-10 col-lg-offset-1">
-			<div id="initial">
+			<div id="router">
 
-				{{ #transition transIn="fadeIn" transOut="fadeOut" display="block" wait="false" }}
+				{{ #transition transIn="slideLeftBigIn" transOut="slideRightBigOut" display="block" wait="true" }}
 					{{> header}}
 					{{> yield }}
 				{{ /transition }}

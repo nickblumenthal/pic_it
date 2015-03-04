@@ -50,7 +50,7 @@ var hooks = {
 };
 
 
-var createTransitionHooks = function (transIn, transOut, display, wait) {
+var createTransitionHooks = function (transIn, transOut, display, wait, exception) {
   // Sets the default for wait
   var wait = typeof wait !== 'undefined' ? wait : true;
 
@@ -62,6 +62,10 @@ var createTransitionHooks = function (transIn, transOut, display, wait) {
       var that = this;
       var trans = 'transition.' + transIn;
 
+      if (exception === true) {
+        trans = 'transition.' + velocityDir('insert');
+      };
+
       $node.hide();
 
       $node.insertBefore(next);
@@ -70,7 +74,7 @@ var createTransitionHooks = function (transIn, transOut, display, wait) {
         if (that.transitioning) {
           Meteor.setTimeout( insert, 50 )
         } else {
-          $node.velocity( trans, { duration: 500, display: display})
+          $node.velocity( trans, { duration: 600, display: display})
         }
       };
       return Tracker.afterFlush( function () {
@@ -79,7 +83,6 @@ var createTransitionHooks = function (transIn, transOut, display, wait) {
     },
 
      moveElement: function (node, next) {
-      debugger
       $(node).animate({ height: 'toggle', opacity: 'toggle' }, 'slow').promise().done(function(){
         $(node).insertBefore(next).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
       });
@@ -89,11 +92,15 @@ var createTransitionHooks = function (transIn, transOut, display, wait) {
       var $node = $(node);
       var that = this;
       var trans = 'transition.' + transOut;
+      
+      if (exception === true) {
+        trans = 'transition.' + velocityDir('remove')
+      };
 
       if ( wait ) { this.transitioning = true };
 
       $node.velocity( trans, { 
-        duration: 500,
+        duration: 600,
         display: display, 
         complete: function () {
           $node.remove()
@@ -112,35 +119,61 @@ Template.transition.rendered = function() {
   var className = parentNode.className;
 
   // Set transition attributes
-  var transIn = typeof this.data.transIn !== 'undefined' ? this.data.transIn : 'transition.fadeIn';
-  var transOut = typeof this.data.transOut !== 'undefined' ? this.data.transOut : 'transition.fadeOut';
+  var transIn = typeof this.data.transIn !== 'undefined' ? this.data.transIn : 'fadeIn';
+  var transOut = typeof this.data.transOut !== 'undefined' ? this.data.transOut : 'fadeOut';
   var display = typeof this.data.display !== 'undefined' ? this.data.display : true;
   var wait = typeof this.data.wait !== 'undefined' ? this.data.wait : true;
 
-  if (parentNode.id === "initial") { return parentNode._uihooks = hooks };
-
+  if (parentNode.id === "router") { 
+    return parentNode._uihooks = createTransitionHooks( transIn, transOut, display, wait, true); };
   return parentNode._uihooks = createTransitionHooks( transIn, transOut, display, wait);
+
 };
 
 // For figuring out which direction route changes should transition
 var transitionDir = function ( action ) {
+  // Gets route client is navigating to
+  var toRoute = Router.current().url;
+  var direction;
+
+  if ( toRoute === "/" ) {
+    if ( action === "remove" ) {
+      direction = 'moveToRight';
+    } else {
+      direction = 'moveFromLeft';
+    }
+  } else {
+    if ( action === "remove" ) {
+      direction = 'moveToLeft';
+    } else {
+      direction = 'moveFromRight';
+    }
+  }
+
+  return direction;
+}
+
+// Veloctiy Direction:
+var velocityDir = function ( action ) {
 	// Gets route client is navigating to
 	var toRoute = Router.current().url;
-	var direction;
+  var animROut = 'slideRightBigOut';
+  var animRIn = 'slideRightBigIn';
+  var animLOut = 'slideLeftBigOut';
+  var animLIn = 'slideLeftBigIn';
+
 
 	if ( toRoute === "/" ) {
 		if ( action === "remove" ) {
-			direction = 'moveToRight';
+      return animROut;
 		} else {
-			direction = 'moveFromLeft';
+      return animLIn;
 		}
 	} else {
 		if ( action === "remove" ) {
-			direction = 'moveToLeft';
+			return animLOut;
 		} else {
-			direction = 'moveFromRight';
+			return animRIn;
 		}
 	}
-
-	return direction;
 }
