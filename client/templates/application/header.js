@@ -1,0 +1,8 @@
+Template.header.helpers({
+  //Only show clock if on smaller screen
+  clock: function() {
+    if(screen.width <= 600) {
+      return "countdown";
+    }
+  }
+})

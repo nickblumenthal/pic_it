@@ -4,7 +4,11 @@
   	margin-top: 50px;
   }
 
-  .sidebar-toggle{
+  .sidebar-toggle {
+    display: none;
+  }
+
+  .small-screen-timer {
     display: none;
   }
 }
@@ -18,7 +22,7 @@
   .small-screen-timer {
     position: absolute;
     top: -27px;
-    right: -41px;
+    right: -54px;
     transform: scale(0.5, 0.5);
   }
 
