@@ -129,7 +129,8 @@ Template.game.rendered = function () {
 	// Reactively observing timer changes of the specific game entry
 	Games.startClockObserve(clock, game._id)
 	// TEMP: Hack to allow for different UIhook on first page hit
-	Session.set('notFirstHook', true)
+	Meteor.setTimeout( function () {
+		Session.set('notFirstHook', true)}, 1000)
 };
 
 // TEMP: Not sure if this allowed, but had to save the observer
