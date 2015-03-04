@@ -161,7 +161,7 @@ input.standard:focus {
 }
 
 .input__field--hoshi:focus + .input__label--hoshi::after,
-.input--filled, .input__field--hoshi:active  {
+.input--filled  {
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }
