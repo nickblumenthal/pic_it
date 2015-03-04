@@ -135,8 +135,6 @@ Template.game.rendered = function () {
 		countdown: true
 	})
 
-
-
 	// Sets clock to whatever the current game timer is
 	clock.setTime(game.timer)
 

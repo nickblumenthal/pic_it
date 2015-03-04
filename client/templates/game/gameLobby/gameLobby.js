@@ -24,7 +24,6 @@ Template.gameLobby.events({
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
 		// Games.update(this._id, {$set: {players[]}})
 	}
-
 });
 
 
@@ -44,7 +43,6 @@ Template.gameLobby.rendered = function() {
 	if ( this.data.status === "finished" ) {
 		window.onbeforeunload = null;
 	};
-
 };
 
 // TEMP: Might want to refactor this into the overall game template
@@ -70,6 +68,8 @@ var revealDrawer = function (drawer, tmp) {
 	var list = tmp.$('.current-players').find('li');
 	var $drawer;
 
+	// Searches for the list of current users and creates a list of guessers
+	// as well as isolating the drawer
 	var guessers = $.grep(list, function(value) { 
 		var $value = $(value);
 		if ( $value.data("id") === drawerID ) {
@@ -78,7 +78,6 @@ var revealDrawer = function (drawer, tmp) {
 		return $value.data("id") !== drawerID 
 	})
 
-	console.log(guessers)
 	$drawer.velocity({
 		translateX: ["-20px", "easeOutCubic"],
 		colorGreen: "90%"
