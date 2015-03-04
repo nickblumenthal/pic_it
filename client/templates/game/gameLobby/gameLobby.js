@@ -1,4 +1,4 @@
-		// return Router.current().params.gameID;
+// return Router.current().params.gameID;
 Template.gameLobby.helpers({
 	creator: function () {
 		// TEMP: Might be a session variable for this
@@ -27,7 +27,6 @@ Template.gameLobby.events({
 
 
 Template.gameLobby.rendered = function() {
-
   var dbPlayers = this.$('.current-players');
 
 	// Initial anim of players list
@@ -35,9 +34,13 @@ Template.gameLobby.rendered = function() {
 		{ stagger: 250 }
 	)
 
+	// Highlight user when he enters statically
+	highlightCurrentUser(Session.get('playerID'))
+
+	// Highlight user when he enters reactively
 	observeCurrentUser(this)
 
-	// Animation for gameLobby 
+	// Animation for when the drawer is chosen
 	observeDrawer(this);
 
 	// To prevent users from being removed from game after its over
@@ -58,7 +61,7 @@ var observeCurrentUser = function (tmp) {
 	query = game.observeChanges({
 		changed: function (id, fields) {
 			if (fields.players) {
-				console.log(fields.players)
+				console.log("observing for current user")
 				var currentUser = _.find( fields.players, function (player) {
 					return player.sessionID === Session.get('playerID');
 				})
@@ -73,26 +76,38 @@ var observeCurrentUser = function (tmp) {
 }
 
 var highlightCurrentUser = function (sessionID) {
-	// Stops the observe changes
-	query.stop();
 	var currentPlayer = $('.current-players').find('li[data-id="' + sessionID + '"]')
-	currentPlayer.addClass('currentUser');
+
+	if (currentPlayer) {
+		currentPlayer.addClass('currentUser');
+		
+		// Stops the observer if the user has been found
+		if (query) { query.stop(); };
+	};
 }
 
+// This is for the the first time a user hits the gameLobby, where
+// he is added reactively rather than being bundled from the server
+var drawerQuery;
 var observeDrawer = function (tmp) {
 	var game = Games.find({ _id: tmp.data._id});
 
-	game.observeChanges({
+	drawerQuery = game.observeChanges({
 		changed: function (id, fields) {
+			console.log('observing for drawer')
 			if (fields.drawer) {
-				revealDrawer(fields.drawer, tmp)
+				revealDrawer(fields.drawer.sessionID, tmp)
 			};
 		}
 	});
 }
 
-var revealDrawer = function (drawer, tmp) {
-	var drawerID = drawer.sessionID;
+var revealDrawer = function (sessionID, tmp) {
+	if (drawerQuery) {
+		drawerQuery.stop();
+	};
+
+	var drawerID = sessionID;
 	var list = tmp.$('.current-players').find('li');
 	var $drawer;
 
