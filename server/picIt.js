@@ -85,7 +85,7 @@ Meteor.methods({
 
 		Meteor.call( 'createRound', game, drawer )
 
-		Games.update( gameID, { $set: { status: "inProgress", timer: 7 }});
+		Games.update( gameID, { $set: { status: "inProgress", timer: 60 }});
 
 		// Incrementing the countdown for pre-round
 		var intID = Meteor.setInterval( function() {

@@ -1,13 +1,42 @@
-.guess-list {
-  height: 400px;
-  width: 100%;
-  background-color: #FFF;
-  padding: 10px;
-  padding-bottom: 20px;
-  overflow: hidden;
+@media(min-width: 601px) {
+  .guess-list {
+    height: 400px;
+    width: 100%;
+    background-color: #FFF;
+    padding: 10px;
+    padding-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .guess-list ul {
+    color: #e85c4a;
+    text-decoration: line-through;
+  }
 }
 
-.guess-list ul {
-  color: #e85c4a;
-  text-decoration: line-through;
+@media(max-width: 600px) {
+  .guess-list {
+    height: 40px;
+    width: 100%;
+    background-color: #FFF;
+    padding: 10px;
+    padding-bottom: 20px;
+    overflow: hidden;
+    margin-top: 2px;
+  }
+
+  .guess-list h3, hr {
+    display: none;
+  }
+
+  .guess-list ul {
+    color: #e85c4a;
+    text-decoration: line-through;
+  }
+
+  .guess-list ul li {
+    float: left;
+    margin-left: 3px;
+  }
+
 }
