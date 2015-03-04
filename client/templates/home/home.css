@@ -106,7 +106,7 @@ input.standard:focus {
 }
 
 .input__field--hoshi {
-	/*margin-top: 1em;*/
+	margin-top: -.7em;
 	padding: 0.85em 0.15em;
 	width: 100%;
 	background: transparent;
@@ -161,7 +161,7 @@ input.standard:focus {
 }
 
 .input__field--hoshi:focus + .input__label--hoshi::after,
-.input--filled  {
+.input--filled, .input__field--hoshi:active  {
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }
