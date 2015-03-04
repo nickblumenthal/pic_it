@@ -2,8 +2,8 @@
 	<div class="game">
 		<center>
 			<div class="row">
-
 				<div class="col-lg-2 navigation">
+					<div id="sidebar" class="collapsed">
 					{{#transition transIn="slideLeftBigIn" transOut="slideLeftBigOut" display="block" wait="true"}}
 						<button id="home" class="pt-touch-button wide">Back to homepage</button>
 						{{#if gameInProgress}}
@@ -19,6 +19,7 @@
 							</label>
 						</span>
 					{{/transition}}
+					</div>
 				</div>
 
 				<div class="col-lg-6 col-lg-offset-1">
@@ -66,7 +67,7 @@
 				<div id="timer" class="col-lg-2  col-lg-offset-1">
 					{{#transition transIn="slideRightBigIn" transOut="slideRightBigOut" display="block" wait="true"}}
 						{{#if gameInProgress}}
-							<div id="countdown"></div>
+							<div id="countdown" class="large-screen"></div>
 								{{#unless inLobbyOrStarting}}
 									{{> guessList}}
 								{{/unless}}

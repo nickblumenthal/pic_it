@@ -92,7 +92,6 @@ Template.game.helpers({
 Template.game.events({
 	'click #create-round': function (event) {
 		var game = this;
-
 		Meteor.call('startCountdown', game)
 	},
 
@@ -113,7 +112,7 @@ Template.game.events({
 });
 
 Template.game.created = function () {
-	
+
 };
 
 Template.game.rendered = function () {
@@ -134,7 +133,13 @@ Template.game.rendered = function () {
 	Games.startClockObserve(clock, game._id)
 	// TEMP: Hack to allow for different UIhook on first page hit
 	Meteor.setTimeout( function () {
-		Session.set('notFirstHook', true)}, 1000)
+		Session.set('notFirstHook', true)
+	}, 1000)
+
+	// Setup event listener for sidebar expander
+	$('.sidebar-toggle').on('click', function() {
+  	$('#sidebar').toggleClass('collapsed')
+	})
 };
 
 // TEMP: Not sure if this allowed, but had to save the observer
@@ -176,5 +181,5 @@ var joinGame = function (game) {
 		Session.set('playerID', sessionID);
 	} else {
 		console.log('ERROR- User not logged in!')
-	}	
+	}
 }
