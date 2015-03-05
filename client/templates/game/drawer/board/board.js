@@ -266,8 +266,8 @@ function convertTouchEvent(e) {
 	if (isTouchSupported) {
 
 		if (e.originalEvent.touches[0]) {
-			e.insideX=e.originalEvent.touches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
-			e.insideY=e.originalEvent.touches[0].pageY - document.getElementById('board').getBoundingClientRect().top;
+			e.insideX=e.originalEvent.touches[0].pageX - (window.scrollX + document.getElementById('board').getBoundingClientRect().left);
+			e.insideY=e.originalEvent.touches[0].pageY - (window.scrollY + document.getElementById('board').getBoundingClientRect().top);
 		} else {
 			e.insideX=e.changedTouches[0].pageX - document.getElementById('board').getBoundingClientRect().left;
 			e.insideY=e.changedTouches[0].pageY - document.getElementById('board').getBoundingClientRect().top;
