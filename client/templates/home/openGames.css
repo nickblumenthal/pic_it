@@ -3,9 +3,14 @@
 }
 
 .games-container {
-	min-height: 200px;
-	max-width: 800px;
+	min-height: 210px;
+	max-width: 800px;	
+}
 
+@media (min-width: 600px) {
+	.games-container {
+		min-height: 270px;
+	}
 }
 
 .open-game {
