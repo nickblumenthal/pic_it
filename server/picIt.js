@@ -85,7 +85,7 @@ Meteor.methods({
 
 		Meteor.call( 'createRound', game, drawer )
 
-		Games.update( gameID, { $set: { status: "inProgress", timer: 60 }});
+		Games.update( gameID, { $set: { status: "inProgress", timer: 5 }});
 
 		// Incrementing the countdown for pre-round
 		var intID = Meteor.setInterval( function() {
@@ -150,16 +150,7 @@ Meteor.methods({
 			{$set: {'players.$.name': newUsername }}
 		)
 	},
-
-	changeGameStatus: function (gameID) {
-		var status = Games.findOne(gameID, { status: true }).status;
-		if ( status === "waiting") {
-			Games.update(gameID, { $set: { status: "inProgress", timer: 60 }})
-		} else {
-			Games.update(gameID, { $set: { status: "waiting", timer: 0 }})
-		}
-	},
-
+	
 	loadWordList: function(fileName) {
 
 	  var wordList = Assets.getText('nounlist.txt');

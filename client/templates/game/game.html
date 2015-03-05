@@ -3,8 +3,8 @@
 		<center>
 			<div class="row">
 				<div class="col-lg-2 navigation">
-					<div id="sidebar" class="collapsed">
 					{{#transition transIn="slideLeftBigIn" transOut="slideLeftBigOut" display="block" wait="true"}}
+					<div id="sidebar" class="collapsed">
 						<button id="full-screen" class="pt-touch-button wide">{{fullScreenText}} Full Screen</button>
 						<button id="home" class="pt-touch-button wide">Back to homepage</button>
 						<span class="input input--kaede">
@@ -13,11 +13,11 @@
 								<span class="input__label-content input__label-content--kaede">USERNAME</span>
 							</label>
 						</span>
-					{{/transition}}
 					</div>
 					{{#if inLobby}}
 						<button id="create-round" class="{{disabledBtnClass}} pt-touch-button wide" {{disableBtn}} >Start Round</button>
 					{{/if}}
+					{{/transition}}
 				</div>
 
 				<div class="col-lg-6 col-lg-offset-1">
@@ -49,7 +49,7 @@
 							</div>
 							<!-- Anim hack -->
 						{{else}}
-							<div class="row game-status"></div>
+							<div class="row"></div>
 						{{/if}}
 
 					{{/transition}}
