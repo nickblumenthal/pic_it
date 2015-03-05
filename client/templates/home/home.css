@@ -106,7 +106,7 @@ input.standard:focus {
 }
 
 .input__field--hoshi {
-	/*margin-top: 1em;*/
+	margin-top: -.7em;
 	padding: 0.85em 0.15em;
 	width: 100%;
 	background: transparent;
