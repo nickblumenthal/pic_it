@@ -99,9 +99,13 @@ var observeDrawer = function (tmp) {
 
 	drawerQuery = game.observeChanges({
 		changed: function (id, fields) {
-			console.log('observing for drawer')
-			if (fields.drawer) {
-				revealDrawer(fields.drawer.sessionID, tmp)
+
+			if (fields.status === "starting") {
+				var query = Games.findOne( {_id: tmp.data._id}, {
+					fields: { drawer: 1 }
+				});
+				
+				revealDrawer(query.drawer.sessionID, tmp)
 			};
 		}
 	});
