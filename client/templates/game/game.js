@@ -111,12 +111,11 @@ Template.game.events({
 
 	'keydown #username': function (event) {
 		if($('#username').val() === "Guest") {
-			console.log($('#username').val());
 			$('#username').val("");
 		}
 	},
 
-	'keyup #username': function (event) {
+	'input #username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
 	},
 
