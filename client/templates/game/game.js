@@ -105,6 +105,13 @@ Template.game.events({
 		Router.go('home');
 	},
 
+	'keydown #username': function (event) {
+		if($('#username').val() === "Guest") {
+			console.log($('#username').val());
+			$('#username').val("");
+		}
+	},
+
 	'keyup #username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
 		// Games.update(this._id, {$set: {players[]}})
