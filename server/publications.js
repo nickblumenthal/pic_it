@@ -26,6 +26,14 @@ Meteor.publish("Game", function (gameID) {
 })
 
 Meteor.publish("Rounds", function (gameID) {
+
+	var sessionID = this.connection.id
+
+	console.log(sessionID)
+	this._session.socket.on("close", Meteor.bindEnvironment( function (e) {
+		Meteor.call('removeUser', sessionID, gameID)
+	}))
+
 	return Rounds.find({ 'game._id': gameID })
 })
 
