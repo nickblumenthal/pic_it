@@ -8,7 +8,7 @@
 						{{#transition transIn="expandIn" transOut="expandOut" display="inline-block" wait="true"}}
 							{{#each openGames}}
 								<div class="open-game" data-id="{{ this._id }}">
-									{{ this.name }}
+									<p>{{ this.name }}</p>
 								</div>
 							{{/each}}
 						{{/transition}}
