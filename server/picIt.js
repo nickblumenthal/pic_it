@@ -85,7 +85,7 @@ Meteor.methods({
 
 		Meteor.call( 'createRound', game, drawer )
 
-		Games.update( gameID, { $set: { status: "inProgress", timer: 7 }});
+		Games.update( gameID, { $set: { status: "inProgress", timer: 60 }});
 
 		// Incrementing the countdown for pre-round
 		var intID = Meteor.setInterval( function() {
@@ -180,6 +180,17 @@ Meteor.methods({
 			var winner = Meteor.call('getSessionID');
 			Rounds.update(roundID, { $set: { won: true, winner: winner }});
 			Meteor.call('endRound', round.game._id);
+		} else if (round.guessedWords.indexOf(guess) === -1) {
+			guesses = round.guessedWords;
+			guesses.unshift(guess);
+			Rounds.update(
+				{"_id": roundID},
+				{
+					$set: {
+						guessedWords: guesses
+					}
+				}
+			);
 		}
 	},
 

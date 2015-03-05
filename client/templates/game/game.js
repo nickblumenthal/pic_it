@@ -109,6 +109,13 @@ Template.game.events({
 		Router.go('home');
 	},
 
+	'keydown #username': function (event) {
+		if($('#username').val() === "Guest") {
+			console.log($('#username').val());
+			$('#username').val("");
+		}
+	},
+
 	'keyup #username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
 	},
@@ -150,9 +157,20 @@ Template.game.rendered = function () {
 	}, 1000)
 
 	// Setup event listener for sidebar expander
-	$('.sidebar-toggle').on('click', function() {
+	// $('.sidebar-toggle').on('click', function() {
+	// 	console.log('click');
+  // 	$('#sidebar').toggleClass('collapsed')
+	// });
+
+	$('.sidebar-toggle').on('touchstart', function() {
+		console.log('click');
   	$('#sidebar').toggleClass('collapsed')
 	})
+};
+
+Template.game.destroyed = function() {
+	// Remove event listener for sidebar expander
+	$('.sidebar-toggle').off('touchstart');
 };
 
 // TEMP: Not sure if this allowed, but had to save the observer

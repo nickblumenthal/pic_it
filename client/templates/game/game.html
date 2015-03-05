@@ -7,12 +7,6 @@
 					{{#transition transIn="slideLeftBigIn" transOut="slideLeftBigOut" display="block" wait="true"}}
 						<button id="full-screen" class="pt-touch-button wide">{{fullScreenText}} Full Screen</button>
 						<button id="home" class="pt-touch-button wide">Back to homepage</button>
-						{{#if gameInProgress}}
-							<button id="create-round" class="{{disabledBtnClass}} pt-touch-button wide" {{disableBtn}} >Start Round</button>
-						{{/if}}
-						<!-- <input id="username" class="standard" value="">
-						<button type="submit" id="change-username" class="pt-touch-button">Set Username</button> -->
-
 						<span class="input input--kaede">
 							<input class="input__field input__field--kaede" type="text" id="username" value="{{getUsername}}"/>
 							<label class="input__label input__label--kaede" for="username">
@@ -21,6 +15,9 @@
 						</span>
 					{{/transition}}
 					</div>
+					{{#if inLobby}}
+						<button id="create-round" class="{{disabledBtnClass}} pt-touch-button wide" {{disableBtn}} >Start Round</button>
+					{{/if}}
 				</div>
 
 				<div class="col-lg-6 col-lg-offset-1">
