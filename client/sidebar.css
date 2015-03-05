@@ -11,5 +11,6 @@
 
   #sidebar.collapsed {
     transform: translate(-100%);
+    -webkit-transform: translate(-100%);
   }
 }
