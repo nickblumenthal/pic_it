@@ -5,6 +5,7 @@
 				<div class="col-lg-2 navigation">
 					<div id="sidebar" class="collapsed">
 					{{#transition transIn="slideLeftBigIn" transOut="slideLeftBigOut" display="block" wait="true"}}
+						<button id="full-screen" class="pt-touch-button wide">{{fullScreenText}} Full Screen</button>
 						<button id="home" class="pt-touch-button wide">Back to homepage</button>
 						{{#if gameInProgress}}
 							<button id="create-round" class="{{disabledBtnClass}} pt-touch-button wide" {{disableBtn}} >Start Round</button>
