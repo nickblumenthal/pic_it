@@ -33,6 +33,25 @@ Template.openGames.helpers({
 			sort: { createdAt: -1 },
 			limit: 20
 		}).count()
+	},
+
+	// TEMP: DRY it
+	disableBtn: function (dir) {
+		var dir = dir.hash.dir;
+		if (dir === "next") {
+			return ( openGamesCounter() < 20 ? "disabled" : "" )
+		} else {
+			return (Session.get('openGamesCursor') <= 0 ? "disabled" : "") 
+		}
+	},
+
+	disabledBtnClass: function (dir) {
+		var dir = dir.hash.dir;
+		if (dir === "next") {
+			return ( openGamesCounter() < 20 ? "disable-btn" : "" )
+		} else {
+			return (Session.get('openGamesCursor') <= 0 ? "disable-btn" : "") 
+		}
 	}
 });
 
@@ -46,6 +65,7 @@ Template.openGames.events({
 		incrementCursor( 'openGamesCursor', 20 )
 	},
 
+	// TEMP: This logic isn't needed anymore
 	'click #open-game-prev': function (event, template) {
 		if ( Session.get('openGamesCursor') > 0 ) {
 			incrementCursor( 'openGamesCursor', -20 )
@@ -90,4 +110,8 @@ Template.openGames.destroyed = function () {
 var incrementCursor = function (cursor, inc) {
   var newCursor = Session.get( cursor ) + inc;
   Session.set( cursor, newCursor);
+}
+
+var openGamesCounter = function () {
+	return Games.find({ status: { $ne: "finished" }}).count()
 }
