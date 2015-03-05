@@ -3,7 +3,7 @@
 }
 
 .games-container {
-	height: 260px;
+	min-height: 200px;
 }
 
 .open-game {

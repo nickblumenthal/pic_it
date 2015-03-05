@@ -1,5 +1,6 @@
 Template.openGames.helpers({
 	openGames: function () {
+		var limit = screen.width < 600 ? 8 : 20;
 		return Games.find({ status: { $ne: "finished" }}, {
 			sort: { createdAt: -1 },
 			limit: 20
