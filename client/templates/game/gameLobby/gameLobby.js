@@ -49,6 +49,11 @@ Template.gameLobby.rendered = function() {
 	};
 };
 
+Template.gameLobby.destroyed = function () {
+	if (query) { query.stop()};
+	if (drawerQuery) { drawerQuery.stop()};
+};
+
 // TEMP: Might want to refactor this into the overall game template
 window.onbeforeunload = function(){
 	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));

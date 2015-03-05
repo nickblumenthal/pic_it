@@ -85,6 +85,10 @@ Template.game.helpers({
 		return (this.status !== "waiting" ? "disable-btn" : "" )
 	},
 
+	fullScreenText: function () {
+		return ( Session.get('fullscreenEnabled') ? "Exit" : "Enter" )
+	}
+
 });
 
 
@@ -113,6 +117,16 @@ Template.game.events({
 
 	'input #username': function (event) {
 		Meteor.call('updateUsername', $('#username').val(), Session.get('gameID'), Session.get('playerID'));
+	},
+
+	'click #full-screen': function (event, tmp) {
+		if ( Session.get('fullscreenEnabled')) {
+			exitFullscreen();
+			Session.set('fullscreenEnabled', false)
+		} else {
+			launchIntoFullscreen(document.documentElement); // the whole page
+			Session.set('fullscreenEnabled', true)
+		}
 	}
 });
 
