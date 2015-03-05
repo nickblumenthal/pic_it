@@ -2,19 +2,20 @@
 
 Template.guesser.events({
 	'keyup #guess': function (event, template) {
-		guess = handleGuess($('#guess').val().toLowerCase(), template);
-		if(guess) {
-			guesses = this.guessedWords;
-			guesses.unshift(guess);
-			Rounds.update(
-				{"_id": this._id},
-				{
-					$set: {
-						guessedWords: guesses
-					}
-				}
-			);
-		}
+		handleGuess($('#guess').val().toLowerCase(), template);
+		// guess = handleGuess($('#guess').val().toLowerCase(), template);
+		// if(guess) {
+		// 	guesses = this.guessedWords;
+		// 	guesses.unshift(guess);
+		// 	Rounds.update(
+		// 		{"_id": this._id},
+		// 		{
+		// 			$set: {
+		// 				guessedWords: guesses
+		// 			}
+		// 		}
+		// 	);
+		// }
    }
 });
 
