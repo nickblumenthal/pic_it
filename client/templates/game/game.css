@@ -18,3 +18,8 @@
     display: none;
   }
 }
+
+.divider {
+	width: 94%;
+	margin-bottom: 0px;
+}

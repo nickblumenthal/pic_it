@@ -8,7 +8,7 @@
 						{{#transition transIn="expandIn" transOut="expandOut" display="inline-block" wait="true"}}
 							{{#each openGames}}
 								<div class="open-game" data-id="{{ this._id }}">
-									{{ this.name }}
+									<p>{{ this.name }}</p>
 								</div>
 							{{/each}}
 						{{/transition}}
@@ -16,8 +16,8 @@
 				</div>
 
 				<div class="controls">
-					<button id="open-game-prev" class="pt-touch-button">Previous</button>
-					<button id="open-game-next" class="pt-touch-button">Next</button>
+					<button id="open-game-prev" class="pt-touch-button {{disabledBtnClass dir='prev'}}" {{disableBtn dir="prev"}}>Previous</button>
+					<button id="open-game-next" class="pt-touch-button {{disabledBtnClass dir='next'}}" {{disableBtn dir="next"}}>Next</button>
 				</div>
 			</div>
 		<!-- {{/if}} -->

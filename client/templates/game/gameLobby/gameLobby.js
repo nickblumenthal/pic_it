@@ -102,7 +102,8 @@ var observeDrawer = function (tmp) {
 
 			if (fields.status === "starting") {
 				var query = Games.findOne( {_id: tmp.data._id}, {
-					fields: { drawer: 1 }
+					fields: { drawer: 1 },
+					reactive: false
 				});
 				
 				revealDrawer(query.drawer.sessionID, tmp)

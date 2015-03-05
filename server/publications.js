@@ -26,13 +26,7 @@ Meteor.publish("Game", function (gameID) {
 })
 
 Meteor.publish("Rounds", function (gameID) {
-
-	var sessionID = this.connection.id
-
-	console.log(sessionID)
-	this._session.socket.on("close", Meteor.bindEnvironment( function (e) {
-		Meteor.call('removeUser', sessionID, gameID)
-	}))
+	onSocketClose(this, gameID)
 
 	return Rounds.find({ 'game._id': gameID })
 })
@@ -40,3 +34,18 @@ Meteor.publish("Rounds", function (gameID) {
 Meteor.publish("Lines", function (roundID) {
 	return Lines.find({ 'round_id': roundID })
 })
+
+// Server precaution to remove users from game if disconnected
+var onSocketClose = function (session, gameID) {
+	var sessionID = session.connection.id
+
+	session._session.socket.on("close", Meteor.bindEnvironment( function (e) {
+		var game = Games.findOne({_id: gameID}, {
+			fields: { status: 1 },
+			reactive: false
+		})
+		if (game.status !== "finished") {
+			Meteor.call('removeUser', sessionID, gameID)
+		};
+	}))
+}

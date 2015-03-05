@@ -82,11 +82,11 @@ var createTransitionHooks = function (transIn, transOut, display, wait, exceptio
       })
     },
 
-     moveElement: function (node, next) {
-      $(node).animate({ height: 'toggle', opacity: 'toggle' }, 'slow').promise().done(function(){
-        $(node).insertBefore(next).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
-      });
-    },
+    //  moveElement: function (node, next) {
+    //   $(node).animate({ height: 'toggle', opacity: 'toggle' }, 'slow').promise().done(function(){
+    //     $(node).insertBefore(next).animate({ height: 'toggle', opacity: 'toggle' }, 'slow');
+    //   });
+    // },
 
     removeElement: function(node) {
       var $node = $(node);

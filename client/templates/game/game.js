@@ -87,6 +87,10 @@ Template.game.helpers({
 
 	fullScreenText: function () {
 		return ( Session.get('fullscreenEnabled') ? "Exit" : "Enter" )
+	},
+
+	winner: function () {
+		return ( this.winner ? (this.winner + "!") : "Nobody!" )
 	}
 
 });
