@@ -3,11 +3,10 @@ Template.openGames.helpers({
 		var limit = screen.width < 600 ? 8 : 20;
 		return Games.find({ status: { $ne: "finished" }}, {
 			sort: { createdAt: -1 },
-			limit: 20
+			limit: 20,
+			fields: { name: 1 }
 		})
 	},
-
-	// Remove count, use openGames if statement inside of blaze
 
 	openGamesCount: function () {
 		return Games.find({ status: { $ne: "finished" }}, {
