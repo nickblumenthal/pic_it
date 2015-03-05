@@ -84,9 +84,10 @@ Template.openGames.events({
 
 
 Template.openGames.created = function() {
-	// Sets the initial value
+	// Reactive elements to change the number of open games to display
 	var initialNumOfGames = $(window).width() < 600 ? 8 : 20;
 	Session.set('numOfGames', initialNumOfGames);
+	resizeObserver();
 
   Session.setDefault('openGamesCursor', 0);
   Session.setDefault('finishedGamesCursor', 0);
@@ -98,7 +99,6 @@ Template.openGames.created = function() {
 		tempSubs.openGames = Meteor.subscribe('openGames', Session.get('openGamesCursor'));
 		tempSubs.finishedGames = Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
   });
-
 }
 
 
@@ -107,18 +107,22 @@ Template.openGames.destroyed = function () {
 	_.each( this.subscriptions, function (sub) {
 		sub.stop();
 	})
+
+	// Removes resizeObserver
+	$(window).off('resize');
 };
 
-
-
-$(window).resize(function () {
-	var size = $(window).width();
-	if (size < 600) {
-		setWidth(8)
-	} else {
-		setWidth(20)
-	}
-})
+var resizeObserver = function () {
+	$(window).resize(function () {
+		console.log('crap')
+		var size = $(window).width();
+		if (size < 600) {
+			setWidth(8)
+		} else {
+			setWidth(20)
+		}
+	})
+}
 
 var setWidth = function (numOfGames) {
 	var currentNumOfGames = Session.get('numOfGames');
