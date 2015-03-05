@@ -66,12 +66,16 @@
 
 
 				<div id="timer" class="col-lg-2  col-lg-offset-1">
-					{{#transition transIn="slideRightBigIn" transOut="slideRightBigOut" display="block" wait="true"}}
+					{{#transition transIn="slideUpBigIn" transOut="slideDownBigOut" display="block" wait="true"}}
 						{{#if gameInProgress}}
 							<div id="countdown" class="large-screen"></div>
-								{{#unless inLobbyOrStarting}}
-									{{> guessList}}
-								{{/unless}}
+							{{#if inLobbyOrStarting}}
+								<div></div>
+							{{else}}
+								{{> guessList}}
+							{{/if}}
+						{{else}}
+							<div></div>
 						{{/if}}
 					{{/transition}}
 				</div>

@@ -17,7 +17,6 @@ Template.home.rendered = function () {
 
 var createGame = function (tmp) {
 	var gameName = this.$('#gameName').val();
-	console.log("Create Game: " + gameName);
 
 	if (!validName(gameName)) {
 		// Give an error 
@@ -28,6 +27,7 @@ var createGame = function (tmp) {
 		if (error) { console.log(error) };
 
 		if (result) {
+			console.log("Create Game: " + gameName);
 			// Redirect to game lobby
 			Router.go('game', { gameID: result.gameID })
 		};
