@@ -1,5 +1,5 @@
 /* Large screen */
-@media(min-width: 600px) {
+@media(min-width: 770px) {
   .top {
   	margin-top: 50px;
   }
@@ -14,7 +14,7 @@
 }
 
 /* Small screen */
-@media(max-width: 600px) {
+@media(max-width: 770px) {
   .top {
     margin: 0px;
   }
