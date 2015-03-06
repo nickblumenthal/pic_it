@@ -141,7 +141,17 @@ Template.game.events({
 			launchIntoFullscreen(document.documentElement); // the whole page
 			Session.set('fullscreenEnabled', true)
 		}
+	},
+
+	'click span.input.input--kaede, #sidebar > button': function (e, tmp) {
+		e.stopPropagation();
+	},
+
+	'click #sidebar:not(.collapsed)': function (e, tmp) {
+		console.log("clicky click")
+		$(e.target).addClass("collapsed")
 	}
+
 });
 
 Template.game.created = function () {
