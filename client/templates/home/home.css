@@ -7,6 +7,12 @@
 	margin-top: 20px;
 }
 
+.tour {
+	color: #EEE;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
 @media(max-width: 770px) {
 	#sidebar.about {
 		top: 72px;
