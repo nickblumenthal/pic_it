@@ -50,7 +50,11 @@
 						{{#if gameFinished}}
 							<div class="row game-status">
 								<h2>GAME OVER</h2>
-								<p>Game winner: {{ winner }}</p>
+								{{#if tie}}
+									<p>Game ended in a tie!</p>
+								{{else}}
+									<p>Game winner: {{ winner }}</p>
+								{{/if}}
 								<hr class="divider">
 							</div>
 						{{/if}}

@@ -117,7 +117,11 @@ Meteor.methods({
 	},
 
 	endGame: function (gameID) {
-		Games.update( gameID, { $set: { status: "finished", timer: 0 }})
+		Meteor.call('getGameWinner', gameID, function (err, res) {
+			var winner = res;
+
+			Games.update( gameID, { $set: { status: "finished", timer: 0, winner: winner }})
+		})
 	},
 
 	joinGame: function (gameID, sessionID) {

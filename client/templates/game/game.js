@@ -89,8 +89,18 @@ Template.game.helpers({
 		return ( Session.get('fullscreenEnabled') ? "Exit" : "Enter" )
 	},
 
+	tie: function () {
+		var orderedPlayers = _.sortBy( this.players, 'points' ).reverse();
+
+		if (orderedPlayers[0].points === orderedPlayers[1].points) {
+			return true
+		} else {
+			return false
+		}
+	},
+
 	winner: function () {
-		return ( this.winner ? (this.winner + "!") : "Nobody!" )
+		return ( this.winner ? (this.winner.name + "!") : "Nobody!" )
 	}
 
 });
