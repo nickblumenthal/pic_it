@@ -38,6 +38,7 @@
 	border-radius: 0;
 	background: #f0f0f0;
 	-webkit-appearance: none; /* for box shadows to show on iOS */
+	font-size: 17px;
 }
 
 .input__field:focus {

@@ -1,7 +1,26 @@
 <template name="roundSummary">
-	<div class="round-summary">
-		<span>Word: {{ this.chosenWord }}</span>
-		<span>Drawer: {{ this.drawer.name }}</span>
-		<span>Winner: {{ winner }}</span>
-	</div>
+	{{#if roundsCount}}
+		<hr>
+		<div class="row">
+		<div id="rounds">
+			<h2 class="title">Previous Rounds</h2>
+			<ul>
+				<li class="round-header round-summary">
+					<div class="round-word round-entry">Word</div>
+					<div class="round-drawer round-entry" >Drawer</div>
+					<div class="round-winner round-entry">Winner</div>
+				</li>
+
+				{{#each rounds}}
+					
+					<li class="round-summary">
+						<div class="round-word round-entry">{{ this.chosenWord }}</div>
+						<div class="round-drawer round-entry {{highlightPlayer user=this.drawer }}" >{{ this.drawer.name }}</div>
+						<div class="round-winner round-entry {{highlightPlayer user=winner }}">{{ winnerName user=winner }}</div>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+		</div>
+	{{/if}}
 </template>

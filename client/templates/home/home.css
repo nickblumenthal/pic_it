@@ -79,6 +79,7 @@ input.standard:focus {
 
 .input__field__hoshi {
 	position: relative;
+	color: #999;
 	display: block;
 	float: right;
 	padding: 0.8em;
@@ -171,15 +172,15 @@ input.standard:focus {
 }
 
 .input__label--hoshi-color-1::after {
-	border-color: hsl(200, 100%, 50%);
+	border-color: #619FBA;
 }
 
 .input__label--hoshi-color-2::after {
-	border-color: hsl(160, 100%, 50%);
+	border-color: #619FBA;
 }
 
 .input__label--hoshi-color-3::after {
-	border-color: hsl(20, 100%, 50%);
+	border-color: #619FBA;
 }
 
 .input__field--hoshi:focus + .input__label--hoshi::after,

@@ -10,12 +10,8 @@ Template.gameLobby.helpers({
 		return _.sortBy( this.players, 'points' ).reverse();
 	},
 
-	rounds: function() {
-		return Rounds.find({'game._id': this._id});
-	},
-
-	roundsCount: function() {
-		return Rounds.find({'game._id': this._id}).count();
+	highlightPlayer: function () {
+		return (this.sessionID === Session.get('playerID') ? "currentUser" : "")
 	}
 });
 
@@ -34,12 +30,6 @@ Template.gameLobby.rendered = function() {
 		{ stagger: 250 }
 	)
 
-	// Highlight user when he enters statically
-	highlightCurrentUser(Session.get('playerID'))
-
-	// Highlight user when he enters reactively
-	observeCurrentUser(this)
-
 	// Animation for when the drawer is chosen
 	observeDrawer(this);
 
@@ -50,7 +40,6 @@ Template.gameLobby.rendered = function() {
 };
 
 Template.gameLobby.destroyed = function () {
-	if (query) { query.stop()};
 	if (drawerQuery) { drawerQuery.stop()};
 };
 
@@ -59,40 +48,7 @@ window.onbeforeunload = function(){
 	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
 }
 
-var query;
-var observeCurrentUser = function (tmp) {
-	var game = Games.find({ _id: tmp.data._id});
 
-	query = game.observeChanges({
-		changed: function (id, fields) {
-			if (fields.players) {
-				console.log("observing for current user")
-				var currentUser = _.find( fields.players, function (player) {
-					return player.sessionID === Session.get('playerID');
-				})
-				if (currentUser) { 
-					Meteor.setTimeout( function() {
-						highlightCurrentUser(currentUser.sessionID)
-					}, 200)
-				}
-			};
-		},
-	});
-}
-
-var highlightCurrentUser = function (sessionID) {
-	var currentPlayer = $('.current-players').find('li[data-id="' + sessionID + '"]')
-
-	if (currentPlayer) {
-		currentPlayer.addClass('currentUser');
-		
-		// Stops the observer if the user has been found
-		if (query) { query.stop(); };
-	};
-}
-
-// This is for the the first time a user hits the gameLobby, where
-// he is added reactively rather than being bundled from the server
 var drawerQuery;
 var observeDrawer = function (tmp) {
 	var game = Games.find({ _id: tmp.data._id});

@@ -1,0 +1,38 @@
+.round-summary {
+	max-width: 27em;
+}
+
+.round-word {
+	float: left;
+}
+	
+.round-winner {
+	float: right;
+}
+
+.round-entry {
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 6.9em;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.round-header {
+	color: #619FBA;
+	font-variant: small-caps;
+	font-weight: 900;
+}
+
+@media(max-width: 600px) {
+	.round-entry {
+		width: 5em;
+	}
+}
+
+@media(min-width: 700px){
+	.round-entry {
+		width: 9em;
+	}
+}

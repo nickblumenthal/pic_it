@@ -1,32 +1,21 @@
 <template name="gameLobby">
 	<div class="row game-status">
-		<div class="col-lg-12">
-			<div class="game-lobby">
-
-				<div id="players">
-					<h3>Players & Points</h3>
-					<ul class="current-players">
-						{{#transition transIn="slideLeftIn" transOut="slideRightOut" display="block" wait="false"}}
-							{{#each players}}
-								<li class="transition-hidden" data-id="{{ this.sessionID }}">{{this.name}} : {{this.points}}</li>
-							{{/each}}
-						{{/transition}}
-					</ul>
-				</div>
-				<hr>
-
-				{{#if roundsCount}}
-					<div id="rounds">
-						<h3>Previous Rounds</h3>
-						<ul>
-							{{#each rounds}}
-								<li>{{> roundSummary}}</li>
-							{{/each}}
-						</ul>
-					</div>
-				{{/if}}
-
-			</div>
+		<div id="players">
+			<h2 class="title">Players & Points</h2>
+			<ul class="current-players">
+				{{#transition transIn="slideLeftIn" transOut="slideRightOut" display="block" wait="false"}}
+					{{#each players}}
+						<li class="transition-hidden row {{highlightPlayer}}" data-id="{{ this.sessionID }}">
+							<div class="player-name">{{this.name}}</div>
+							<div class="player-points">{{this.points}}</div>
+						</li>
+					{{/each}}
+				{{/transition}}
+			</ul>
 		</div>
+		<div class="row" style="margin-bottom:20px;"></div>
+		
+		{{> roundSummary}}				
+	
 	</div>
 </template>

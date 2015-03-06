@@ -12,5 +12,25 @@
 }
 
 .currentUser {
-	color: blue;
+	color: #619FBA;
+}
+
+.current-players > li {
+	max-width: 250px;
+}
+
+.player-name {
+	float: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 9.5em;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.player-points {
+	float: right;
+	text-align: left;
+	width: 4em;
+	display: inline-block;
 }

@@ -57,13 +57,20 @@ Template.board.rendered = function() {
 	var round = this.data;
 	resizeBoard();
 	boardRender(true, round);
-	// window.onresize = resizeControl.bind(this);
+
+	// Adds listener to stop drawing lines on mouseup outside of board
+	$(window).on('mouseup', function (event) {
+		mpTouchEnd(event)
+	});
 
 	Rounds.startLinesObserver(round);
 }
 
 Template.board.destroyed = function () {
 	Rounds.stopLinesObserver();
+
+	// Removes listener for stopping lines outside of board
+	$(window).off('mouseup');
 };
 
 Rounds.startLinesObserver = function startLinesObserver (round) {
@@ -295,7 +302,7 @@ function mpTouchMove(e, tmp) {
 					(previousTouchPosition.x-center.x)/zoom, (previousTouchPosition.y-center.y)/zoom, (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom
 				));
 				Meteor.call("boardUpdated", round._id, function(error, ret){
-						console.log("boardUpdated error="+error+" ret="+ret);
+						// console.log("boardUpdated error="+error+" ret="+ret);
 				});
 			}
 
