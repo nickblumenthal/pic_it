@@ -57,13 +57,20 @@ Template.board.rendered = function() {
 	var round = this.data;
 	resizeBoard();
 	boardRender(true, round);
-	// window.onresize = resizeControl.bind(this);
+
+	// Adds listener to stop drawing lines on mouseup outside of board
+	$(window).on('mouseup', function (event) {
+		mpTouchEnd(event)
+	});
 
 	Rounds.startLinesObserver(round);
 }
 
 Template.board.destroyed = function () {
 	Rounds.stopLinesObserver();
+
+	// Removes listener for stopping lines outside of board
+	$(window).off('mouseup');
 };
 
 Rounds.startLinesObserver = function startLinesObserver (round) {
