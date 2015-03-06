@@ -62,6 +62,7 @@ Template.openGames.events({
 
 	'click #open-game-next': function (event, template) {
 		incrementCursor( 'openGamesCursor', Session.get('numOfGames') )
+		freezeBtn(event.target);
 	},
 
 	'click #open-game-prev': function (event, template) {
@@ -131,6 +132,14 @@ var setWidth = function (numOfGames) {
 	if ( currentNumOfGames !== numOfGames) {
 		Session.set('numOfGames', numOfGames)
 	};
+}
+
+var freezeBtn = function (target) {
+	var $target = $(target);
+	$target.attr('disabled', true);
+	Meteor.setTimeout(function () {
+		$target.attr('disabled', false)
+	}, 1000)
 }
 
 var incrementCursor = function (cursor, inc) {

@@ -2,54 +2,6 @@
 // _uihooks to see what to do before inserting, moving or deleting the
 // reactive element
 
-// Hooks for initial page transition
-var hooks = {
-  transitioning: false,
-
-  insertElement: function(node, next) {
-  	var $node = $(node);
-
-    $node.insertBefore(next);
-    $node.addClass('pt-page-current')
-
-    console.log(Session.get('notFirstHook'))
-    if (Session.get('notFirstHook')) {
-      // TEMP: Not really needed anymore, seeing as we could just 
-      // $node.hide() before inserting
-
-      // // Adds transition effect
-      $node.addClass('pt-page-' + transitionDir('insert'))
-
-      $node.on( animEndEventName, function () {
-      	$node.off( animEndEventName );
-      	$node.removeClass('pt-page-' + transitionDir('insert'))
-      })
-    } else {
-      $node.addClass('pt-page-moveFromBottom')
-
-      $node.on( animEndEventName, function () {
-        $node.off( animEndEventName );
-        $node.removeClass('pt-page-moveFromBottom')
-      })
-    }
-  },
-
-  removeElement: function(node) {
-    var remove;
-    var $node = $(node);
-    var that = this;
-
-		// TEMP: Switch this to a Session variable
-		$node.addClass( 'pt-page-' + transitionDir('remove') );
-
-		$node.on( animEndEventName, function () {
-			$node.off( animEndEventName )
-			$node.remove()
-		})
-  }
-};
-
-
 var createTransitionHooks = function (transIn, transOut, display, wait, exception) {
   // Sets the default for wait
   var wait = typeof wait !== 'undefined' ? wait : true;
@@ -125,33 +77,12 @@ Template.transition.rendered = function() {
   var wait = typeof this.data.wait !== 'undefined' ? this.data.wait : true;
 
   if (parentNode.id === "router") { 
-    return parentNode._uihooks = createTransitionHooks( transIn, transOut, display, wait, true); };
-  return parentNode._uihooks = createTransitionHooks( transIn, transOut, display, wait);
+    return parentNode._uihooks = createTransitionHooks( transIn, transOut, display, wait, true); 
+  };
 
+  return parentNode._uihooks = createTransitionHooks( transIn, transOut, display, wait);
 };
 
-// For figuring out which direction route changes should transition
-var transitionDir = function ( action ) {
-  // Gets route client is navigating to
-  var toRoute = Router.current().url;
-  var direction;
-
-  if ( toRoute === "/" ) {
-    if ( action === "remove" ) {
-      direction = 'moveToRight';
-    } else {
-      direction = 'moveFromLeft';
-    }
-  } else {
-    if ( action === "remove" ) {
-      direction = 'moveToLeft';
-    } else {
-      direction = 'moveFromRight';
-    }
-  }
-
-  return direction;
-}
 
 // Veloctiy Direction:
 var velocityDir = function ( action ) {
