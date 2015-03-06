@@ -1,7 +1,7 @@
 Template.home.events({
-	'click #create': function (event, tmp) {
-		createGame(tmp)
-	}, 
+	'click #create': function(event, tmp) {
+		createGame(tmp);
+	},
 
 	'keypress #gameName': function (event, tmp) {
 		var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -12,14 +12,23 @@ Template.home.events({
 });
 
 Template.home.rendered = function () {
-	Session.set('notFirstHook', true)
+	Session.set('notFirstHook', true);
+
+	$('.sidebar-toggle').on('touchstart', function() {
+		console.log('click');
+  	$('#sidebar').toggleClass('collapsed')
+	})
 };
+
+Template.home.destroyed = function() {
+	$('.sidebar-toggle').off('touchstart');
+}
 
 var createGame = function (tmp) {
 	var gameName = this.$('#gameName').val();
 
 	if (!validName(gameName)) {
-		// Give an error 
+		// Give an error
 		return;
 	}
 

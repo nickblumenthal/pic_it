@@ -2,6 +2,18 @@
 	text-align: center;
 }
 
+.about {
+	color: white;
+	margin-top: 20px;
+}
+
+@media(max-width: 770px) {
+	#sidebar.about {
+		top: 72px;
+		padding: 15px;
+	}
+}
+
 .home h2 {
   color: #FFF;
 }
