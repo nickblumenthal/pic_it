@@ -8,7 +8,7 @@
 					<ul class="current-players">
 						{{#transition transIn="slideLeftIn" transOut="slideRightOut" display="block" wait="false"}}
 							{{#each players}}
-								<li class="transition-hidden row" data-id="{{ this.sessionID }}">
+								<li class="transition-hidden row {{highlightPlayer}}" data-id="{{ this.sessionID }}">
 									<div class="player-name">{{this.name}}</div>
 									<div class="player-points">{{this.points}}</div>
 								</li>
