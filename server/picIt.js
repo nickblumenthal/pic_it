@@ -126,7 +126,10 @@ Meteor.methods({
 	},
 
 	joinGame: function (gameID, sessionID) {
-		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: 'guest', points: 0 }}})
+		// Not worth the db call to find the number of current players
+		var userNum = Math.floor((Math.random() * 100) + 1);
+		var username = "Guest" + userNum;
+		Games.update(gameID, { $addToSet: { players: { sessionID: sessionID, name: username, points: 0 }}})
 	},
 
 	boardUpdated: function (roundID) {

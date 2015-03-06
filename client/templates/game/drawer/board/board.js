@@ -302,7 +302,7 @@ function mpTouchMove(e, tmp) {
 					(previousTouchPosition.x-center.x)/zoom, (previousTouchPosition.y-center.y)/zoom, (e.insideX-center.x)/zoom, (e.insideY-center.y)/zoom
 				));
 				Meteor.call("boardUpdated", round._id, function(error, ret){
-						console.log("boardUpdated error="+error+" ret="+ret);
+						// console.log("boardUpdated error="+error+" ret="+ret);
 				});
 			}
 

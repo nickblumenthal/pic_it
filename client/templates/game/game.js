@@ -144,11 +144,11 @@ Template.game.events({
 	},
 
 	'click span.input.input--kaede, #sidebar > button': function (e, tmp) {
+		// Stop the sidebar from collapsing if pressing a button
 		e.stopPropagation();
 	},
 
 	'click #sidebar:not(.collapsed)': function (e, tmp) {
-		console.log("clicky click")
 		$(e.target).addClass("collapsed")
 	}
 
