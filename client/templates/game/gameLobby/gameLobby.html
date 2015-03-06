@@ -7,7 +7,7 @@
 					<h3>Players & Points</h3>
 					<ul class="current-players">
 						{{#transition transIn="slideLeftIn" transOut="slideRightOut" display="block" wait="false"}}
-							{{#each this.players}}
+							{{#each players}}
 								<li class="transition-hidden" data-id="{{ this.sessionID }}">{{this.name}} : {{this.points}}</li>
 							{{/each}}
 						{{/transition}}
