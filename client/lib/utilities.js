@@ -1,5 +1,5 @@
 getCurrentRound = function(gameID) {
-  return Rounds.findOne({ 'game._id': gameID }, { sort: { 'board.started' : -1 }});
+  return Rounds.findOne({ 'game._id': gameID }, { sort: { 'createdAt' : -1 }});
 }
 
 Template.registerHelper('rounds', function () {

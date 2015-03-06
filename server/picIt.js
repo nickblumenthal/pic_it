@@ -55,17 +55,18 @@ Meteor.methods({
 	},
 
 	createRound: function (game, drawer) {
-		var started = new Date().getTime();
+		var createdAt = new Date().getTime();
 
 		// Chose a random word
 		var chosenWord = Meteor.call('getRandomWord', 'nounlist.txt');
 
 		var round = {
 			game: game,
+			createdAt: createdAt,
 			drawer: drawer,
 			board: {
-				started: started,
-				updated: started
+				createdAt: createdAt,
+				updated: createdAt
 			},
 			lines: {},
 			guessedWords: [],
@@ -75,7 +76,7 @@ Meteor.methods({
 
 		var roundID = Rounds.insert( round );
 
-		var round = Rounds.findOne( roundID, { sort: { 'board.started' : -1 }});
+		var round = Rounds.findOne( roundID, { sort: { 'createdAt' : -1 }});
 
 		return round;
 	},
@@ -191,7 +192,7 @@ Meteor.methods({
 	},
 
 	assignPoints: function(gameID) {
-		var round = Rounds.findOne({ 'game._id': gameID }, { sort: { 'board.started' : -1 }});
+		var round = Rounds.findOne({ 'game._id': gameID }, { sort: { 'createdAt' : -1 }});
 		if(round.won === true) {
 			var game = Games.findOne(gameID);
 			var drawerPoints = game.timer;
