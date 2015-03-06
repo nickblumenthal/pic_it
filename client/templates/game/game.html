@@ -2,7 +2,7 @@
 	<div class="game">
 		<center>
 			<div class="row">
-				<div class="col-lg-2 navigation">
+				<div class="col-sm-2 navigation">
 					{{#transition transIn="slideLeftBigIn" transOut="slideLeftBigOut" display="block" wait="true"}}
 					<div id="sidebar" class="collapsed">
 						<button id="full-screen" class="pt-touch-button wide">{{fullScreenText}} Full Screen</button>
@@ -20,7 +20,7 @@
 					{{/transition}}
 				</div>
 
-				<div class="col-lg-6 col-lg-offset-1">
+				<div class="col-sm-6 col-sm-offset-1">
 					<!-- TEMP: Probably break into different templates -->
 					{{#transition transIn="slideUpBigIn" transOut="slideDownBigOut" display="block" wait="true"}}
 						{{#if inLobbyOrStarting}}
@@ -65,7 +65,7 @@
 				</div>
 
 
-				<div id="timer" class="col-lg-2  col-lg-offset-1">
+				<div id="timer" class="col-sm-2  col-sm-offset-1">
 					{{#transition transIn="slideUpBigIn" transOut="slideDownBigOut" display="block" wait="true"}}
 						{{#if gameInProgress}}
 							<div id="countdown" class="large-screen"></div>

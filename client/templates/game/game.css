@@ -12,6 +12,10 @@
 	margin-right: 0px;
 }
 
+#sidebar button {
+  display: block;
+}
+
 /* Move clock to upper right corner on mobile */
 @media(max-width: 600px) {
   #countdown.large-screen {
