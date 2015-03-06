@@ -29,6 +29,9 @@
 
   .menu {
     position: absolute;
-    left: -10px;
+    left: -4px;
+    top: 8px;
+    height: 50px;
+    width: 50px;
   }
 }

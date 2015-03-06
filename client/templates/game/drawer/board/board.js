@@ -55,7 +55,7 @@ Template.board.created = function () {
 
 Template.board.rendered = function() {
 	var round = this.data;
-	// resizeBoard();
+	resizeBoard();
 	boardRender(true, round);
 	// window.onresize = resizeControl.bind(this);
 
@@ -114,20 +114,6 @@ var size = function () {
 	}
 	return {w:500,h:500}
 }
-
-var setZoom = function () {
-	var zoom=1;
-	if (Session.get("board_w")<minZone) {
-		zoom=Session.get("board_w")/minZone;
-	}
-	if (Session.get("board_h")<Session.get("board_w")) {
-		zoom=Session.get("board_h")/minZone;
-	}
-	if (zoom<minZoom) zoom=minZoom;
-	Session.set("zoom",zoom);
-}
-
-
 
 var boardRender = function (overlay, round) {
 
@@ -212,7 +198,6 @@ var boardRender = function (overlay, round) {
 
 // Set new size of the canvas on browser window resize (or mobile rotation for example)
 
-
 var setZoom = function () {
 	var zoom=1;
 	if (Session.get("board_w")<minZone) {
@@ -225,8 +210,6 @@ var setZoom = function () {
 	Session.set("zoom",zoom);
 }
 
-
-
 // Events
 var isTouchSupported = 'ontouchstart' in window;
 
@@ -234,15 +217,12 @@ var isTouchSupported = 'ontouchstart' in window;
 if (isTouchSupported) {
 	Template.board.events({
 		"touchstart #board": function (e,tmp) {
-			console.log("touchstart");
 			mpTouchStart(e);
 		},
 		"touchmove #board": function (e,tmp) {
-			console.log("touchmove");
 			mpTouchMove(e, tmp);
 		},
 		"touchend #board": function (e,tmp) {
-			console.log("touchend");
 			mpTouchEnd(e);
 		},
 	});
@@ -283,8 +263,8 @@ function convertTouchEvent(e) {
 
 function mpTouchStart(e) {
 	if(Session.get('role') === 'drawer') {
+		resizeBoard();
 		try { convertTouchEvent(e); } catch (err) {return;}
-		//console.log("mpTouchStart "+e.insideX+","+e.insideY);
 		previousTouchPosition={x:e.insideX,y:e.insideY};
 		e.preventDefault();
 	}
@@ -296,7 +276,6 @@ function mpTouchMove(e, tmp) {
 	if(Session.get('role') === 'drawer') {
 
 		try { convertTouchEvent(e); } catch (err) {return;}
-		//console.log("mpTouchMove "+e.insideX+","+e.insideY+" previousTouchPosition="+previousTouchPosition);
 		if (previousTouchPosition) {
 
 			var round = tmp.data;
@@ -357,4 +336,5 @@ var pushPoint = function(line_id, x, y) {
 var resizeBoard = function() {
 	Session.set("board_w", $('.drawer-canvas').width());
 	Session.set("board_h", $('.drawer-canvas').height());
+	setZoom();
 }
