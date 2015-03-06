@@ -64,11 +64,13 @@ Template.openGames.events({
 		incrementCursor( 'openGamesCursor', Session.get('numOfGames') )
 	},
 
-	// TEMP: This logic isn't needed anymore
 	'click #open-game-prev': function (event, template) {
-		if ( Session.get('openGamesCursor') > 0 ) {
+		var openGamesCursor = Session.get('openGamesCursor');
+		if ( openGamesCursor <= 8 && openGamesCursor > 1 ) {
+			Session.set('openGamesCursor', 0);
+		} else if ( openGamesCursor > 0 ) {
 			incrementCursor( 'openGamesCursor', ( -1 * Session.get('numOfGames') ))
-		};
+		}
 	},
 
 	'click #finished-games-next': function (event, template) {
@@ -86,7 +88,7 @@ Template.openGames.events({
 Template.openGames.created = function() {
 	// Reactive elements to change the number of open games to display
 	var initialNumOfGames = $(window).width() < 600 ? 8 : 20;
-	Session.set('numOfGames', initialNumOfGames);
+	Session.setDefault('numOfGames', initialNumOfGames);
 	resizeObserver();
 
   Session.setDefault('openGamesCursor', 0);
@@ -97,7 +99,7 @@ Template.openGames.created = function() {
 
   Tracker.autorun(function() {
 		tempSubs.openGames = Meteor.subscribe('openGames', Session.get('openGamesCursor'));
-		tempSubs.finishedGames = Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
+		// tempSubs.finishedGames = Meteor.subscribe('finishedGames', Session.get('finishedGamesCursor'));
   });
 }
 
@@ -114,7 +116,6 @@ Template.openGames.destroyed = function () {
 
 var resizeObserver = function () {
 	$(window).resize(function () {
-		console.log('crap')
 		var size = $(window).width();
 		if (size < 600) {
 			setWidth(8)
