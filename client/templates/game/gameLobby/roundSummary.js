@@ -9,5 +9,21 @@ Template.roundSummary.helpers({
     } else {
       return 'None';
     }
-	}
+	},
+
+  rounds: function() {
+    return Rounds.find({'game._id': this._id}, {
+      sort: { createdAt: -1 }, 
+      fields: {
+        drawer: 1, 
+        chosenWord: 1,
+        winner: 1,
+        'game.players': 1
+      }
+    });
+  },
+
+  roundsCount: function() {
+    return Rounds.find({'game._id': this._id}).count();
+  }, 
 });
