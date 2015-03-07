@@ -58,7 +58,7 @@ Meteor.methods({
 		var createdAt = new Date().getTime();
 
 		// Chose a random word
-		var chosenWord = Meteor.call('getRandomWord', 'nounlist.txt');
+		var chosenWord = Meteor.call('getRandomWord', 'wordlist1.txt');
 
 		var round = {
 			game: game,
@@ -178,7 +178,6 @@ Meteor.methods({
 		if(guess === round.chosenWord){
 			var winner = this.connection.id;
 			Rounds.update(roundID, { $set: { won: true, winner: winner }});
-			console.log(guess);
 			Meteor.call('endRound', round.game._id);
 		} else if (round.guessedWords.indexOf(guess) === -1) {
 			guesses = round.guessedWords;
