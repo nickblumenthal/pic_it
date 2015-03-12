@@ -92,17 +92,12 @@ Template.game.helpers({
 	tie: function () {
 		var orderedPlayers = _.sortBy( this.players, 'points' ).reverse();
 
-		if (orderedPlayers[0].points === orderedPlayers[1].points) {
-			return true
-		} else {
-			return false
-		}
+		return (orderedPlayers[0].points === orderedPlayers[1].points ? true : false ) 
 	},
 
 	winner: function () {
 		return ( this.winner ? (this.winner.name + "!") : "Nobody!" )
 	}
-
 });
 
 
@@ -156,6 +151,10 @@ Template.game.events({
 
 Template.game.created = function () {
 
+	// Removes user when the window is closed
+	window.onbeforeunload = function(){
+		Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
+	}
 };
 
 Template.game.rendered = function () {
@@ -195,6 +194,8 @@ Template.game.destroyed = function() {
 	// Remove event listener for sidebar expander
 	$('.sidebar-toggle').off('touchstart');
 };
+
+// Functions
 
 // TEMP: Not sure if this allowed, but had to save the observer
 // in order to access it from the events

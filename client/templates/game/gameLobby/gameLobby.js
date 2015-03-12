@@ -43,11 +43,7 @@ Template.gameLobby.destroyed = function () {
 	if (drawerQuery) { drawerQuery.stop()};
 };
 
-// TEMP: Might want to refactor this into the overall game template
-window.onbeforeunload = function(){
-	Meteor.call('removeUser', Session.get('playerID'), Session.get('gameID'));
-}
-
+// Functions
 
 var drawerQuery;
 var observeDrawer = function (tmp) {

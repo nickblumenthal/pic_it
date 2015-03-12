@@ -176,6 +176,7 @@ Meteor.methods({
 	checkGuess: function(guess, roundID) {
 		var round = Rounds.findOne(roundID);
 		if(guess === round.chosenWord){
+			// Winner should be refactored to be the entire player object
 			var winner = this.connection.id;
 			Rounds.update(roundID, { $set: { won: true, winner: winner }});
 			Meteor.call('endRound', round.game._id);

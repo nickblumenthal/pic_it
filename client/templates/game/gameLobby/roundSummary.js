@@ -1,14 +1,16 @@
 Template.roundSummary.helpers({
 	winner: function() {
     var that = this;
-    var winningPlayer = this.game.players.filter(function(player) {
+    var game = Games.findOne(
+      {_id: Session.get('gameID') },
+      {fields: { players: 1},
+      reactive: false,
+    });
+
+    var winningPlayer = _.find(game.players, function(player) {
       return player.sessionID === that.winner
     });
-    if(winningPlayer.length > 0) {
-		  return winningPlayer[0];
-    } else {
-      return '';
-    }
+    return winningPlayer;
 	},
 
   rounds: function() {
@@ -25,11 +27,8 @@ Template.roundSummary.helpers({
 
   winnerName: function (user) {
     var winner = user.hash.user;
-    if (winner.name) {
-      return winner.name
-    } else {
-      return "None"
-    }
+    console.log("this Should be the winner object")
+    return (typeof winner !== "undefined" ? winner.name : "None")
   },
 
   roundsCount: function() {
@@ -38,6 +37,7 @@ Template.roundSummary.helpers({
 
   highlightPlayer: function (user) {
     var user = user.hash.user;
+    if (typeof user === "undefined") { return };
     return (user.sessionID === Session.get('playerID') ? "currentUser" : "")
   }
 
