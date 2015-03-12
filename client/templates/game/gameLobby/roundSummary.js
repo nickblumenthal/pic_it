@@ -27,7 +27,6 @@ Template.roundSummary.helpers({
 
   winnerName: function (user) {
     var winner = user.hash.user;
-    console.log("this Should be the winner object")
     return (typeof winner !== "undefined" ? winner.name : "None")
   },
 
